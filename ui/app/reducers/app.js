@@ -324,12 +324,28 @@ function reduceApp (state, action) {
         activeAddress: action.value,
       })
 
+//    case actions.GO_HOME:
+//      return extend(appState, {
+//        currentView: extend(appState.currentView, {
+//          name: 'accountDetail',
+//        }),
+//        accountDetail: {
+//          subview: 'transactions',
+//          accountExport: 'none',
+//          privateKey: '',
+//        },
+//        transForward: false,
+//        warning: null,
+//      })
+
+
+//feng
     case actions.GO_HOME:
       return extend(appState, {
         currentView: extend(appState.currentView, {
-          name: 'accountDetail',
+          name: 'shareDefault',
         }),
-        accountDetail: {
+        shareDefault: {
           subview: 'transactions',
           accountExport: 'none',
           privateKey: '',
@@ -337,6 +353,7 @@ function reduceApp (state, action) {
         transForward: false,
         warning: null,
       })
+
 
     case actions.SHOW_ACCOUNT_DETAIL:
       return extend(appState, {

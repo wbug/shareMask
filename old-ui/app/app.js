@@ -14,6 +14,7 @@ const NewKeyChainScreen = require('./new-keychain')
 const UnlockScreen = require('./unlock')
 // accounts
 const AccountDetailScreen = require('./account-detail')
+const ShareDefaultScreen = require('./share-default')
 const SendTransactionScreen = require('./send')
 const ConfirmTxScreen = require('./conf-tx')
 // notice
@@ -533,6 +534,10 @@ App.prototype.renderPrimary = function () {
   // show current view
   switch (props.currentView.name) {
 
+    case 'shareDefault':
+      log.debug('rendering share default screen')
+      return h(ShareDefaultScreen, {key: 'share-default'})
+
     case 'accountDetail':
       log.debug('rendering account detail screen')
       return h(AccountDetailScreen, {key: 'account-detail'})
@@ -606,8 +611,11 @@ App.prototype.renderPrimary = function () {
       ])
 
     default:
-      log.debug('rendering default, account detail screen')
-      return h(AccountDetailScreen, {key: 'account-detail'})
+      log.debug('rendering share default screen')
+      return h(ShareDefaultScreen, {key: 'share-default'})
+
+//     log.debug('rendering default, account detail screen')
+//     return h(AccountDetailScreen, {key: 'account-detail'})
   }
 }
 
