@@ -70,10 +70,10 @@ AccountDetailScreen.prototype.render = function () {
             alignItems: 'flex-start',
           },
         }, [
-          // back button
-          h('i.fa.fa-arrow-left.fa-lg.cursor-pointer.color-orange', {
-            onClick: this.back.bind(this),
-          }),
+          // // back button
+          // h('i.fa.fa-arrow-left.fa-lg.cursor-pointer.color-orange', {
+          //   onClick: this.back.bind(this),
+          // }),
           // large identicon and addresses
           h('.identicon-wrapper.select-none', [
             h(Identicon, {
