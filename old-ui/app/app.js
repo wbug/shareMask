@@ -12,6 +12,10 @@ const InitializeMenuScreen = require('./first-time/init-menu')
 const NewKeyChainScreen = require('./new-keychain')
 // unlock
 const UnlockScreen = require('./unlock')
+
+// shareDefault --zhen
+const ShareDefaultScreen = require('./share-default')
+
 // accounts
 const AccountDetailScreen = require('./account-detail')
 const SendTransactionScreen = require('./send')
@@ -520,6 +524,8 @@ App.prototype.renderPrimary = function () {
 
       default:
         log.debug('rendering locked screen')
+        // dev 修改 首次安装并同意协议之后的登录页面 --zgl
+        // return h(ShareDefaultScreen, {key: 'share-default'})
         return h(UnlockScreen, {key: 'locked'})
     }
   }
@@ -532,6 +538,10 @@ App.prototype.renderPrimary = function () {
 
   // show current view
   switch (props.currentView.name) {
+    
+    case 'shareDefault':
+      log.debug('rendering share default screen')
+      return h(ShareDefaultScreen, {key: 'share-default'})
 
     case 'accountDetail':
       log.debug('rendering account detail screen')
@@ -607,7 +617,7 @@ App.prototype.renderPrimary = function () {
 
     default:
       log.debug('rendering default, account detail screen')
-      return h(AccountDetailScreen, {key: 'account-detail'})
+      return h(AccountDetailScreen, {key: 'share-default'})
   }
 }
 

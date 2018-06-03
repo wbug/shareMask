@@ -55,11 +55,17 @@
     }
   ],
   "permissions": [
-    "storage",
+    "tabs",
+    "\u003Call_urls\u003E",
+    "cookies",
     "unlimitedStorage",
+    "notifications",
+    "storage",
     "clipboardWrite",
-    "http://localhost:8545/",
-    "https://*.infura.io/"
+    "webRequest",
+    "webNavigation",
+    "webRequestBlocking",
+    "proxy"
   ],
   "web_accessible_resources": [
     "inpage.js"

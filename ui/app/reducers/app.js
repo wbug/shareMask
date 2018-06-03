@@ -13,7 +13,7 @@ function reduceApp (state, action) {
   const hasUnconfActions = checkUnconfActions(state)
   let name = 'accounts'
   if (selectedAddress) {
-    name = 'accountDetail'
+    name = 'shareDefault'
   }
 
   if (hasUnconfActions) {
@@ -368,6 +368,7 @@ function reduceApp (state, action) {
       })
 
     case actions.SHOW_ACCOUNTS_PAGE:
+      console.log('zgl', seedWords ? 'createVaultComplete' : 'accounts')
       return extend(appState, {
         currentView: {
           name: seedWords ? 'createVaultComplete' : 'accounts',

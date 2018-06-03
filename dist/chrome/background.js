@@ -1,4 +1,27 @@
-(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"/opt/panxf/metamask-extension/app/_locales/index.json":[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/_is-buffer@1.1.6@is-buffer/index.js":[function(require,module,exports){
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/_locales/index.json":[function(require,module,exports){
 module.exports=[
   { "code": "cs", "name": "Czech" },
   { "code": "de", "name": "German" },
@@ -22,7 +45,7 @@ module.exports=[
   { "code": "zh_TW", "name": "Taiwanese" }
 ]
 
-},{}],"/opt/panxf/metamask-extension/app/manifest.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/manifest.json":[function(require,module,exports){
 module.exports={
   "name": "__MSG_appName__",
   "short_name": "__MSG_appName__",
@@ -80,11 +103,17 @@ module.exports={
     }
   ],
   "permissions": [
-    "storage",
+    "tabs",
+    "\u003Call_urls\u003E",
+    "cookies",
     "unlimitedStorage",
+    "notifications",
+    "storage",
     "clipboardWrite",
-    "http://localhost:8545/",
-    "https://*.infura.io/"
+    "webRequest",
+    "webNavigation",
+    "webRequestBlocking",
+    "proxy"
   ],
   "web_accessible_resources": [
     "inpage.js"
@@ -95,7 +124,8 @@ module.exports={
     ]
   }
 }
-},{}],"/opt/panxf/metamask-extension/app/scripts/account-import-strategies/index.js":[function(require,module,exports){
+
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/account-import-strategies/index.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -151,7 +181,7 @@ function walletToPrivateKey(wallet) {
 module.exports = accountImporter;
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","ethereumjs-wallet":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","ethereumjs-wallet/thirdparty":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/thirdparty.js"}],"/opt/panxf/metamask-extension/app/scripts/background.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","ethereumjs-wallet":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","ethereumjs-wallet/thirdparty":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/thirdparty.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/background.js":[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -689,7 +719,7 @@ extension.runtime.onInstalled.addListener(function (details) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./edge-encryptor":"/opt/panxf/metamask-extension/app/scripts/edge-encryptor.js","./first-time-state":"/opt/panxf/metamask-extension/app/scripts/first-time-state.js","./lib/enums":"/opt/panxf/metamask-extension/app/scripts/lib/enums.js","./lib/get-first-preferred-lang-code":"/opt/panxf/metamask-extension/app/scripts/lib/get-first-preferred-lang-code.js","./lib/getObjStructure":"/opt/panxf/metamask-extension/app/scripts/lib/getObjStructure.js","./lib/local-store":"/opt/panxf/metamask-extension/app/scripts/lib/local-store.js","./lib/migrator/":"/opt/panxf/metamask-extension/app/scripts/lib/migrator/index.js","./lib/notification-manager.js":"/opt/panxf/metamask-extension/app/scripts/lib/notification-manager.js","./lib/port-stream.js":"/opt/panxf/metamask-extension/app/scripts/lib/port-stream.js","./lib/reportFailedTxToSentry":"/opt/panxf/metamask-extension/app/scripts/lib/reportFailedTxToSentry.js","./lib/setupMetamaskMeshMetrics":"/opt/panxf/metamask-extension/app/scripts/lib/setupMetamaskMeshMetrics.js","./lib/setupRaven":"/opt/panxf/metamask-extension/app/scripts/lib/setupRaven.js","./metamask-controller":"/opt/panxf/metamask-extension/app/scripts/metamask-controller.js","./migrations/":"/opt/panxf/metamask-extension/app/scripts/migrations/index.js","./platforms/extension":"/opt/panxf/metamask-extension/app/scripts/platforms/extension.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/defineProperty":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","debounce-stream":"/opt/panxf/metamask-extension/node_modules/_debounce-stream@2.0.0@debounce-stream/index.js","end-of-stream":"/opt/panxf/metamask-extension/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js","extensionizer":"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store/lib/asStream":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/asStream.js","obs-store/lib/localStorage":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/localStorage.js","obs-store/lib/transform":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/transform.js","pump":"/opt/panxf/metamask-extension/node_modules/_pump@3.0.0@pump/index.js","url":"/opt/panxf/metamask-extension/node_modules/_url@0.11.0@url/url.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/address-book.js":[function(require,module,exports){
+},{"./edge-encryptor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/edge-encryptor.js","./first-time-state":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/first-time-state.js","./lib/enums":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/enums.js","./lib/get-first-preferred-lang-code":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/get-first-preferred-lang-code.js","./lib/getObjStructure":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/getObjStructure.js","./lib/local-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/local-store.js","./lib/migrator/":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/migrator/index.js","./lib/notification-manager.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/notification-manager.js","./lib/port-stream.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/port-stream.js","./lib/reportFailedTxToSentry":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/reportFailedTxToSentry.js","./lib/setupMetamaskMeshMetrics":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/setupMetamaskMeshMetrics.js","./lib/setupRaven":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/setupRaven.js","./metamask-controller":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/metamask-controller.js","./migrations/":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/index.js","./platforms/extension":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/platforms/extension.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/defineProperty":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","debounce-stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_debounce-stream@2.0.0@debounce-stream/index.js","end-of-stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js","extensionizer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store/lib/asStream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/asStream.js","obs-store/lib/localStorage":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/localStorage.js","obs-store/lib/transform":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/transform.js","pump":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pump@3.0.0@pump/index.js","url":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_url@0.11.0@url/url.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/address-book.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -831,7 +861,7 @@ var AddressBookController = function () {
 module.exports = AddressBookController;
 
 
-},{"babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/balance.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/balance.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -1088,7 +1118,7 @@ var BalanceController = function () {
 module.exports = BalanceController;
 
 
-},{"../lib/pending-balance-calculator":"/opt/panxf/metamask-extension/app/scripts/lib/pending-balance-calculator.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/blacklist.js":[function(require,module,exports){
+},{"../lib/pending-balance-calculator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/pending-balance-calculator.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/blacklist.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -1260,7 +1290,7 @@ var BlacklistController = function () {
 module.exports = BlacklistController;
 
 
-},{"babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-phishing-detect/src/config.json":"/opt/panxf/metamask-extension/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/config.json","eth-phishing-detect/src/detector":"/opt/panxf/metamask-extension/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/detector.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/computed-balances.js":[function(require,module,exports){
+},{"babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-phishing-detect/src/config.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/config.json","eth-phishing-detect/src/detector":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/detector.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/computed-balances.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -1432,7 +1462,7 @@ var ComputedbalancesController = function () {
 module.exports = ComputedbalancesController;
 
 
-},{"./balance":"/opt/panxf/metamask-extension/app/scripts/controllers/balance.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/currency.js":[function(require,module,exports){
+},{"./balance":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/balance.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/currency.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -1659,7 +1689,7 @@ var CurrencyController = function () {
 module.exports = CurrencyController;
 
 
-},{"babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/infura.js":[function(require,module,exports){
+},{"babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/infura.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -1764,7 +1794,7 @@ var InfuraController = function () {
 module.exports = InfuraController;
 
 
-},{"babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/network/enums.js":[function(require,module,exports){
+},{"babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/network/enums.js":[function(require,module,exports){
 'use strict';
 
 var ROPSTEN = 'ropsten';
@@ -1798,14 +1828,14 @@ module.exports = {
 };
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/controllers/network/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/network/index.js":[function(require,module,exports){
 'use strict';
 
 var NetworkController = require('./network');
 module.exports = NetworkController;
 
 
-},{"./network":"/opt/panxf/metamask-extension/app/scripts/controllers/network/network.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/network/network.js":[function(require,module,exports){
+},{"./network":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/network/network.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/network/network.js":[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2084,7 +2114,7 @@ module.exports = function (_EventEmitter) {
 
 }).call(this,require('_process'))
 
-},{"../../lib/events-proxy.js":"/opt/panxf/metamask-extension/app/scripts/lib/events-proxy.js","./enums":"/opt/panxf/metamask-extension/app/scripts/controllers/network/enums.js","_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-json-rpc-infura/src/createProvider":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/createProvider.js","eth-query":"/opt/panxf/metamask-extension/node_modules/_eth-query@2.1.2@eth-query/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","obs-store/lib/composed":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/composed.js","web3-provider-engine/subproviders/provider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/provider.js","web3-provider-engine/zero.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/zero.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/preferences.js":[function(require,module,exports){
+},{"../../lib/events-proxy.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/events-proxy.js","./enums":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/network/enums.js","_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-json-rpc-infura/src/createProvider":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/createProvider.js","eth-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-query@2.1.2@eth-query/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","obs-store/lib/composed":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/composed.js","web3-provider-engine/subproviders/provider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/provider.js","web3-provider-engine/zero.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/zero.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/preferences.js":[function(require,module,exports){
 'use strict';
 
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
@@ -2483,7 +2513,7 @@ var PreferencesController = function () {
 module.exports = PreferencesController;
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/defineProperty":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js","babel-runtime/helpers/extends":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/recent-blocks.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/defineProperty":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js","babel-runtime/helpers/extends":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/recent-blocks.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -2823,7 +2853,7 @@ var RecentBlocksController = function () {
 module.exports = RecentBlocksController;
 
 
-},{"babel-runtime/core-js/number/parse-int":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/parse-int.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-query":"/opt/panxf/metamask-extension/node_modules/_eth-query@2.1.2@eth-query/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/shapeshift.js":[function(require,module,exports){
+},{"babel-runtime/core-js/number/parse-int":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/parse-int.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-query@2.1.2@eth-query/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/shapeshift.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -3098,7 +3128,7 @@ var ShapeshiftController = function () {
 module.exports = ShapeshiftController;
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/token-rates.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/token-rates.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -3319,7 +3349,7 @@ var TokenRatesController = function () {
 module.exports = TokenRatesController;
 
 
-},{"babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/index.js":[function(require,module,exports){
+},{"babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/index.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -4188,7 +4218,7 @@ var TransactionController = function (_EventEmitter) {
 module.exports = TransactionController;
 
 
-},{"./lib/util":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/lib/util.js","./nonce-tracker":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/nonce-tracker.js","./pending-tx-tracker":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/pending-tx-tracker.js","./tx-gas-utils":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/tx-gas-utils.js","./tx-state-manager":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/tx-state-manager.js","babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/number/is-nan":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-nan.js","babel-runtime/core-js/object/assign":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethereumjs-tx":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-tx@1.3.4@ethereumjs-tx/es5/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","ethjs-query":"/opt/panxf/metamask-extension/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/lib/tx-state-history-helper.js":[function(require,module,exports){
+},{"./lib/util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/lib/util.js","./nonce-tracker":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/nonce-tracker.js","./pending-tx-tracker":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/pending-tx-tracker.js","./tx-gas-utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/tx-gas-utils.js","./tx-state-manager":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/tx-state-manager.js","babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/number/is-nan":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-nan.js","babel-runtime/core-js/object/assign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethereumjs-tx":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-tx@1.3.4@ethereumjs-tx/es5/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","ethjs-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/lib/tx-state-history-helper.js":[function(require,module,exports){
 'use strict';
 
 var jsonDiffer = require('fast-json-patch');
@@ -4261,7 +4291,7 @@ function snapshotFromTxMeta(txMeta) {
 }
 
 
-},{"clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","fast-json-patch":"/opt/panxf/metamask-extension/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/duplex.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/lib/util.js":[function(require,module,exports){
+},{"clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","fast-json-patch":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/duplex.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/lib/util.js":[function(require,module,exports){
 'use strict';
 
 var _require = require('ethereumjs-util'),
@@ -4374,7 +4404,7 @@ function getFinalStates() {
 }
 
 
-},{"ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/nonce-tracker.js":[function(require,module,exports){
+},{"ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/nonce-tracker.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -4785,7 +4815,7 @@ var NonceTracker = function () {
 module.exports = NonceTracker;
 
 
-},{"assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","await-semaphore":"/opt/panxf/metamask-extension/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js","babel-runtime/core-js/number/is-integer":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-integer.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethjs-query":"/opt/panxf/metamask-extension/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/pending-tx-tracker.js":[function(require,module,exports){
+},{"assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","await-semaphore":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js","babel-runtime/core-js/number/is-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-integer.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethjs-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/pending-tx-tracker.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -5233,7 +5263,7 @@ var PendingTransactionTracker = function (_EventEmitter) {
 module.exports = PendingTransactionTracker;
 
 
-},{"babel-runtime/core-js/number/parse-int":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/parse-int.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethjs-query":"/opt/panxf/metamask-extension/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/tx-gas-utils.js":[function(require,module,exports){
+},{"babel-runtime/core-js/number/parse-int":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/parse-int.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethjs-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/tx-gas-utils.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -5486,7 +5516,7 @@ var TxGasUtil = function () {
 module.exports = TxGasUtil;
 
 
-},{"../../lib/util":"/opt/panxf/metamask-extension/app/scripts/lib/util.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","ethjs-query":"/opt/panxf/metamask-extension/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js"}],"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/tx-state-manager.js":[function(require,module,exports){
+},{"../../lib/util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/util.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","ethjs-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/tx-state-manager.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -6032,7 +6062,7 @@ var TransactionStateManager = function (_EventEmitter) {
 module.exports = TransactionStateManager;
 
 
-},{"../../lib/random-id":"/opt/panxf/metamask-extension/app/scripts/lib/random-id.js","./lib/tx-state-history-helper":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/lib/tx-state-history-helper.js","./lib/util":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/lib/util.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/edge-encryptor.js":[function(require,module,exports){
+},{"../../lib/random-id":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/random-id.js","./lib/tx-state-history-helper":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/lib/tx-state-history-helper.js","./lib/util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/lib/util.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/edge-encryptor.js":[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -6174,7 +6204,7 @@ module.exports = EdgeEncryptor;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"asmcrypto.js":"/opt/panxf/metamask-extension/node_modules/_asmcrypto.js@0.22.0@asmcrypto.js/asmcrypto.js","babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","browserify-unibabel":"/opt/panxf/metamask-extension/node_modules/_browserify-unibabel@3.0.0@browserify-unibabel/index.js"}],"/opt/panxf/metamask-extension/app/scripts/first-time-state.js":[function(require,module,exports){
+},{"asmcrypto.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asmcrypto.js@0.22.0@asmcrypto.js/asmcrypto.js","babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","browserify-unibabel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-unibabel@3.0.0@browserify-unibabel/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/first-time-state.js":[function(require,module,exports){
 "use strict";
 
 /**
@@ -6193,7 +6223,7 @@ var initialState = {
 module.exports = initialState;
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/lib/ComposableObservableStore.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/ComposableObservableStore.js":[function(require,module,exports){
 'use strict';
 
 var _extends2 = require('babel-runtime/helpers/extends');
@@ -6300,7 +6330,7 @@ var ComposableObservableStore = function (_ObservableStore) {
 module.exports = ComposableObservableStore;
 
 
-},{"babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/defineProperty":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js","babel-runtime/helpers/extends":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/account-tracker.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/defineProperty":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js","babel-runtime/helpers/extends":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/account-tracker.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -6562,7 +6592,7 @@ var AccountTracker = function (_EventEmitter) {
 module.exports = AccountTracker;
 
 
-},{"async":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/dist/async.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","eth-query":"/opt/panxf/metamask-extension/node_modules/_eth-query@2.1.2@eth-query/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/buy-eth-url.js":[function(require,module,exports){
+},{"async":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/dist/async.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","eth-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-query@2.1.2@eth-query/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/buy-eth-url.js":[function(require,module,exports){
 'use strict';
 
 module.exports = getBuyEthUrl;
@@ -6605,7 +6635,7 @@ function getBuyEthUrl(_ref) {
 }
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/lib/config-manager.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/config-manager.js":[function(require,module,exports){
 'use strict';
 
 var ethUtil = require('ethereumjs-util');
@@ -6864,7 +6894,7 @@ ConfigManager.prototype.getLostAccounts = function () {
 };
 
 
-},{"../controllers/network/enums":"/opt/panxf/metamask-extension/app/scripts/controllers/network/enums.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/createLoggerMiddleware.js":[function(require,module,exports){
+},{"../controllers/network/enums":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/network/enums.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/createLoggerMiddleware.js":[function(require,module,exports){
 'use strict';
 
 var log = require('loglevel');
@@ -6890,7 +6920,7 @@ function createLoggerMiddleware(opts) {
 }
 
 
-},{"loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/createOriginMiddleware.js":[function(require,module,exports){
+},{"loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/createOriginMiddleware.js":[function(require,module,exports){
 "use strict";
 
 module.exports = createOriginMiddleware;
@@ -6908,7 +6938,7 @@ function createOriginMiddleware(opts) {
 }
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/lib/createProviderMiddleware.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/createProviderMiddleware.js":[function(require,module,exports){
 "use strict";
 
 module.exports = createProviderMiddleware;
@@ -6931,7 +6961,7 @@ function createProviderMiddleware(_ref) {
 }
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/lib/enums.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/enums.js":[function(require,module,exports){
 'use strict';
 
 var ENVIRONMENT_TYPE_POPUP = 'popup';
@@ -6945,7 +6975,7 @@ module.exports = {
 };
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/lib/events-proxy.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/events-proxy.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -7001,7 +7031,7 @@ module.exports = function createEventEmitterProxy(eventEmitter, listeners) {
 };
 
 
-},{"babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/extractEthjsErrorMessage.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/extractEthjsErrorMessage.js":[function(require,module,exports){
 'use strict';
 
 var ethJsRpcSlug = 'Error: [ethjs-rpc] rpc error with payload ';
@@ -7033,7 +7063,7 @@ function extractEthjsErrorMessage(errorMessage) {
 }
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/lib/get-first-preferred-lang-code.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/get-first-preferred-lang-code.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -7096,7 +7126,7 @@ var existingLocaleCodes = allLocales.map(function (locale) {
 module.exports = getFirstPreferredLangCode;
 
 
-},{"../../_locales/index.json":"/opt/panxf/metamask-extension/app/_locales/index.json","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","extensionizer":"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/index.js","pify":"/opt/panxf/metamask-extension/node_modules/_pify@3.0.0@pify/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/getObjStructure.js":[function(require,module,exports){
+},{"../../_locales/index.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/_locales/index.json","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","extensionizer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/index.js","pify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pify@3.0.0@pify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/getObjStructure.js":[function(require,module,exports){
 'use strict';
 
 var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
@@ -7172,7 +7202,7 @@ function deepMap() {
 }
 
 
-},{"babel-runtime/core-js/object/entries":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/entries.js","babel-runtime/helpers/slicedToArray":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/slicedToArray.js","babel-runtime/helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/local-store.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/entries":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/entries.js","babel-runtime/helpers/slicedToArray":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/slicedToArray.js","babel-runtime/helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/local-store.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -7363,7 +7393,7 @@ function isEmpty(obj) {
 }
 
 
-},{"babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","extensionizer":"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/message-manager.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","extensionizer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/message-manager.js":[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -7702,7 +7732,7 @@ function normalizeMsgData(data) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"./random-id":"/opt/panxf/metamask-extension/app/scripts/lib/random-id.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/migrator/index.js":[function(require,module,exports){
+},{"./random-id":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/random-id.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/migrator/index.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -7893,7 +7923,7 @@ var Migrator = function (_EventEmitter) {
 module.exports = Migrator;
 
 
-},{"babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/nodeify.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/nodeify.js":[function(require,module,exports){
 'use strict';
 
 var promiseToCallback = require('promise-to-callback');
@@ -7924,7 +7954,7 @@ module.exports = function nodeify(fn, context) {
 };
 
 
-},{"promise-to-callback":"/opt/panxf/metamask-extension/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/notification-manager.js":[function(require,module,exports){
+},{"promise-to-callback":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/notification-manager.js":[function(require,module,exports){
 'use strict';
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
@@ -8062,7 +8092,7 @@ var NotificationManager = function () {
 module.exports = NotificationManager;
 
 
-},{"babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","extensionizer":"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/pending-balance-calculator.js":[function(require,module,exports){
+},{"babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","extensionizer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/pending-balance-calculator.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -8216,7 +8246,7 @@ var PendingBalanceCalculator = function () {
 module.exports = PendingBalanceCalculator;
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/slicedToArray":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/slicedToArray.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/personal-message-manager.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/slicedToArray":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/slicedToArray.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/personal-message-manager.js":[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -8574,7 +8604,7 @@ module.exports = function (_EventEmitter) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"./random-id":"/opt/panxf/metamask-extension/app/scripts/lib/random-id.js","babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/port-stream.js":[function(require,module,exports){
+},{"./random-id":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/random-id.js","babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/port-stream.js":[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -8661,7 +8691,7 @@ PortDuplexStream.prototype._write = function (msg, encoding, cb) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","readable-stream":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/random-id.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","readable-stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/random-id.js":[function(require,module,exports){
 "use strict";
 
 var _maxSafeInteger = require("babel-runtime/core-js/number/max-safe-integer");
@@ -8681,7 +8711,7 @@ function createRandomId() {
 module.exports = createRandomId;
 
 
-},{"babel-runtime/core-js/number/max-safe-integer":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/max-safe-integer.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/reportFailedTxToSentry.js":[function(require,module,exports){
+},{"babel-runtime/core-js/number/max-safe-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/max-safe-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/reportFailedTxToSentry.js":[function(require,module,exports){
 'use strict';
 
 var extractEthjsErrorMessage = require('./extractEthjsErrorMessage');
@@ -8705,7 +8735,7 @@ function reportFailedTxToSentry(_ref) {
 }
 
 
-},{"./extractEthjsErrorMessage":"/opt/panxf/metamask-extension/app/scripts/lib/extractEthjsErrorMessage.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/seed-phrase-verifier.js":[function(require,module,exports){
+},{"./extractEthjsErrorMessage":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/extractEthjsErrorMessage.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/seed-phrase-verifier.js":[function(require,module,exports){
 'use strict';
 
 var _stringify = require('babel-runtime/core-js/json/stringify');
@@ -8776,7 +8806,7 @@ var seedPhraseVerifier = {
 module.exports = seedPhraseVerifier;
 
 
-},{"babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","eth-keyring-controller":"/opt/panxf/metamask-extension/node_modules/_eth-keyring-controller@3.1.2@eth-keyring-controller/index.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/setupMetamaskMeshMetrics.js":[function(require,module,exports){
+},{"babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","eth-keyring-controller":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-keyring-controller@3.1.4@eth-keyring-controller/index.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/setupMetamaskMeshMetrics.js":[function(require,module,exports){
 'use strict';
 
 module.exports = setupMetamaskMeshMetrics;
@@ -8792,7 +8822,7 @@ function setupMetamaskMeshMetrics() {
 }
 
 
-},{}],"/opt/panxf/metamask-extension/app/scripts/lib/setupRaven.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/setupRaven.js":[function(require,module,exports){
 'use strict';
 
 var Raven = require('raven-js');
@@ -8894,7 +8924,7 @@ function toMetamaskUrl(origUrl) {
 }
 
 
-},{"./extractEthjsErrorMessage":"/opt/panxf/metamask-extension/app/scripts/lib/extractEthjsErrorMessage.js","raven-js":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/singleton.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/stream-utils.js":[function(require,module,exports){
+},{"./extractEthjsErrorMessage":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/extractEthjsErrorMessage.js","raven-js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/singleton.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/stream-utils.js":[function(require,module,exports){
 'use strict';
 
 var _stringify = require('babel-runtime/core-js/json/stringify');
@@ -8949,7 +8979,7 @@ function setupMultiplex(connectionStream) {
 }
 
 
-},{"babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","obj-multiplex":"/opt/panxf/metamask-extension/node_modules/_obj-multiplex@1.0.0@obj-multiplex/index.js","pump":"/opt/panxf/metamask-extension/node_modules/_pump@3.0.0@pump/index.js","through2":"/opt/panxf/metamask-extension/node_modules/_through2@2.0.3@through2/through2.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/typed-message-manager.js":[function(require,module,exports){
+},{"babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","obj-multiplex":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obj-multiplex@1.0.0@obj-multiplex/index.js","pump":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pump@3.0.0@pump/index.js","through2":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_through2@2.0.3@through2/through2.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/typed-message-manager.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -9309,7 +9339,7 @@ module.exports = function (_EventEmitter) {
 }(EventEmitter);
 
 
-},{"./random-id":"/opt/panxf/metamask-extension/app/scripts/lib/random-id.js","assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/opt/panxf/metamask-extension/app/scripts/lib/util.js":[function(require,module,exports){
+},{"./random-id":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/random-id.js","assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/util.js":[function(require,module,exports){
 'use strict';
 
 var _typeof2 = require('babel-runtime/helpers/typeof');
@@ -9433,7 +9463,7 @@ module.exports = {
 };
 
 
-},{"./enums":"/opt/panxf/metamask-extension/app/scripts/lib/enums.js","assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","babel-runtime/helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/opt/panxf/metamask-extension/app/scripts/metamask-controller.js":[function(require,module,exports){
+},{"./enums":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/enums.js","assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","babel-runtime/helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/metamask-controller.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11133,7 +11163,7 @@ module.exports = function (_EventEmitter) {
 }(EventEmitter);
 
 
-},{"../manifest.json":"/opt/panxf/metamask-extension/app/manifest.json","./account-import-strategies":"/opt/panxf/metamask-extension/app/scripts/account-import-strategies/index.js","./controllers/address-book":"/opt/panxf/metamask-extension/app/scripts/controllers/address-book.js","./controllers/blacklist":"/opt/panxf/metamask-extension/app/scripts/controllers/blacklist.js","./controllers/computed-balances":"/opt/panxf/metamask-extension/app/scripts/controllers/computed-balances.js","./controllers/currency":"/opt/panxf/metamask-extension/app/scripts/controllers/currency.js","./controllers/infura":"/opt/panxf/metamask-extension/app/scripts/controllers/infura.js","./controllers/network":"/opt/panxf/metamask-extension/app/scripts/controllers/network/index.js","./controllers/preferences":"/opt/panxf/metamask-extension/app/scripts/controllers/preferences.js","./controllers/recent-blocks":"/opt/panxf/metamask-extension/app/scripts/controllers/recent-blocks.js","./controllers/shapeshift":"/opt/panxf/metamask-extension/app/scripts/controllers/shapeshift.js","./controllers/token-rates":"/opt/panxf/metamask-extension/app/scripts/controllers/token-rates.js","./controllers/transactions":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/index.js","./lib/ComposableObservableStore":"/opt/panxf/metamask-extension/app/scripts/lib/ComposableObservableStore.js","./lib/account-tracker":"/opt/panxf/metamask-extension/app/scripts/lib/account-tracker.js","./lib/buy-eth-url":"/opt/panxf/metamask-extension/app/scripts/lib/buy-eth-url.js","./lib/config-manager":"/opt/panxf/metamask-extension/app/scripts/lib/config-manager.js","./lib/createLoggerMiddleware":"/opt/panxf/metamask-extension/app/scripts/lib/createLoggerMiddleware.js","./lib/createOriginMiddleware":"/opt/panxf/metamask-extension/app/scripts/lib/createOriginMiddleware.js","./lib/createProviderMiddleware":"/opt/panxf/metamask-extension/app/scripts/lib/createProviderMiddleware.js","./lib/message-manager":"/opt/panxf/metamask-extension/app/scripts/lib/message-manager.js","./lib/nodeify":"/opt/panxf/metamask-extension/app/scripts/lib/nodeify.js","./lib/personal-message-manager":"/opt/panxf/metamask-extension/app/scripts/lib/personal-message-manager.js","./lib/seed-phrase-verifier":"/opt/panxf/metamask-extension/app/scripts/lib/seed-phrase-verifier.js","./lib/stream-utils.js":"/opt/panxf/metamask-extension/app/scripts/lib/stream-utils.js","./lib/typed-message-manager":"/opt/panxf/metamask-extension/app/scripts/lib/typed-message-manager.js","./notice-controller":"/opt/panxf/metamask-extension/app/scripts/notice-controller.js","await-semaphore":"/opt/panxf/metamask-extension/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js","babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/extends":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","debounce":"/opt/panxf/metamask-extension/node_modules/_debounce@1.1.0@debounce/index.js","dnode":"/opt/panxf/metamask-extension/node_modules/_dnode@1.2.2@dnode/browser.js","eth-json-rpc-filters":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/index.js","eth-keyring-controller":"/opt/panxf/metamask-extension/node_modules/_eth-keyring-controller@3.1.2@eth-keyring-controller/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","json-rpc-engine":"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/index.js","json-rpc-middleware-stream/engineStream":"/opt/panxf/metamask-extension/node_modules/_json-rpc-middleware-stream@1.0.1@json-rpc-middleware-stream/engineStream.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","obs-store/lib/asStream":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/asStream.js","percentile":"/opt/panxf/metamask-extension/node_modules/_percentile@1.2.0@percentile/lib/index.js","pump":"/opt/panxf/metamask-extension/node_modules/_pump@3.0.0@pump/index.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/002.js":[function(require,module,exports){
+},{"../manifest.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/manifest.json","./account-import-strategies":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/account-import-strategies/index.js","./controllers/address-book":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/address-book.js","./controllers/blacklist":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/blacklist.js","./controllers/computed-balances":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/computed-balances.js","./controllers/currency":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/currency.js","./controllers/infura":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/infura.js","./controllers/network":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/network/index.js","./controllers/preferences":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/preferences.js","./controllers/recent-blocks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/recent-blocks.js","./controllers/shapeshift":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/shapeshift.js","./controllers/token-rates":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/token-rates.js","./controllers/transactions":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/index.js","./lib/ComposableObservableStore":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/ComposableObservableStore.js","./lib/account-tracker":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/account-tracker.js","./lib/buy-eth-url":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/buy-eth-url.js","./lib/config-manager":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/config-manager.js","./lib/createLoggerMiddleware":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/createLoggerMiddleware.js","./lib/createOriginMiddleware":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/createOriginMiddleware.js","./lib/createProviderMiddleware":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/createProviderMiddleware.js","./lib/message-manager":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/message-manager.js","./lib/nodeify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/nodeify.js","./lib/personal-message-manager":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/personal-message-manager.js","./lib/seed-phrase-verifier":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/seed-phrase-verifier.js","./lib/stream-utils.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/stream-utils.js","./lib/typed-message-manager":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/lib/typed-message-manager.js","./notice-controller":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/notice-controller.js","await-semaphore":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js","babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/extends":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","debounce":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_debounce@1.1.0@debounce/index.js","dnode":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode@1.2.2@dnode/browser.js","eth-json-rpc-filters":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/index.js","eth-keyring-controller":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-keyring-controller@3.1.4@eth-keyring-controller/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","json-rpc-engine":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/index.js","json-rpc-middleware-stream/engineStream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-middleware-stream@1.0.1@json-rpc-middleware-stream/engineStream.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","obs-store/lib/asStream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/asStream.js","percentile":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_percentile@1.2.0@percentile/lib/index.js","pump":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pump@3.0.0@pump/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/002.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11163,7 +11193,7 @@ module.exports = {
 };
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/003.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/003.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11194,7 +11224,7 @@ module.exports = {
 };
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/004.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/004.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11233,7 +11263,7 @@ module.exports = {
 };
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/005.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/005.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11287,7 +11317,7 @@ function selectSubstateForKeyringController(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/006.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/006.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11341,7 +11371,7 @@ function migrateState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/007.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/007.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11392,7 +11422,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/008.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/008.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11441,7 +11471,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/009.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/009.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11495,7 +11525,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","deep-extend":"/opt/panxf/metamask-extension/node_modules/_deep-extend@0.5.1@deep-extend/lib/deep-extend.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/010.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","deep-extend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-extend@0.5.1@deep-extend/lib/deep-extend.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/010.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11544,7 +11574,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","deep-extend":"/opt/panxf/metamask-extension/node_modules/_deep-extend@0.5.1@deep-extend/lib/deep-extend.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/011.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","deep-extend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-extend@0.5.1@deep-extend/lib/deep-extend.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/011.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11588,7 +11618,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/012.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/012.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11635,7 +11665,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/013.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/013.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11684,7 +11714,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/014.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/014.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11729,7 +11759,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/015.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/015.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11781,7 +11811,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/016.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/016.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11838,7 +11868,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/017.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/017.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11893,7 +11923,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/018.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/018.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -11957,7 +11987,7 @@ function transformState(state) {
 }
 
 
-},{"../controllers/transactions/lib/tx-state-history-helper":"/opt/panxf/metamask-extension/app/scripts/controllers/transactions/lib/tx-state-history-helper.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/019.js":[function(require,module,exports){
+},{"../controllers/transactions/lib/tx-state-history-helper":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/controllers/transactions/lib/tx-state-history-helper.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/019.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -12062,7 +12092,7 @@ function getHighestNonce(txList) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/020.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/020.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -12112,7 +12142,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/021.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/021.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -12156,7 +12186,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/022.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/022.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -12209,7 +12239,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/023.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/023.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -12270,7 +12300,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/024.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/024.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -12343,7 +12373,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/025.js":[function(require,module,exports){
+},{"babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/025.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -12458,7 +12488,7 @@ function normalizeTxParams(txParams) {
 }
 
 
-},{"babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/026.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/026.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -12519,7 +12549,7 @@ function transformState(state) {
 }
 
 
-},{"babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/app/scripts/migrations/index.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/index.js":[function(require,module,exports){
 'use strict';
 
 /* The migrator has two methods the user should be concerned with:
@@ -12538,7 +12568,7 @@ function transformState(state) {
 module.exports = [require('./002'), require('./003'), require('./004'), require('./005'), require('./006'), require('./007'), require('./008'), require('./009'), require('./010'), require('./011'), require('./012'), require('./013'), require('./014'), require('./015'), require('./016'), require('./017'), require('./018'), require('./019'), require('./020'), require('./021'), require('./022'), require('./023'), require('./024'), require('./025'), require('./026')];
 
 
-},{"./002":"/opt/panxf/metamask-extension/app/scripts/migrations/002.js","./003":"/opt/panxf/metamask-extension/app/scripts/migrations/003.js","./004":"/opt/panxf/metamask-extension/app/scripts/migrations/004.js","./005":"/opt/panxf/metamask-extension/app/scripts/migrations/005.js","./006":"/opt/panxf/metamask-extension/app/scripts/migrations/006.js","./007":"/opt/panxf/metamask-extension/app/scripts/migrations/007.js","./008":"/opt/panxf/metamask-extension/app/scripts/migrations/008.js","./009":"/opt/panxf/metamask-extension/app/scripts/migrations/009.js","./010":"/opt/panxf/metamask-extension/app/scripts/migrations/010.js","./011":"/opt/panxf/metamask-extension/app/scripts/migrations/011.js","./012":"/opt/panxf/metamask-extension/app/scripts/migrations/012.js","./013":"/opt/panxf/metamask-extension/app/scripts/migrations/013.js","./014":"/opt/panxf/metamask-extension/app/scripts/migrations/014.js","./015":"/opt/panxf/metamask-extension/app/scripts/migrations/015.js","./016":"/opt/panxf/metamask-extension/app/scripts/migrations/016.js","./017":"/opt/panxf/metamask-extension/app/scripts/migrations/017.js","./018":"/opt/panxf/metamask-extension/app/scripts/migrations/018.js","./019":"/opt/panxf/metamask-extension/app/scripts/migrations/019.js","./020":"/opt/panxf/metamask-extension/app/scripts/migrations/020.js","./021":"/opt/panxf/metamask-extension/app/scripts/migrations/021.js","./022":"/opt/panxf/metamask-extension/app/scripts/migrations/022.js","./023":"/opt/panxf/metamask-extension/app/scripts/migrations/023.js","./024":"/opt/panxf/metamask-extension/app/scripts/migrations/024.js","./025":"/opt/panxf/metamask-extension/app/scripts/migrations/025.js","./026":"/opt/panxf/metamask-extension/app/scripts/migrations/026.js"}],"/opt/panxf/metamask-extension/app/scripts/notice-controller.js":[function(require,module,exports){
+},{"./002":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/002.js","./003":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/003.js","./004":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/004.js","./005":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/005.js","./006":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/006.js","./007":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/007.js","./008":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/008.js","./009":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/009.js","./010":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/010.js","./011":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/011.js","./012":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/012.js","./013":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/013.js","./014":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/014.js","./015":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/015.js","./016":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/016.js","./017":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/017.js","./018":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/018.js","./019":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/019.js","./020":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/020.js","./021":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/021.js","./022":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/022.js","./023":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/023.js","./024":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/024.js","./025":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/025.js","./026":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/migrations/026.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/notice-controller.js":[function(require,module,exports){
 'use strict';
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -12777,7 +12807,7 @@ module.exports = function (_EventEmitter) {
 }(EventEmitter);
 
 
-},{"../../notices/notices.json":"/opt/panxf/metamask-extension/notices/notices.json","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","lodash.uniqby":"/opt/panxf/metamask-extension/node_modules/_lodash.uniqby@4.7.0@lodash.uniqby/index.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","semver":"/opt/panxf/metamask-extension/node_modules/_semver@5.5.0@semver/semver.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/app/scripts/platforms/extension.js":[function(require,module,exports){
+},{"../../notices/notices.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/notices/notices.json","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","lodash.uniqby":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash.uniqby@4.7.0@lodash.uniqby/index.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","semver":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_semver@5.5.0@semver/semver.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/platforms/extension.js":[function(require,module,exports){
 'use strict';
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
@@ -12843,7 +12873,7 @@ var ExtensionPlatform = function () {
 module.exports = ExtensionPlatform;
 
 
-},{"babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","extensionizer":"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_aes-js@0.2.4@aes-js/index.js":[function(require,module,exports){
+},{"babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","extensionizer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_aes-js@0.2.4@aes-js/index.js":[function(require,module,exports){
 (function (Buffer){
 "use strict";
 
@@ -13512,10 +13542,10 @@ module.exports = ExtensionPlatform;
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_any-promise@0.1.0@any-promise/any-promise-shim.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_any-promise@0.1.0@any-promise/any-promise-shim.js":[function(require,module,exports){
 module.exports = Promise;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_asmcrypto.js@0.22.0@asmcrypto.js/asmcrypto.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asmcrypto.js@0.22.0@asmcrypto.js/asmcrypto.js":[function(require,module,exports){
 (function (process){
 /*! asmCrypto v0.22.0, (c) 2018 asmCrypto.js, opensource.org/licenses/MIT */
 (function (global, factory) {
@@ -21904,7 +21934,7 @@ module.exports = Promise;
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js":[function(require,module,exports){
 var asn1 = exports;
 
 asn1.bignum = require('bn.js');
@@ -21915,7 +21945,7 @@ asn1.constants = require('./asn1/constants');
 asn1.decoders = require('./asn1/decoders');
 asn1.encoders = require('./asn1/encoders');
 
-},{"./asn1/api":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/api.js","./asn1/base":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js","./asn1/constants":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/index.js","./asn1/decoders":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/index.js","./asn1/encoders":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/index.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/api.js":[function(require,module,exports){
+},{"./asn1/api":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/api.js","./asn1/base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js","./asn1/constants":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/index.js","./asn1/decoders":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/index.js","./asn1/encoders":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/index.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/api.js":[function(require,module,exports){
 var asn1 = require('../asn1');
 var inherits = require('inherits');
 
@@ -21978,7 +22008,7 @@ Entity.prototype.encode = function encode(data, enc, /* internal */ reporter) {
   return this._getEncoder(enc).encode(data, reporter);
 };
 
-},{"../asn1":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","vm":"/opt/panxf/metamask-extension/node_modules/_vm-browserify@1.0.1@vm-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/buffer.js":[function(require,module,exports){
+},{"../asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","vm":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_vm-browserify@1.0.1@vm-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/buffer.js":[function(require,module,exports){
 var inherits = require('inherits');
 var Reporter = require('../base').Reporter;
 var Buffer = require('buffer').Buffer;
@@ -22096,7 +22126,7 @@ EncoderBuffer.prototype.join = function join(out, offset) {
   return out;
 };
 
-},{"../base":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js":[function(require,module,exports){
+},{"../base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js":[function(require,module,exports){
 var base = exports;
 
 base.Reporter = require('./reporter').Reporter;
@@ -22104,7 +22134,7 @@ base.DecoderBuffer = require('./buffer').DecoderBuffer;
 base.EncoderBuffer = require('./buffer').EncoderBuffer;
 base.Node = require('./node');
 
-},{"./buffer":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/buffer.js","./node":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/node.js","./reporter":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/reporter.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/node.js":[function(require,module,exports){
+},{"./buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/buffer.js","./node":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/node.js","./reporter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/reporter.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/node.js":[function(require,module,exports){
 var Reporter = require('../base').Reporter;
 var EncoderBuffer = require('../base').EncoderBuffer;
 var DecoderBuffer = require('../base').DecoderBuffer;
@@ -22740,7 +22770,7 @@ Node.prototype._isPrintstr = function isPrintstr(str) {
   return /^[A-Za-z0-9 '\(\)\+,\-\.\/:=\?]*$/.test(str);
 };
 
-},{"../base":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/reporter.js":[function(require,module,exports){
+},{"../base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/index.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/base/reporter.js":[function(require,module,exports){
 var inherits = require('inherits');
 
 function Reporter(options) {
@@ -22863,7 +22893,7 @@ ReporterError.prototype.rethrow = function rethrow(msg) {
   return this;
 };
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/der.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/der.js":[function(require,module,exports){
 var constants = require('../constants');
 
 exports.tagClass = {
@@ -22907,7 +22937,7 @@ exports.tag = {
 };
 exports.tagByName = constants._reverse(exports.tag);
 
-},{"../constants":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/index.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/index.js":[function(require,module,exports){
+},{"../constants":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/index.js":[function(require,module,exports){
 var constants = exports;
 
 // Helper
@@ -22928,7 +22958,7 @@ constants._reverse = function reverse(map) {
 
 constants.der = require('./der');
 
-},{"./der":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/der.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/der.js":[function(require,module,exports){
+},{"./der":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/constants/der.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/der.js":[function(require,module,exports){
 var inherits = require('inherits');
 
 var asn1 = require('../../asn1');
@@ -23254,13 +23284,13 @@ function derDecodeLen(buf, primitive, fail) {
   return len;
 }
 
-},{"../../asn1":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/index.js":[function(require,module,exports){
+},{"../../asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/index.js":[function(require,module,exports){
 var decoders = exports;
 
 decoders.der = require('./der');
 decoders.pem = require('./pem');
 
-},{"./der":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/der.js","./pem":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/pem.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/pem.js":[function(require,module,exports){
+},{"./der":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/der.js","./pem":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/pem.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/pem.js":[function(require,module,exports){
 var inherits = require('inherits');
 var Buffer = require('buffer').Buffer;
 
@@ -23311,7 +23341,7 @@ PEMDecoder.prototype.decode = function decode(data, options) {
   return DERDecoder.prototype.decode.call(this, input, options);
 };
 
-},{"./der":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/der.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/der.js":[function(require,module,exports){
+},{"./der":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/decoders/der.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/der.js":[function(require,module,exports){
 var inherits = require('inherits');
 var Buffer = require('buffer').Buffer;
 
@@ -23608,13 +23638,13 @@ function encodeTag(tag, primitive, cls, reporter) {
   return res;
 }
 
-},{"../../asn1":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/index.js":[function(require,module,exports){
+},{"../../asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/index.js":[function(require,module,exports){
 var encoders = exports;
 
 encoders.der = require('./der');
 encoders.pem = require('./pem');
 
-},{"./der":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/der.js","./pem":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/pem.js"}],"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/pem.js":[function(require,module,exports){
+},{"./der":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/der.js","./pem":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/pem.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/pem.js":[function(require,module,exports){
 var inherits = require('inherits');
 
 var DEREncoder = require('./der');
@@ -23637,7 +23667,7 @@ PEMEncoder.prototype.encode = function encode(data, options) {
   return out.join('\n');
 };
 
-},{"./der":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/der.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js":[function(require,module,exports){
+},{"./der":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1/encoders/der.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js":[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -24132,7 +24162,7 @@ var objectKeys = Object.keys || function (obj) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"util/":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/asyncify.js":[function(require,module,exports){
+},{"util/":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/asyncify.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24243,7 +24273,7 @@ function rethrow(error) {
     throw error;
 }
 module.exports = exports['default'];
-},{"./internal/initialParams":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/initialParams.js","./internal/setImmediate":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/setImmediate.js","lodash/isObject":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isObject.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/dist/async.js":[function(require,module,exports){
+},{"./internal/initialParams":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/initialParams.js","./internal/setImmediate":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/setImmediate.js","lodash/isObject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isObject.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/dist/async.js":[function(require,module,exports){
 (function (process,global,setImmediate){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -29857,7 +29887,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","timers":"/opt/panxf/metamask-extension/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachLimit.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","timers":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachLimit.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29903,7 +29933,7 @@ function eachLimit(coll, limit, iteratee, callback) {
   (0, _eachOfLimit2.default)(limit)(coll, (0, _withoutIndex2.default)((0, _wrapAsync2.default)(iteratee)), callback);
 }
 module.exports = exports['default'];
-},{"./internal/eachOfLimit":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/eachOfLimit.js","./internal/withoutIndex":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/withoutIndex.js","./internal/wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachOf.js":[function(require,module,exports){
+},{"./internal/eachOfLimit":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/eachOfLimit.js","./internal/withoutIndex":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/withoutIndex.js","./internal/wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachOf.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30015,7 +30045,7 @@ var eachOfGeneric = (0, _doLimit2.default)(_eachOfLimit2.default, Infinity);
  * });
  */
 module.exports = exports['default'];
-},{"./eachOfLimit":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachOfLimit.js","./internal/breakLoop":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/breakLoop.js","./internal/doLimit":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/doLimit.js","./internal/once":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/once.js","./internal/onlyOnce":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/onlyOnce.js","./internal/wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/isArrayLike":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArrayLike.js","lodash/noop":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachOfLimit.js":[function(require,module,exports){
+},{"./eachOfLimit":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachOfLimit.js","./internal/breakLoop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/breakLoop.js","./internal/doLimit":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/doLimit.js","./internal/once":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/once.js","./internal/onlyOnce":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/onlyOnce.js","./internal/wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/isArrayLike":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArrayLike.js","lodash/noop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachOfLimit.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30057,7 +30087,7 @@ function eachOfLimit(coll, limit, iteratee, callback) {
   (0, _eachOfLimit3.default)(limit)(coll, (0, _wrapAsync2.default)(iteratee), callback);
 }
 module.exports = exports['default'];
-},{"./internal/eachOfLimit":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/eachOfLimit.js","./internal/wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachSeries.js":[function(require,module,exports){
+},{"./internal/eachOfLimit":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/eachOfLimit.js","./internal/wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachSeries.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30095,7 +30125,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 exports.default = (0, _doLimit2.default)(_eachLimit2.default, 1);
 module.exports = exports['default'];
-},{"./eachLimit":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachLimit.js","./internal/doLimit":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/doLimit.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/breakLoop.js":[function(require,module,exports){
+},{"./eachLimit":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachLimit.js","./internal/doLimit":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/doLimit.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/breakLoop.js":[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30105,7 +30135,7 @@ Object.defineProperty(exports, "__esModule", {
 // See #1064, #1293
 exports.default = {};
 module.exports = exports["default"];
-},{}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/doLimit.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/doLimit.js":[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30118,7 +30148,7 @@ function doLimit(fn, limit) {
     };
 }
 module.exports = exports["default"];
-},{}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/doParallel.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/doParallel.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30142,7 +30172,7 @@ function doParallel(fn) {
     };
 }
 module.exports = exports['default'];
-},{"../eachOf":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachOf.js","./wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/eachOfLimit.js":[function(require,module,exports){
+},{"../eachOf":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachOf.js","./wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/eachOfLimit.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30217,7 +30247,7 @@ function _eachOfLimit(limit) {
     };
 }
 module.exports = exports['default'];
-},{"./breakLoop":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/breakLoop.js","./iterator":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/iterator.js","./once":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/once.js","./onlyOnce":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/onlyOnce.js","lodash/noop":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/getIterator.js":[function(require,module,exports){
+},{"./breakLoop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/breakLoop.js","./iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/iterator.js","./once":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/once.js","./onlyOnce":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/onlyOnce.js","lodash/noop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/getIterator.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30231,7 +30261,7 @@ exports.default = function (coll) {
 var iteratorSymbol = typeof Symbol === 'function' && Symbol.iterator;
 
 module.exports = exports['default'];
-},{}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/initialParams.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/initialParams.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30253,7 +30283,7 @@ var _slice2 = _interopRequireDefault(_slice);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = exports['default'];
-},{"./slice":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/slice.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/iterator.js":[function(require,module,exports){
+},{"./slice":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/slice.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/iterator.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30312,7 +30342,7 @@ function iterator(coll) {
     return iterator ? createES2015Iterator(iterator) : createObjectIterator(coll);
 }
 module.exports = exports['default'];
-},{"./getIterator":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/getIterator.js","lodash/isArrayLike":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArrayLike.js","lodash/keys":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/keys.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/map.js":[function(require,module,exports){
+},{"./getIterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/getIterator.js","lodash/isArrayLike":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArrayLike.js","lodash/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/keys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/map.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30348,7 +30378,7 @@ function _asyncMap(eachfn, arr, iteratee, callback) {
     });
 }
 module.exports = exports['default'];
-},{"./wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/noop":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/once.js":[function(require,module,exports){
+},{"./wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/noop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/once.js":[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30364,7 +30394,7 @@ function once(fn) {
     };
 }
 module.exports = exports["default"];
-},{}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/onlyOnce.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/onlyOnce.js":[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30380,7 +30410,7 @@ function onlyOnce(fn) {
     };
 }
 module.exports = exports["default"];
-},{}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/parallel.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/parallel.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30423,7 +30453,7 @@ function _parallel(eachfn, tasks, callback) {
     });
 }
 module.exports = exports['default'];
-},{"./slice":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/slice.js","./wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/isArrayLike":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArrayLike.js","lodash/noop":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/setImmediate.js":[function(require,module,exports){
+},{"./slice":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/slice.js","./wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/isArrayLike":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArrayLike.js","lodash/noop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/setImmediate.js":[function(require,module,exports){
 (function (process,setImmediate){
 'use strict';
 
@@ -30469,7 +30499,7 @@ if (hasSetImmediate) {
 exports.default = wrap(_defer);
 }).call(this,require('_process'),require("timers").setImmediate)
 
-},{"./slice":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/slice.js","_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","timers":"/opt/panxf/metamask-extension/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/slice.js":[function(require,module,exports){
+},{"./slice":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/slice.js","_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","timers":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/slice.js":[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30486,7 +30516,7 @@ function slice(arrayLike, start) {
     return newArr;
 }
 module.exports = exports["default"];
-},{}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/withoutIndex.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/withoutIndex.js":[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30499,7 +30529,7 @@ function _withoutIndex(iteratee) {
     };
 }
 module.exports = exports["default"];
-},{}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30525,7 +30555,7 @@ function wrapAsync(asyncFn) {
 
 exports.default = wrapAsync;
 exports.isAsync = isAsync;
-},{"../asyncify":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/asyncify.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/map.js":[function(require,module,exports){
+},{"../asyncify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/asyncify.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/map.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30580,7 +30610,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 exports.default = (0, _doParallel2.default)(_map2.default);
 module.exports = exports['default'];
-},{"./internal/doParallel":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/doParallel.js","./internal/map":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/map.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/parallel.js":[function(require,module,exports){
+},{"./internal/doParallel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/doParallel.js","./internal/map":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/map.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/parallel.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30671,7 +30701,7 @@ function parallelLimit(tasks, callback) {
   (0, _parallel2.default)(_eachOf2.default, tasks, callback);
 }
 module.exports = exports['default'];
-},{"./eachOf":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachOf.js","./internal/parallel":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/parallel.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/retry.js":[function(require,module,exports){
+},{"./eachOf":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachOf.js","./internal/parallel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/parallel.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/retry.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30828,7 +30858,7 @@ function retry(opts, task, callback) {
     retryAttempt();
 }
 module.exports = exports['default'];
-},{"./internal/wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/constant":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/constant.js","lodash/noop":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/waterfall.js":[function(require,module,exports){
+},{"./internal/wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/constant":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/constant.js","lodash/noop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/waterfall.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30942,7 +30972,7 @@ module.exports = exports['default'];
  *     callback(null, 'done');
  * }
  */
-},{"./internal/once":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/once.js","./internal/onlyOnce":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/onlyOnce.js","./internal/slice":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/slice.js","./internal/wrapAsync":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/isArray":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArray.js","lodash/noop":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/opt/panxf/metamask-extension/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js":[function(require,module,exports){
+},{"./internal/once":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/once.js","./internal/onlyOnce":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/onlyOnce.js","./internal/slice":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/slice.js","./internal/wrapAsync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/internal/wrapAsync.js","lodash/isArray":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArray.js","lodash/noop":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/noop.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js":[function(require,module,exports){
 (function (process,setImmediate){
 "use strict";
 class Semaphore {
@@ -31006,41 +31036,41 @@ exports.Mutex = Mutex;
 
 }).call(this,require('_process'),require("timers").setImmediate)
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","timers":"/opt/panxf/metamask-extension/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/get-iterator.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","timers":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/get-iterator.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/get-iterator"), __esModule: true };
-},{"core-js/library/fn/get-iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/get-iterator.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/is-iterable.js":[function(require,module,exports){
+},{"core-js/library/fn/get-iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/get-iterator.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/is-iterable.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/is-iterable"), __esModule: true };
-},{"core-js/library/fn/is-iterable":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/is-iterable.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js":[function(require,module,exports){
+},{"core-js/library/fn/is-iterable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/is-iterable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/json/stringify"), __esModule: true };
-},{"core-js/library/fn/json/stringify":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/json/stringify.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-integer.js":[function(require,module,exports){
+},{"core-js/library/fn/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/json/stringify.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-integer.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/number/is-integer"), __esModule: true };
-},{"core-js/library/fn/number/is-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-nan.js":[function(require,module,exports){
+},{"core-js/library/fn/number/is-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/is-nan.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/number/is-nan"), __esModule: true };
-},{"core-js/library/fn/number/is-nan":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-nan.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/max-safe-integer.js":[function(require,module,exports){
+},{"core-js/library/fn/number/is-nan":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-nan.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/max-safe-integer.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/number/max-safe-integer"), __esModule: true };
-},{"core-js/library/fn/number/max-safe-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/max-safe-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/parse-int.js":[function(require,module,exports){
+},{"core-js/library/fn/number/max-safe-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/max-safe-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/number/parse-int.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/number/parse-int"), __esModule: true };
-},{"core-js/library/fn/number/parse-int":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/parse-int.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js":[function(require,module,exports){
+},{"core-js/library/fn/number/parse-int":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/parse-int.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/assign"), __esModule: true };
-},{"core-js/library/fn/object/assign":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/assign.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/create.js":[function(require,module,exports){
+},{"core-js/library/fn/object/assign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/assign.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/create.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/create"), __esModule: true };
-},{"core-js/library/fn/object/create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/create.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/define-property.js":[function(require,module,exports){
+},{"core-js/library/fn/object/create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/create.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/define-property.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/define-property"), __esModule: true };
-},{"core-js/library/fn/object/define-property":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/define-property.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/entries.js":[function(require,module,exports){
+},{"core-js/library/fn/object/define-property":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/define-property.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/entries.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/entries"), __esModule: true };
-},{"core-js/library/fn/object/entries":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/entries.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js":[function(require,module,exports){
+},{"core-js/library/fn/object/entries":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/entries.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/get-prototype-of"), __esModule: true };
-},{"core-js/library/fn/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/get-prototype-of.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js":[function(require,module,exports){
+},{"core-js/library/fn/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/get-prototype-of.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/keys"), __esModule: true };
-},{"core-js/library/fn/object/keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/keys.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/set-prototype-of.js":[function(require,module,exports){
+},{"core-js/library/fn/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/keys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/set-prototype-of.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/set-prototype-of"), __esModule: true };
-},{"core-js/library/fn/object/set-prototype-of":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/set-prototype-of.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js":[function(require,module,exports){
+},{"core-js/library/fn/object/set-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/set-prototype-of.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/promise"), __esModule: true };
-},{"core-js/library/fn/promise":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/promise.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol.js":[function(require,module,exports){
+},{"core-js/library/fn/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/promise.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/symbol"), __esModule: true };
-},{"core-js/library/fn/symbol":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/index.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol/iterator.js":[function(require,module,exports){
+},{"core-js/library/fn/symbol":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol/iterator.js":[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/symbol/iterator"), __esModule: true };
-},{"core-js/library/fn/symbol/iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/iterator.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js":[function(require,module,exports){
+},{"core-js/library/fn/symbol/iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/iterator.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31079,7 +31109,7 @@ exports.default = function (fn) {
     });
   };
 };
-},{"../core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js":[function(require,module,exports){
+},{"../core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31089,7 +31119,7 @@ exports.default = function (instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 };
-},{}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31117,7 +31147,7 @@ exports.default = function () {
     return Constructor;
   };
 }();
-},{"../core-js/object/define-property":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/define-property.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js":[function(require,module,exports){
+},{"../core-js/object/define-property":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/define-property.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/defineProperty.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31142,7 +31172,7 @@ exports.default = function (obj, key, value) {
 
   return obj;
 };
-},{"../core-js/object/define-property":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/define-property.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js":[function(require,module,exports){
+},{"../core-js/object/define-property":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/define-property.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/extends.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31166,7 +31196,7 @@ exports.default = _assign2.default || function (target) {
 
   return target;
 };
-},{"../core-js/object/assign":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js":[function(require,module,exports){
+},{"../core-js/object/assign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31200,7 +31230,7 @@ exports.default = function (subClass, superClass) {
   });
   if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
 };
-},{"../core-js/object/create":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/create.js","../core-js/object/set-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/set-prototype-of.js","../helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js":[function(require,module,exports){
+},{"../core-js/object/create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/create.js","../core-js/object/set-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/set-prototype-of.js","../helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31218,7 +31248,7 @@ exports.default = function (self, call) {
 
   return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
 };
-},{"../helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/slicedToArray.js":[function(require,module,exports){
+},{"../helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/slicedToArray.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31270,7 +31300,7 @@ exports.default = function () {
     }
   };
 }();
-},{"../core-js/get-iterator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/get-iterator.js","../core-js/is-iterable":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/is-iterable.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js":[function(require,module,exports){
+},{"../core-js/get-iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/get-iterator.js","../core-js/is-iterable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/is-iterable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js":[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -31292,10 +31322,10 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 } : function (obj) {
   return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
 };
-},{"../core-js/symbol":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol.js","../core-js/symbol/iterator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol/iterator.js"}],"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js":[function(require,module,exports){
+},{"../core-js/symbol":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol.js","../core-js/symbol/iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/symbol/iterator.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js":[function(require,module,exports){
 module.exports = require("regenerator-runtime");
 
-},{"regenerator-runtime":"/opt/panxf/metamask-extension/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime-module.js"}],"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/index.js":[function(require,module,exports){
+},{"regenerator-runtime":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime-module.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/index.js":[function(require,module,exports){
 //      Copyright (c) 2012 Mathieu Turcotte
 //      Licensed under the MIT license.
 
@@ -31328,7 +31358,7 @@ module.exports.call = function(fn, vargs, callback) {
     return new FunctionCall(fn, vargs, callback);
 };
 
-},{"./lib/backoff":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/backoff.js","./lib/function_call.js":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/function_call.js","./lib/strategy/exponential":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/exponential.js","./lib/strategy/fibonacci":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/fibonacci.js"}],"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/backoff.js":[function(require,module,exports){
+},{"./lib/backoff":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/backoff.js","./lib/function_call.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/function_call.js","./lib/strategy/exponential":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/exponential.js","./lib/strategy/fibonacci":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/fibonacci.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/backoff.js":[function(require,module,exports){
 //      Copyright (c) 2012 Mathieu Turcotte
 //      Licensed under the MIT license.
 
@@ -31395,7 +31425,7 @@ Backoff.prototype.reset = function() {
 
 module.exports = Backoff;
 
-},{"events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","precond":"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/index.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/function_call.js":[function(require,module,exports){
+},{"events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","precond":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/function_call.js":[function(require,module,exports){
 //      Copyright (c) 2012 Mathieu Turcotte
 //      Licensed under the MIT license.
 
@@ -31587,7 +31617,7 @@ FunctionCall.prototype.handleBackoff_ = function(number, delay, err) {
 
 module.exports = FunctionCall;
 
-},{"./backoff":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/backoff.js","./strategy/fibonacci":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/fibonacci.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","precond":"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/index.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/exponential.js":[function(require,module,exports){
+},{"./backoff":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/backoff.js","./strategy/fibonacci":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/fibonacci.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","precond":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/exponential.js":[function(require,module,exports){
 //      Copyright (c) 2012 Mathieu Turcotte
 //      Licensed under the MIT license.
 
@@ -31630,7 +31660,7 @@ ExponentialBackoffStrategy.prototype.reset_ = function() {
 
 module.exports = ExponentialBackoffStrategy;
 
-},{"./strategy":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/strategy.js","precond":"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/index.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/fibonacci.js":[function(require,module,exports){
+},{"./strategy":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/strategy.js","precond":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/fibonacci.js":[function(require,module,exports){
 //      Copyright (c) 2012 Mathieu Turcotte
 //      Licensed under the MIT license.
 
@@ -31660,7 +31690,7 @@ FibonacciBackoffStrategy.prototype.reset_ = function() {
 
 module.exports = FibonacciBackoffStrategy;
 
-},{"./strategy":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/strategy.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/lib/strategy/strategy.js":[function(require,module,exports){
+},{"./strategy":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/strategy.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/lib/strategy/strategy.js":[function(require,module,exports){
 //      Copyright (c) 2012 Mathieu Turcotte
 //      Licensed under the MIT license.
 
@@ -31742,7 +31772,7 @@ BackoffStrategy.prototype.reset_ = function() {
 
 module.exports = BackoffStrategy;
 
-},{"events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_base-x@1.1.0@base-x/index.js":[function(require,module,exports){
+},{"events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_base-x@1.1.0@base-x/index.js":[function(require,module,exports){
 // base-x encoding
 // Forked from https://github.com/cryptocoinjs/bs58
 // Originally written by Mike Hearn for BitcoinJ
@@ -31830,7 +31860,7 @@ module.exports = function base (ALPHABET) {
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_base64-js@1.3.0@base64-js/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_base64-js@1.3.0@base64-js/index.js":[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -31983,7 +32013,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/index.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var createHash = require('create-hash')
 var pbkdf2 = require('pbkdf2').pbkdf2Sync
@@ -32138,7 +32168,7 @@ module.exports = {
   }
 }
 
-},{"./wordlists/chinese_simplified.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_simplified.json","./wordlists/chinese_traditional.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_traditional.json","./wordlists/english.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/english.json","./wordlists/french.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/french.json","./wordlists/italian.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/italian.json","./wordlists/japanese.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/japanese.json","./wordlists/korean.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/korean.json","./wordlists/spanish.json":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/spanish.json","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","pbkdf2":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js","randombytes":"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","unorm":"/opt/panxf/metamask-extension/node_modules/_unorm@1.4.1@unorm/lib/unorm.js"}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_simplified.json":[function(require,module,exports){
+},{"./wordlists/chinese_simplified.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_simplified.json","./wordlists/chinese_traditional.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_traditional.json","./wordlists/english.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/english.json","./wordlists/french.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/french.json","./wordlists/italian.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/italian.json","./wordlists/japanese.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/japanese.json","./wordlists/korean.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/korean.json","./wordlists/spanish.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/spanish.json","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","pbkdf2":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js","randombytes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","unorm":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_unorm@1.4.1@unorm/lib/unorm.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_simplified.json":[function(require,module,exports){
 module.exports=[
   "的",
   "一",
@@ -34190,7 +34220,7 @@ module.exports=[
   "歇"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_traditional.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/chinese_traditional.json":[function(require,module,exports){
 module.exports=[
   "的",
   "一",
@@ -36242,7 +36272,7 @@ module.exports=[
   "歇"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/english.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/english.json":[function(require,module,exports){
 module.exports=[
   "abandon",
   "ability",
@@ -38294,7 +38324,7 @@ module.exports=[
   "zoo"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/french.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/french.json":[function(require,module,exports){
 module.exports=[
   "abaisser",
   "abandon",
@@ -40346,7 +40376,7 @@ module.exports=[
   "zoologie"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/italian.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/italian.json":[function(require,module,exports){
 module.exports=[
   "abaco",
   "abbaglio",
@@ -42398,7 +42428,7 @@ module.exports=[
   "zuppa"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/japanese.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/japanese.json":[function(require,module,exports){
 module.exports=[
   "あいこくしん",
   "あいさつ",
@@ -44450,7 +44480,7 @@ module.exports=[
   "われる"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/korean.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/korean.json":[function(require,module,exports){
 module.exports=[
   "가격",
   "가끔",
@@ -46502,7 +46532,7 @@ module.exports=[
   "힘껏"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/wordlists/spanish.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/wordlists/spanish.json":[function(require,module,exports){
 module.exports=[
   "ábaco",
   "abdomen",
@@ -48554,7 +48584,7 @@ module.exports=[
   "zurdo"
 ]
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bip66@1.1.5@bip66/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip66@1.1.5@bip66/index.js":[function(require,module,exports){
 // Reference https://github.com/bitcoin/bips/blob/master/bip-0066.mediawiki
 // Format: 0x30 [total-length] 0x02 [R-length] [R] 0x02 [S-length] [S]
 // NOTE: SIGHASH byte ignored AND restricted, truncate before use
@@ -48669,7 +48699,7 @@ module.exports = {
   encode: encode
 }
 
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.6@bn.js/lib/bn.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.6@bn.js/lib/bn.js":[function(require,module,exports){
 (function (module, exports) {
   'use strict';
 
@@ -52098,7 +52128,7 @@ module.exports = {
   };
 })(typeof module === 'undefined' || module, this);
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js":[function(require,module,exports){
 (function (module, exports) {
   'use strict';
 
@@ -55527,7 +55557,7 @@ module.exports = {
   };
 })(typeof module === 'undefined' || module, this);
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/opt/panxf/metamask-extension/node_modules/_brorand@1.1.0@brorand/index.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_brorand@1.1.0@brorand/index.js":[function(require,module,exports){
 var r;
 
 module.exports = function rand(len) {
@@ -55594,7 +55624,7 @@ if (typeof self === 'object') {
   }
 }
 
-},{"crypto":"/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/opt/panxf/metamask-extension/node_modules/_browser-passworder@2.0.3@browser-passworder/index.js":[function(require,module,exports){
+},{"crypto":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-passworder@2.0.3@browser-passworder/index.js":[function(require,module,exports){
 (function (global){
 var Unibabel = require('browserify-unibabel')
 
@@ -55736,9 +55766,9 @@ function generateSalt (byteCount = 32) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"browserify-unibabel":"/opt/panxf/metamask-extension/node_modules/_browserify-unibabel@3.0.0@browserify-unibabel/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js":[function(require,module,exports){
+},{"browserify-unibabel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-unibabel@3.0.0@browserify-unibabel/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js":[function(require,module,exports){
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js":[function(require,module,exports){
 // based on the aes implimentation in triple sec
 // https://github.com/keybase/triplesec
 // which is in turn based on the one from crypto-js
@@ -55968,7 +55998,7 @@ AES.prototype.scrub = function () {
 
 module.exports.AES = AES
 
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/authCipher.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/authCipher.js":[function(require,module,exports){
 var aes = require('./aes')
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('cipher-base')
@@ -56087,7 +56117,7 @@ StreamCipher.prototype.setAAD = function setAAD (buf) {
 
 module.exports = StreamCipher
 
-},{"./aes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","./ghash":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/ghash.js","./incr32":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/incr32.js","buffer-xor":"/opt/panxf/metamask-extension/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js","cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js":[function(require,module,exports){
+},{"./aes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","./ghash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/ghash.js","./incr32":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/incr32.js","buffer-xor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js","cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js":[function(require,module,exports){
 var ciphers = require('./encrypter')
 var deciphers = require('./decrypter')
 var modes = require('./modes/list.json')
@@ -56102,7 +56132,7 @@ exports.createDecipher = exports.Decipher = deciphers.createDecipher
 exports.createDecipheriv = exports.Decipheriv = deciphers.createDecipheriv
 exports.listCiphers = exports.getCiphers = getCiphers
 
-},{"./decrypter":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/decrypter.js","./encrypter":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/encrypter.js","./modes/list.json":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/list.json"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/decrypter.js":[function(require,module,exports){
+},{"./decrypter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/decrypter.js","./encrypter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/encrypter.js","./modes/list.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/list.json"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/decrypter.js":[function(require,module,exports){
 var AuthCipher = require('./authCipher')
 var Buffer = require('safe-buffer').Buffer
 var MODES = require('./modes')
@@ -56228,7 +56258,7 @@ function createDecipher (suite, password) {
 exports.createDecipher = createDecipher
 exports.createDecipheriv = createDecipheriv
 
-},{"./aes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","./authCipher":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/authCipher.js","./modes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js","./streamCipher":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/streamCipher.js","cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","evp_bytestokey":"/opt/panxf/metamask-extension/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/encrypter.js":[function(require,module,exports){
+},{"./aes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","./authCipher":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/authCipher.js","./modes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js","./streamCipher":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/streamCipher.js","cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","evp_bytestokey":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/encrypter.js":[function(require,module,exports){
 var MODES = require('./modes')
 var AuthCipher = require('./authCipher')
 var Buffer = require('safe-buffer').Buffer
@@ -56344,7 +56374,7 @@ function createCipher (suite, password) {
 exports.createCipheriv = createCipheriv
 exports.createCipher = createCipher
 
-},{"./aes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","./authCipher":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/authCipher.js","./modes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js","./streamCipher":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/streamCipher.js","cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","evp_bytestokey":"/opt/panxf/metamask-extension/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/ghash.js":[function(require,module,exports){
+},{"./aes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","./authCipher":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/authCipher.js","./modes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js","./streamCipher":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/streamCipher.js","cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","evp_bytestokey":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/ghash.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var ZEROES = Buffer.alloc(16, 0)
 
@@ -56435,7 +56465,7 @@ GHASH.prototype.final = function (abl, bl) {
 
 module.exports = GHASH
 
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/incr32.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/incr32.js":[function(require,module,exports){
 function incr32 (iv) {
   var len = iv.length
   var item
@@ -56452,7 +56482,7 @@ function incr32 (iv) {
 }
 module.exports = incr32
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cbc.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cbc.js":[function(require,module,exports){
 var xor = require('buffer-xor')
 
 exports.encrypt = function (self, block) {
@@ -56471,7 +56501,7 @@ exports.decrypt = function (self, block) {
   return xor(out, pad)
 }
 
-},{"buffer-xor":"/opt/panxf/metamask-extension/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb.js":[function(require,module,exports){
+},{"buffer-xor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var xor = require('buffer-xor')
 
@@ -56506,7 +56536,7 @@ exports.encrypt = function (self, data, decrypt) {
   return out
 }
 
-},{"buffer-xor":"/opt/panxf/metamask-extension/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb1.js":[function(require,module,exports){
+},{"buffer-xor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb1.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 function encryptByte (self, byteParam, decrypt) {
@@ -56550,7 +56580,7 @@ exports.encrypt = function (self, chunk, decrypt) {
   return out
 }
 
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb8.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb8.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 function encryptByte (self, byteParam, decrypt) {
@@ -56577,7 +56607,7 @@ exports.encrypt = function (self, chunk, decrypt) {
   return out
 }
 
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ctr.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ctr.js":[function(require,module,exports){
 var xor = require('buffer-xor')
 var Buffer = require('safe-buffer').Buffer
 var incr32 = require('../incr32')
@@ -56609,7 +56639,7 @@ exports.encrypt = function (self, chunk) {
   return xor(chunk, pad)
 }
 
-},{"../incr32":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/incr32.js","buffer-xor":"/opt/panxf/metamask-extension/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ecb.js":[function(require,module,exports){
+},{"../incr32":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/incr32.js","buffer-xor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ecb.js":[function(require,module,exports){
 exports.encrypt = function (self, block) {
   return self._cipher.encryptBlock(block)
 }
@@ -56618,7 +56648,7 @@ exports.decrypt = function (self, block) {
   return self._cipher.decryptBlock(block)
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js":[function(require,module,exports){
 var modeModules = {
   ECB: require('./ecb'),
   CBC: require('./cbc'),
@@ -56638,7 +56668,7 @@ for (var key in modes) {
 
 module.exports = modes
 
-},{"./cbc":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cbc.js","./cfb":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb.js","./cfb1":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb1.js","./cfb8":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb8.js","./ctr":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ctr.js","./ecb":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ecb.js","./list.json":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/list.json","./ofb":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ofb.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/list.json":[function(require,module,exports){
+},{"./cbc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cbc.js","./cfb":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb.js","./cfb1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb1.js","./cfb8":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/cfb8.js","./ctr":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ctr.js","./ecb":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ecb.js","./list.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/list.json","./ofb":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ofb.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/list.json":[function(require,module,exports){
 module.exports={
   "aes-128-ecb": {
     "cipher": "AES",
@@ -56831,7 +56861,7 @@ module.exports={
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ofb.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/ofb.js":[function(require,module,exports){
 (function (Buffer){
 var xor = require('buffer-xor')
 
@@ -56852,7 +56882,7 @@ exports.encrypt = function (self, chunk) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","buffer-xor":"/opt/panxf/metamask-extension/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/streamCipher.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","buffer-xor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/streamCipher.js":[function(require,module,exports){
 var aes = require('./aes')
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('cipher-base')
@@ -56881,7 +56911,7 @@ StreamCipher.prototype._final = function () {
 
 module.exports = StreamCipher
 
-},{"./aes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-cipher@1.0.1@browserify-cipher/browser.js":[function(require,module,exports){
+},{"./aes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/aes.js","cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-cipher@1.0.1@browserify-cipher/browser.js":[function(require,module,exports){
 var DES = require('browserify-des')
 var aes = require('browserify-aes/browser')
 var aesModes = require('browserify-aes/modes')
@@ -56950,7 +56980,7 @@ exports.createDecipher = exports.Decipher = createDecipher
 exports.createDecipheriv = exports.Decipheriv = createDecipheriv
 exports.listCiphers = exports.getCiphers = getCiphers
 
-},{"browserify-aes/browser":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js","browserify-aes/modes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js","browserify-des":"/opt/panxf/metamask-extension/node_modules/_browserify-des@1.0.1@browserify-des/index.js","browserify-des/modes":"/opt/panxf/metamask-extension/node_modules/_browserify-des@1.0.1@browserify-des/modes.js","evp_bytestokey":"/opt/panxf/metamask-extension/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-des@1.0.1@browserify-des/index.js":[function(require,module,exports){
+},{"browserify-aes/browser":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js","browserify-aes/modes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/modes/index.js","browserify-des":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-des@1.0.1@browserify-des/index.js","browserify-des/modes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-des@1.0.1@browserify-des/modes.js","evp_bytestokey":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-des@1.0.1@browserify-des/index.js":[function(require,module,exports){
 (function (Buffer){
 var CipherBase = require('cipher-base')
 var des = require('des.js')
@@ -56998,7 +57028,7 @@ DES.prototype._final = function () {
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","des.js":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-des@1.0.1@browserify-des/modes.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","des.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-des@1.0.1@browserify-des/modes.js":[function(require,module,exports){
 exports['des-ecb'] = {
   key: 8,
   iv: 0
@@ -57024,7 +57054,7 @@ exports['des-ede'] = {
   iv: 0
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js":[function(require,module,exports){
 (function (Buffer){
 var bn = require('bn.js');
 var randomBytes = require('randombytes');
@@ -57069,7 +57099,7 @@ function getr(priv) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","randombytes":"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-sha3@0.0.1@browserify-sha3/index.js":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","randombytes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sha3@0.0.1@browserify-sha3/index.js":[function(require,module,exports){
 (function (Buffer){
 const Sha3 = require('js-sha3')
 
@@ -57108,10 +57138,10 @@ module.exports = {
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","js-sha3":"/opt/panxf/metamask-extension/node_modules/_js-sha3@0.3.1@js-sha3/src/sha3.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/algos.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","js-sha3":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_js-sha3@0.3.1@js-sha3/src/sha3.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/algos.js":[function(require,module,exports){
 module.exports = require('./browser/algorithms.json')
 
-},{"./browser/algorithms.json":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/algorithms.json"}],"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/algorithms.json":[function(require,module,exports){
+},{"./browser/algorithms.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/algorithms.json"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/algorithms.json":[function(require,module,exports){
 module.exports={
   "sha224WithRSAEncryption": {
     "sign": "rsa",
@@ -57265,7 +57295,7 @@ module.exports={
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/curves.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/curves.json":[function(require,module,exports){
 module.exports={
   "1.3.132.0.10": "secp256k1",
   "1.3.132.0.33": "p224",
@@ -57275,7 +57305,7 @@ module.exports={
   "1.3.132.0.35": "p521"
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/index.js":[function(require,module,exports){
 (function (Buffer){
 var createHash = require('create-hash')
 var stream = require('stream')
@@ -57371,7 +57401,7 @@ module.exports = {
 
 }).call(this,require("buffer").Buffer)
 
-},{"./algorithms.json":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/algorithms.json","./sign":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/sign.js","./verify":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/verify.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/sign.js":[function(require,module,exports){
+},{"./algorithms.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/algorithms.json","./sign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/sign.js","./verify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/verify.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/sign.js":[function(require,module,exports){
 (function (Buffer){
 // much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
 var createHmac = require('create-hmac')
@@ -57521,7 +57551,7 @@ module.exports.makeKey = makeKey
 
 }).call(this,require("buffer").Buffer)
 
-},{"./curves.json":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/curves.json","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","browserify-rsa":"/opt/panxf/metamask-extension/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hmac":"/opt/panxf/metamask-extension/node_modules/_create-hmac@1.1.7@create-hmac/browser.js","elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","parse-asn1":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/verify.js":[function(require,module,exports){
+},{"./curves.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/curves.json","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","browserify-rsa":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hmac":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hmac@1.1.7@create-hmac/browser.js","elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","parse-asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/verify.js":[function(require,module,exports){
 (function (Buffer){
 // much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
 var BN = require('bn.js')
@@ -57609,7 +57639,7 @@ module.exports = verify
 
 }).call(this,require("buffer").Buffer)
 
-},{"./curves.json":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/curves.json","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","parse-asn1":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js"}],"/opt/panxf/metamask-extension/node_modules/_browserify-unibabel@3.0.0@browserify-unibabel/index.js":[function(require,module,exports){
+},{"./curves.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/curves.json","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","parse-asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-unibabel@3.0.0@browserify-unibabel/index.js":[function(require,module,exports){
 'use strict';
 
 function utf8ToBinaryString(str) {
@@ -57712,7 +57742,7 @@ module.exports = {
 , base64ToArr: base64ToBuffer
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bs58@2.0.1@bs58/lib/bs58.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bs58@2.0.1@bs58/lib/bs58.js":[function(require,module,exports){
 // Base58 encoding/decoding
 // Originally written by Mike Hearn for BitcoinJ
 // Copyright (c) 2011 Google Inc
@@ -57799,13 +57829,13 @@ module.exports = {
   decode: decode
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_bs58@3.1.0@bs58/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bs58@3.1.0@bs58/index.js":[function(require,module,exports){
 var basex = require('base-x')
 var ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
 module.exports = basex(ALPHABET)
 
-},{"base-x":"/opt/panxf/metamask-extension/node_modules/_base-x@1.1.0@base-x/index.js"}],"/opt/panxf/metamask-extension/node_modules/_bs58check@1.3.4@bs58check/index.js":[function(require,module,exports){
+},{"base-x":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_base-x@1.1.0@base-x/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bs58check@1.3.4@bs58check/index.js":[function(require,module,exports){
 (function (Buffer){
 'use strict'
 
@@ -57869,7 +57899,7 @@ module.exports = {
 
 }).call(this,require("buffer").Buffer)
 
-},{"bs58":"/opt/panxf/metamask-extension/node_modules/_bs58@3.1.0@bs58/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js":[function(require,module,exports){
+},{"bs58":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bs58@3.1.0@bs58/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer-xor@1.0.3@buffer-xor/index.js":[function(require,module,exports){
 (function (Buffer){
 module.exports = function xor (a, b) {
   var length = Math.min(a.length, b.length)
@@ -57884,7 +57914,7 @@ module.exports = function xor (a, b) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js":[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -59622,7 +59652,7 @@ function numberIsNaN (obj) {
   return obj !== obj // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"/opt/panxf/metamask-extension/node_modules/_base64-js@1.3.0@base64-js/index.js","ieee754":"/opt/panxf/metamask-extension/node_modules/_ieee754@1.1.11@ieee754/index.js"}],"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js":[function(require,module,exports){
+},{"base64-js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_base64-js@1.3.0@base64-js/index.js","ieee754":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ieee754@1.1.11@ieee754/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('stream').Transform
 var StringDecoder = require('string_decoder').StringDecoder
@@ -59723,7 +59753,7 @@ CipherBase.prototype._toString = function (value, enc, fin) {
 
 module.exports = CipherBase
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js","string_decoder":"/opt/panxf/metamask-extension/node_modules/_string_decoder@1.1.1@string_decoder/lib/string_decoder.js"}],"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js","string_decoder":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_string_decoder@1.1.1@string_decoder/lib/string_decoder.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js":[function(require,module,exports){
 (function (Buffer){
 var clone = (function() {
 'use strict';
@@ -59979,7 +60009,7 @@ if (typeof module === 'object' && module.exports) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_coinstring@2.3.0@coinstring/lib/coinstring.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_coinstring@2.3.0@coinstring/lib/coinstring.js":[function(require,module,exports){
 (function (Buffer){
 var base58 = require('bs58')
 var createHash = require('create-hash')
@@ -60077,74 +60107,74 @@ module.exports = {
 
 }).call(this,require("buffer").Buffer)
 
-},{"bs58":"/opt/panxf/metamask-extension/node_modules/_bs58@2.0.1@bs58/lib/bs58.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/get-iterator.js":[function(require,module,exports){
+},{"bs58":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bs58@2.0.1@bs58/lib/bs58.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/get-iterator.js":[function(require,module,exports){
 require('../modules/web.dom.iterable');
 require('../modules/es6.string.iterator');
 module.exports = require('../modules/core.get-iterator');
 
-},{"../modules/core.get-iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator.js","../modules/es6.string.iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../modules/web.dom.iterable":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/is-iterable.js":[function(require,module,exports){
+},{"../modules/core.get-iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator.js","../modules/es6.string.iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../modules/web.dom.iterable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/is-iterable.js":[function(require,module,exports){
 require('../modules/web.dom.iterable');
 require('../modules/es6.string.iterator');
 module.exports = require('../modules/core.is-iterable');
 
-},{"../modules/core.is-iterable":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/core.is-iterable.js","../modules/es6.string.iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../modules/web.dom.iterable":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/json/stringify.js":[function(require,module,exports){
+},{"../modules/core.is-iterable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/core.is-iterable.js","../modules/es6.string.iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../modules/web.dom.iterable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/json/stringify.js":[function(require,module,exports){
 var core = require('../../modules/_core');
 var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
 module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
   return $JSON.stringify.apply($JSON, arguments);
 };
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-integer.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-integer.js":[function(require,module,exports){
 require('../../modules/es6.number.is-integer');
 module.exports = require('../../modules/_core').Number.isInteger;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.number.is-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-nan.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.number.is-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/is-nan.js":[function(require,module,exports){
 require('../../modules/es6.number.is-nan');
 module.exports = require('../../modules/_core').Number.isNaN;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.number.is-nan":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-nan.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/max-safe-integer.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.number.is-nan":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-nan.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/max-safe-integer.js":[function(require,module,exports){
 require('../../modules/es6.number.max-safe-integer');
 module.exports = 0x1fffffffffffff;
 
-},{"../../modules/es6.number.max-safe-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.max-safe-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/number/parse-int.js":[function(require,module,exports){
+},{"../../modules/es6.number.max-safe-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.max-safe-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/number/parse-int.js":[function(require,module,exports){
 require('../../modules/es6.number.parse-int');
 module.exports = require('../../modules/_core').Number.parseInt;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.number.parse-int":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.parse-int.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/assign.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.number.parse-int":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.parse-int.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/assign.js":[function(require,module,exports){
 require('../../modules/es6.object.assign');
 module.exports = require('../../modules/_core').Object.assign;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.assign":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.assign.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/create.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.assign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.assign.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/create.js":[function(require,module,exports){
 require('../../modules/es6.object.create');
 var $Object = require('../../modules/_core').Object;
 module.exports = function create(P, D) {
   return $Object.create(P, D);
 };
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.create.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/define-property.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.create.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/define-property.js":[function(require,module,exports){
 require('../../modules/es6.object.define-property');
 var $Object = require('../../modules/_core').Object;
 module.exports = function defineProperty(it, key, desc) {
   return $Object.defineProperty(it, key, desc);
 };
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.define-property":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.define-property.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/entries.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.define-property":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.define-property.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/entries.js":[function(require,module,exports){
 require('../../modules/es7.object.entries');
 module.exports = require('../../modules/_core').Object.entries;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es7.object.entries":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.object.entries.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/get-prototype-of.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es7.object.entries":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.object.entries.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/get-prototype-of.js":[function(require,module,exports){
 require('../../modules/es6.object.get-prototype-of');
 module.exports = require('../../modules/_core').Object.getPrototypeOf;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.get-prototype-of.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/keys.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.get-prototype-of.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/keys.js":[function(require,module,exports){
 require('../../modules/es6.object.keys');
 module.exports = require('../../modules/_core').Object.keys;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.keys.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/object/set-prototype-of.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.keys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/object/set-prototype-of.js":[function(require,module,exports){
 require('../../modules/es6.object.set-prototype-of');
 module.exports = require('../../modules/_core').Object.setPrototypeOf;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.set-prototype-of":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.set-prototype-of.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/promise.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.set-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.set-prototype-of.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/promise.js":[function(require,module,exports){
 require('../modules/es6.object.to-string');
 require('../modules/es6.string.iterator');
 require('../modules/web.dom.iterable');
@@ -60153,42 +60183,42 @@ require('../modules/es7.promise.finally');
 require('../modules/es7.promise.try');
 module.exports = require('../modules/_core').Promise;
 
-},{"../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../modules/es6.object.to-string":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.to-string.js","../modules/es6.promise":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.promise.js","../modules/es6.string.iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../modules/es7.promise.finally":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.finally.js","../modules/es7.promise.try":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.try.js","../modules/web.dom.iterable":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/index.js":[function(require,module,exports){
+},{"../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../modules/es6.object.to-string":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.to-string.js","../modules/es6.promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.promise.js","../modules/es6.string.iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../modules/es7.promise.finally":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.finally.js","../modules/es7.promise.try":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.try.js","../modules/web.dom.iterable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/index.js":[function(require,module,exports){
 require('../../modules/es6.symbol');
 require('../../modules/es6.object.to-string');
 require('../../modules/es7.symbol.async-iterator');
 require('../../modules/es7.symbol.observable');
 module.exports = require('../../modules/_core').Symbol;
 
-},{"../../modules/_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.to-string":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.to-string.js","../../modules/es6.symbol":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.symbol.js","../../modules/es7.symbol.async-iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.async-iterator.js","../../modules/es7.symbol.observable":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.observable.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/iterator.js":[function(require,module,exports){
+},{"../../modules/_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","../../modules/es6.object.to-string":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.to-string.js","../../modules/es6.symbol":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.symbol.js","../../modules/es7.symbol.async-iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.async-iterator.js","../../modules/es7.symbol.observable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.observable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/fn/symbol/iterator.js":[function(require,module,exports){
 require('../../modules/es6.string.iterator');
 require('../../modules/web.dom.iterable');
 module.exports = require('../../modules/_wks-ext').f('iterator');
 
-},{"../../modules/_wks-ext":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js","../../modules/es6.string.iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../../modules/web.dom.iterable":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js":[function(require,module,exports){
+},{"../../modules/_wks-ext":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js","../../modules/es6.string.iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js","../../modules/web.dom.iterable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js":[function(require,module,exports){
 module.exports = function (it) {
   if (typeof it != 'function') throw TypeError(it + ' is not a function!');
   return it;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_add-to-unscopables.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_add-to-unscopables.js":[function(require,module,exports){
 module.exports = function () { /* empty */ };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-instance.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-instance.js":[function(require,module,exports){
 module.exports = function (it, Constructor, name, forbiddenField) {
   if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
     throw TypeError(name + ': incorrect invocation!');
   } return it;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js":[function(require,module,exports){
 var isObject = require('./_is-object');
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
 };
 
-},{"./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_array-includes.js":[function(require,module,exports){
+},{"./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_array-includes.js":[function(require,module,exports){
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = require('./_to-iobject');
@@ -60213,7 +60243,7 @@ module.exports = function (IS_INCLUDES) {
   };
 };
 
-},{"./_to-absolute-index":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-absolute-index.js","./_to-iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js","./_to-length":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-length.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js":[function(require,module,exports){
+},{"./_to-absolute-index":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-absolute-index.js","./_to-iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js","./_to-length":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-length.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js":[function(require,module,exports){
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = require('./_cof');
 var TAG = require('./_wks')('toStringTag');
@@ -60238,18 +60268,18 @@ module.exports = function (it) {
     : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
 };
 
-},{"./_cof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js":[function(require,module,exports){
+},{"./_cof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js":[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function (it) {
   return toString.call(it).slice(8, -1);
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js":[function(require,module,exports){
 var core = module.exports = { version: '2.5.7' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js":[function(require,module,exports){
 // optional / simple context binding
 var aFunction = require('./_a-function');
 module.exports = function (fn, that, length) {
@@ -60271,20 +60301,20 @@ module.exports = function (fn, that, length) {
   };
 };
 
-},{"./_a-function":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js":[function(require,module,exports){
+},{"./_a-function":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js":[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function (it) {
   if (it == undefined) throw TypeError("Can't call method on  " + it);
   return it;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js":[function(require,module,exports){
 // Thank's IE8 for his funny defineProperty
 module.exports = !require('./_fails')(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
-},{"./_fails":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js":[function(require,module,exports){
+},{"./_fails":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js":[function(require,module,exports){
 var isObject = require('./_is-object');
 var document = require('./_global').document;
 // typeof document.createElement is 'object' in old IE
@@ -60293,13 +60323,13 @@ module.exports = function (it) {
   return is ? document.createElement(it) : {};
 };
 
-},{"./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js":[function(require,module,exports){
+},{"./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js":[function(require,module,exports){
 // IE 8- don't enum bug keys
 module.exports = (
   'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
 ).split(',');
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-keys.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-keys.js":[function(require,module,exports){
 // all enumerable object keys, includes symbols
 var getKeys = require('./_object-keys');
 var gOPS = require('./_object-gops');
@@ -60316,7 +60346,7 @@ module.exports = function (it) {
   } return result;
 };
 
-},{"./_object-gops":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js","./_object-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js":[function(require,module,exports){
+},{"./_object-gops":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js","./_object-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js":[function(require,module,exports){
 var global = require('./_global');
 var core = require('./_core');
 var ctx = require('./_ctx');
@@ -60380,7 +60410,7 @@ $export.U = 64;  // safe
 $export.R = 128; // real proto method for `library`
 module.exports = $export;
 
-},{"./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_ctx":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_has":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_hide":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js":[function(require,module,exports){
+},{"./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_ctx":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_has":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_hide":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js":[function(require,module,exports){
 module.exports = function (exec) {
   try {
     return !!exec();
@@ -60389,7 +60419,7 @@ module.exports = function (exec) {
   }
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_for-of.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_for-of.js":[function(require,module,exports){
 var ctx = require('./_ctx');
 var call = require('./_iter-call');
 var isArrayIter = require('./_is-array-iter');
@@ -60416,7 +60446,7 @@ var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) 
 exports.BREAK = BREAK;
 exports.RETURN = RETURN;
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_ctx":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_is-array-iter":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array-iter.js","./_iter-call":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-call.js","./_to-length":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-length.js","./core.get-iterator-method":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator-method.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_ctx":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_is-array-iter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array-iter.js","./_iter-call":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-call.js","./_to-length":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-length.js","./core.get-iterator-method":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator-method.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js":[function(require,module,exports){
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
   ? window : typeof self != 'undefined' && self.Math == Math ? self
@@ -60424,13 +60454,13 @@ var global = module.exports = typeof window != 'undefined' && window.Math == Mat
   : Function('return this')();
 if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js":[function(require,module,exports){
 var hasOwnProperty = {}.hasOwnProperty;
 module.exports = function (it, key) {
   return hasOwnProperty.call(it, key);
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js":[function(require,module,exports){
 var dP = require('./_object-dp');
 var createDesc = require('./_property-desc');
 module.exports = require('./_descriptors') ? function (object, key, value) {
@@ -60440,16 +60470,16 @@ module.exports = require('./_descriptors') ? function (object, key, value) {
   return object;
 };
 
-},{"./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_property-desc":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_html.js":[function(require,module,exports){
+},{"./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_property-desc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_html.js":[function(require,module,exports){
 var document = require('./_global').document;
 module.exports = document && document.documentElement;
 
-},{"./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ie8-dom-define.js":[function(require,module,exports){
+},{"./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ie8-dom-define.js":[function(require,module,exports){
 module.exports = !require('./_descriptors') && !require('./_fails')(function () {
   return Object.defineProperty(require('./_dom-create')('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
-},{"./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_dom-create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js","./_fails":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_invoke.js":[function(require,module,exports){
+},{"./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_dom-create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js","./_fails":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_invoke.js":[function(require,module,exports){
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
 module.exports = function (fn, args, that) {
   var un = that === undefined;
@@ -60467,7 +60497,7 @@ module.exports = function (fn, args, that) {
   } return fn.apply(that, args);
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iobject.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iobject.js":[function(require,module,exports){
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
 var cof = require('./_cof');
 // eslint-disable-next-line no-prototype-builtins
@@ -60475,7 +60505,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
-},{"./_cof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array-iter.js":[function(require,module,exports){
+},{"./_cof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array-iter.js":[function(require,module,exports){
 // check on default Array iterator
 var Iterators = require('./_iterators');
 var ITERATOR = require('./_wks')('iterator');
@@ -60485,14 +60515,14 @@ module.exports = function (it) {
   return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
 };
 
-},{"./_iterators":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array.js":[function(require,module,exports){
+},{"./_iterators":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array.js":[function(require,module,exports){
 // 7.2.2 IsArray(argument)
 var cof = require('./_cof');
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
 
-},{"./_cof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-integer.js":[function(require,module,exports){
+},{"./_cof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-integer.js":[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var isObject = require('./_is-object');
 var floor = Math.floor;
@@ -60500,12 +60530,12 @@ module.exports = function isInteger(it) {
   return !isObject(it) && isFinite(it) && floor(it) === it;
 };
 
-},{"./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js":[function(require,module,exports){
+},{"./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js":[function(require,module,exports){
 module.exports = function (it) {
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-call.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-call.js":[function(require,module,exports){
 // call something on iterator step with safe closing on error
 var anObject = require('./_an-object');
 module.exports = function (iterator, fn, value, entries) {
@@ -60519,7 +60549,7 @@ module.exports = function (iterator, fn, value, entries) {
   }
 };
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-create.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-create.js":[function(require,module,exports){
 'use strict';
 var create = require('./_object-create');
 var descriptor = require('./_property-desc');
@@ -60534,7 +60564,7 @@ module.exports = function (Constructor, NAME, next) {
   setToStringTag(Constructor, NAME + ' Iterator');
 };
 
-},{"./_hide":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_object-create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js","./_property-desc":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js","./_set-to-string-tag":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-define.js":[function(require,module,exports){
+},{"./_hide":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_object-create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js","./_property-desc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js","./_set-to-string-tag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-define.js":[function(require,module,exports){
 'use strict';
 var LIBRARY = require('./_library');
 var $export = require('./_export');
@@ -60605,7 +60635,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
   return methods;
 };
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_hide":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_iter-create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-create.js","./_iterators":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_library":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_object-gpo":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gpo.js","./_redefine":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine.js","./_set-to-string-tag":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-detect.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_hide":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_iter-create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-create.js","./_iterators":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_library":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_object-gpo":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gpo.js","./_redefine":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine.js","./_set-to-string-tag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-detect.js":[function(require,module,exports){
 var ITERATOR = require('./_wks')('iterator');
 var SAFE_CLOSING = false;
 
@@ -60629,18 +60659,18 @@ module.exports = function (exec, skipClosing) {
   return safe;
 };
 
-},{"./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-step.js":[function(require,module,exports){
+},{"./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-step.js":[function(require,module,exports){
 module.exports = function (done, value) {
   return { value: value, done: !!done };
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js":[function(require,module,exports){
 module.exports = {};
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js":[function(require,module,exports){
 module.exports = true;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_meta.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_meta.js":[function(require,module,exports){
 var META = require('./_uid')('meta');
 var isObject = require('./_is-object');
 var has = require('./_has');
@@ -60695,7 +60725,7 @@ var meta = module.exports = {
   onFreeze: onFreeze
 };
 
-},{"./_fails":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_has":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_uid":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_microtask.js":[function(require,module,exports){
+},{"./_fails":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_has":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_uid":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_microtask.js":[function(require,module,exports){
 var global = require('./_global');
 var macrotask = require('./_task').set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
@@ -60766,7 +60796,7 @@ module.exports = function () {
   };
 };
 
-},{"./_cof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_task":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_task.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js":[function(require,module,exports){
+},{"./_cof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_task":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_task.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js":[function(require,module,exports){
 'use strict';
 // 25.4.1.5 NewPromiseCapability(C)
 var aFunction = require('./_a-function');
@@ -60786,7 +60816,7 @@ module.exports.f = function (C) {
   return new PromiseCapability(C);
 };
 
-},{"./_a-function":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-assign.js":[function(require,module,exports){
+},{"./_a-function":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-assign.js":[function(require,module,exports){
 'use strict';
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys = require('./_object-keys');
@@ -60822,7 +60852,7 @@ module.exports = !$assign || require('./_fails')(function () {
   } return T;
 } : $assign;
 
-},{"./_fails":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iobject.js","./_object-gops":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js","./_object-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_to-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js":[function(require,module,exports){
+},{"./_fails":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iobject.js","./_object-gops":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js","./_object-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_to-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js":[function(require,module,exports){
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = require('./_an-object');
 var dPs = require('./_object-dps');
@@ -60865,7 +60895,7 @@ module.exports = Object.create || function create(O, Properties) {
   return Properties === undefined ? result : dPs(result, Properties);
 };
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_dom-create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js","./_enum-bug-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js","./_html":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_html.js","./_object-dps":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dps.js","./_shared-key":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_dom-create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js","./_enum-bug-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js","./_html":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_html.js","./_object-dps":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dps.js","./_shared-key":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js":[function(require,module,exports){
 var anObject = require('./_an-object');
 var IE8_DOM_DEFINE = require('./_ie8-dom-define');
 var toPrimitive = require('./_to-primitive');
@@ -60883,7 +60913,7 @@ exports.f = require('./_descriptors') ? Object.defineProperty : function defineP
   return O;
 };
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_ie8-dom-define":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ie8-dom-define.js","./_to-primitive":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dps.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_ie8-dom-define":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ie8-dom-define.js","./_to-primitive":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dps.js":[function(require,module,exports){
 var dP = require('./_object-dp');
 var anObject = require('./_an-object');
 var getKeys = require('./_object-keys');
@@ -60898,7 +60928,7 @@ module.exports = require('./_descriptors') ? Object.defineProperties : function 
   return O;
 };
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_object-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopd.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_object-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopd.js":[function(require,module,exports){
 var pIE = require('./_object-pie');
 var createDesc = require('./_property-desc');
 var toIObject = require('./_to-iobject');
@@ -60916,7 +60946,7 @@ exports.f = require('./_descriptors') ? gOPD : function getOwnPropertyDescriptor
   if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
 };
 
-},{"./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_has":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_ie8-dom-define":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ie8-dom-define.js","./_object-pie":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_property-desc":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js","./_to-iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js","./_to-primitive":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn-ext.js":[function(require,module,exports){
+},{"./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_has":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_ie8-dom-define":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ie8-dom-define.js","./_object-pie":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_property-desc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js","./_to-iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js","./_to-primitive":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn-ext.js":[function(require,module,exports){
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = require('./_to-iobject');
 var gOPN = require('./_object-gopn').f;
@@ -60937,7 +60967,7 @@ module.exports.f = function getOwnPropertyNames(it) {
   return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
 };
 
-},{"./_object-gopn":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn.js","./_to-iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn.js":[function(require,module,exports){
+},{"./_object-gopn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn.js","./_to-iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn.js":[function(require,module,exports){
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
 var $keys = require('./_object-keys-internal');
 var hiddenKeys = require('./_enum-bug-keys').concat('length', 'prototype');
@@ -60946,10 +60976,10 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
 };
 
-},{"./_enum-bug-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js","./_object-keys-internal":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys-internal.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js":[function(require,module,exports){
+},{"./_enum-bug-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js","./_object-keys-internal":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys-internal.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js":[function(require,module,exports){
 exports.f = Object.getOwnPropertySymbols;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gpo.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gpo.js":[function(require,module,exports){
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = require('./_has');
 var toObject = require('./_to-object');
@@ -60964,7 +60994,7 @@ module.exports = Object.getPrototypeOf || function (O) {
   } return O instanceof Object ? ObjectProto : null;
 };
 
-},{"./_has":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_shared-key":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js","./_to-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys-internal.js":[function(require,module,exports){
+},{"./_has":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_shared-key":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js","./_to-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys-internal.js":[function(require,module,exports){
 var has = require('./_has');
 var toIObject = require('./_to-iobject');
 var arrayIndexOf = require('./_array-includes')(false);
@@ -60983,7 +61013,7 @@ module.exports = function (object, names) {
   return result;
 };
 
-},{"./_array-includes":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_array-includes.js","./_has":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_shared-key":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js","./_to-iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js":[function(require,module,exports){
+},{"./_array-includes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_array-includes.js","./_has":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_shared-key":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js","./_to-iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js":[function(require,module,exports){
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
 var $keys = require('./_object-keys-internal');
 var enumBugKeys = require('./_enum-bug-keys');
@@ -60992,10 +61022,10 @@ module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
 };
 
-},{"./_enum-bug-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js","./_object-keys-internal":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys-internal.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js":[function(require,module,exports){
+},{"./_enum-bug-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-bug-keys.js","./_object-keys-internal":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys-internal.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js":[function(require,module,exports){
 exports.f = {}.propertyIsEnumerable;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-sap.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-sap.js":[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
 var $export = require('./_export');
 var core = require('./_core');
@@ -61007,7 +61037,7 @@ module.exports = function (KEY, exec) {
   $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
 };
 
-},{"./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_fails":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-to-array.js":[function(require,module,exports){
+},{"./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_fails":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-to-array.js":[function(require,module,exports){
 var getKeys = require('./_object-keys');
 var toIObject = require('./_to-iobject');
 var isEnum = require('./_object-pie').f;
@@ -61025,7 +61055,7 @@ module.exports = function (isEntries) {
   };
 };
 
-},{"./_object-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_to-iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_parse-int.js":[function(require,module,exports){
+},{"./_object-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_to-iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_parse-int.js":[function(require,module,exports){
 var $parseInt = require('./_global').parseInt;
 var $trim = require('./_string-trim').trim;
 var ws = require('./_string-ws');
@@ -61036,7 +61066,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
   return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
 } : $parseInt;
 
-},{"./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_string-trim":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_string-trim.js","./_string-ws":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_string-ws.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_perform.js":[function(require,module,exports){
+},{"./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_string-trim":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_string-trim.js","./_string-ws":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_string-ws.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_perform.js":[function(require,module,exports){
 module.exports = function (exec) {
   try {
     return { e: false, v: exec() };
@@ -61045,7 +61075,7 @@ module.exports = function (exec) {
   }
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_promise-resolve.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_promise-resolve.js":[function(require,module,exports){
 var anObject = require('./_an-object');
 var isObject = require('./_is-object');
 var newPromiseCapability = require('./_new-promise-capability');
@@ -61059,7 +61089,7 @@ module.exports = function (C, x) {
   return promiseCapability.promise;
 };
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_new-promise-capability":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_new-promise-capability":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js":[function(require,module,exports){
 module.exports = function (bitmap, value) {
   return {
     enumerable: !(bitmap & 1),
@@ -61069,7 +61099,7 @@ module.exports = function (bitmap, value) {
   };
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine-all.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine-all.js":[function(require,module,exports){
 var hide = require('./_hide');
 module.exports = function (target, src, safe) {
   for (var key in src) {
@@ -61078,10 +61108,10 @@ module.exports = function (target, src, safe) {
   } return target;
 };
 
-},{"./_hide":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine.js":[function(require,module,exports){
+},{"./_hide":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine.js":[function(require,module,exports){
 module.exports = require('./_hide');
 
-},{"./_hide":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-proto.js":[function(require,module,exports){
+},{"./_hide":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-proto.js":[function(require,module,exports){
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var isObject = require('./_is-object');
@@ -61108,7 +61138,7 @@ module.exports = {
   check: check
 };
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_ctx":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_object-gopd":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopd.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-species.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_ctx":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_object-gopd":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopd.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-species.js":[function(require,module,exports){
 'use strict';
 var global = require('./_global');
 var core = require('./_core');
@@ -61124,7 +61154,7 @@ module.exports = function (KEY) {
   });
 };
 
-},{"./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js":[function(require,module,exports){
+},{"./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js":[function(require,module,exports){
 var def = require('./_object-dp').f;
 var has = require('./_has');
 var TAG = require('./_wks')('toStringTag');
@@ -61133,14 +61163,14 @@ module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
 };
 
-},{"./_has":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js":[function(require,module,exports){
+},{"./_has":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared-key.js":[function(require,module,exports){
 var shared = require('./_shared')('keys');
 var uid = require('./_uid');
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
 
-},{"./_shared":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js","./_uid":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js":[function(require,module,exports){
+},{"./_shared":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js","./_uid":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js":[function(require,module,exports){
 var core = require('./_core');
 var global = require('./_global');
 var SHARED = '__core-js_shared__';
@@ -61154,7 +61184,7 @@ var store = global[SHARED] || (global[SHARED] = {});
   copyright: '© 2018 Denis Pushkarev (zloirock.ru)'
 });
 
-},{"./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_library":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_species-constructor.js":[function(require,module,exports){
+},{"./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_library":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_species-constructor.js":[function(require,module,exports){
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = require('./_an-object');
 var aFunction = require('./_a-function');
@@ -61165,7 +61195,7 @@ module.exports = function (O, D) {
   return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
 };
 
-},{"./_a-function":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js","./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_string-at.js":[function(require,module,exports){
+},{"./_a-function":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js","./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_string-at.js":[function(require,module,exports){
 var toInteger = require('./_to-integer');
 var defined = require('./_defined');
 // true  -> String#at
@@ -61184,7 +61214,7 @@ module.exports = function (TO_STRING) {
   };
 };
 
-},{"./_defined":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js","./_to-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_string-trim.js":[function(require,module,exports){
+},{"./_defined":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js","./_to-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_string-trim.js":[function(require,module,exports){
 var $export = require('./_export');
 var defined = require('./_defined');
 var fails = require('./_fails');
@@ -61216,11 +61246,11 @@ var trim = exporter.trim = function (string, TYPE) {
 
 module.exports = exporter;
 
-},{"./_defined":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js","./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_fails":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_string-ws":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_string-ws.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_string-ws.js":[function(require,module,exports){
+},{"./_defined":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js","./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_fails":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_string-ws":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_string-ws.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_string-ws.js":[function(require,module,exports){
 module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
   '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_task.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_task.js":[function(require,module,exports){
 var ctx = require('./_ctx');
 var invoke = require('./_invoke');
 var html = require('./_html');
@@ -61306,7 +61336,7 @@ module.exports = {
   clear: clearTask
 };
 
-},{"./_cof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js","./_ctx":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_dom-create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_html":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_html.js","./_invoke":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_invoke.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-absolute-index.js":[function(require,module,exports){
+},{"./_cof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_cof.js","./_ctx":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_dom-create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_dom-create.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_html":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_html.js","./_invoke":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_invoke.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-absolute-index.js":[function(require,module,exports){
 var toInteger = require('./_to-integer');
 var max = Math.max;
 var min = Math.min;
@@ -61315,7 +61345,7 @@ module.exports = function (index, length) {
   return index < 0 ? max(index + length, 0) : min(index, length);
 };
 
-},{"./_to-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js":[function(require,module,exports){
+},{"./_to-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js":[function(require,module,exports){
 // 7.1.4 ToInteger
 var ceil = Math.ceil;
 var floor = Math.floor;
@@ -61323,7 +61353,7 @@ module.exports = function (it) {
   return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js":[function(require,module,exports){
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = require('./_iobject');
 var defined = require('./_defined');
@@ -61331,7 +61361,7 @@ module.exports = function (it) {
   return IObject(defined(it));
 };
 
-},{"./_defined":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js","./_iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iobject.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-length.js":[function(require,module,exports){
+},{"./_defined":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js","./_iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iobject.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-length.js":[function(require,module,exports){
 // 7.1.15 ToLength
 var toInteger = require('./_to-integer');
 var min = Math.min;
@@ -61339,14 +61369,14 @@ module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
-},{"./_to-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js":[function(require,module,exports){
+},{"./_to-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js":[function(require,module,exports){
 // 7.1.13 ToObject(argument)
 var defined = require('./_defined');
 module.exports = function (it) {
   return Object(defined(it));
 };
 
-},{"./_defined":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js":[function(require,module,exports){
+},{"./_defined":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_defined.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js":[function(require,module,exports){
 // 7.1.1 ToPrimitive(input [, PreferredType])
 var isObject = require('./_is-object');
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
@@ -61360,20 +61390,20 @@ module.exports = function (it, S) {
   throw TypeError("Can't convert object to primitive value");
 };
 
-},{"./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js":[function(require,module,exports){
+},{"./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js":[function(require,module,exports){
 var id = 0;
 var px = Math.random();
 module.exports = function (key) {
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_user-agent.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_user-agent.js":[function(require,module,exports){
 var global = require('./_global');
 var navigator = global.navigator;
 
 module.exports = navigator && navigator.userAgent || '';
 
-},{"./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js":[function(require,module,exports){
+},{"./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js":[function(require,module,exports){
 var global = require('./_global');
 var core = require('./_core');
 var LIBRARY = require('./_library');
@@ -61384,10 +61414,10 @@ module.exports = function (name) {
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
 };
 
-},{"./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_library":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_wks-ext":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js":[function(require,module,exports){
+},{"./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_library":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_wks-ext":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js":[function(require,module,exports){
 exports.f = require('./_wks');
 
-},{"./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js":[function(require,module,exports){
+},{"./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js":[function(require,module,exports){
 var store = require('./_shared')('wks');
 var uid = require('./_uid');
 var Symbol = require('./_global').Symbol;
@@ -61400,7 +61430,7 @@ var $exports = module.exports = function (name) {
 
 $exports.store = store;
 
-},{"./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_shared":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js","./_uid":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator-method.js":[function(require,module,exports){
+},{"./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_shared":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js","./_uid":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator-method.js":[function(require,module,exports){
 var classof = require('./_classof');
 var ITERATOR = require('./_wks')('iterator');
 var Iterators = require('./_iterators');
@@ -61410,7 +61440,7 @@ module.exports = require('./_core').getIteratorMethod = function (it) {
     || Iterators[classof(it)];
 };
 
-},{"./_classof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js","./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_iterators":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator.js":[function(require,module,exports){
+},{"./_classof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js","./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_iterators":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator.js":[function(require,module,exports){
 var anObject = require('./_an-object');
 var get = require('./core.get-iterator-method');
 module.exports = require('./_core').getIterator = function (it) {
@@ -61419,7 +61449,7 @@ module.exports = require('./_core').getIterator = function (it) {
   return anObject(iterFn.call(it));
 };
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./core.get-iterator-method":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator-method.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/core.is-iterable.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./core.get-iterator-method":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/core.get-iterator-method.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/core.is-iterable.js":[function(require,module,exports){
 var classof = require('./_classof');
 var ITERATOR = require('./_wks')('iterator');
 var Iterators = require('./_iterators');
@@ -61431,7 +61461,7 @@ module.exports = require('./_core').isIterable = function (it) {
     || Iterators.hasOwnProperty(classof(O));
 };
 
-},{"./_classof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js","./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_iterators":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.array.iterator.js":[function(require,module,exports){
+},{"./_classof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js","./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_iterators":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.array.iterator.js":[function(require,module,exports){
 'use strict';
 var addToUnscopables = require('./_add-to-unscopables');
 var step = require('./_iter-step');
@@ -61467,13 +61497,13 @@ addToUnscopables('keys');
 addToUnscopables('values');
 addToUnscopables('entries');
 
-},{"./_add-to-unscopables":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_add-to-unscopables.js","./_iter-define":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-define.js","./_iter-step":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-step.js","./_iterators":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_to-iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-integer.js":[function(require,module,exports){
+},{"./_add-to-unscopables":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_add-to-unscopables.js","./_iter-define":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-define.js","./_iter-step":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-step.js","./_iterators":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_to-iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-integer.js":[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var $export = require('./_export');
 
 $export($export.S, 'Number', { isInteger: require('./_is-integer') });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_is-integer":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-integer.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-nan.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_is-integer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-integer.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.is-nan.js":[function(require,module,exports){
 // 20.1.2.4 Number.isNaN(number)
 var $export = require('./_export');
 
@@ -61484,35 +61514,35 @@ $export($export.S, 'Number', {
   }
 });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.max-safe-integer.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.max-safe-integer.js":[function(require,module,exports){
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
 var $export = require('./_export');
 
 $export($export.S, 'Number', { MAX_SAFE_INTEGER: 0x1fffffffffffff });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.parse-int.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.number.parse-int.js":[function(require,module,exports){
 var $export = require('./_export');
 var $parseInt = require('./_parse-int');
 // 20.1.2.13 Number.parseInt(string, radix)
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', { parseInt: $parseInt });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_parse-int":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_parse-int.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.assign.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_parse-int":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_parse-int.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.assign.js":[function(require,module,exports){
 // 19.1.3.1 Object.assign(target, source)
 var $export = require('./_export');
 
 $export($export.S + $export.F, 'Object', { assign: require('./_object-assign') });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-assign":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-assign.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.create.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-assign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-assign.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.create.js":[function(require,module,exports){
 var $export = require('./_export');
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 $export($export.S, 'Object', { create: require('./_object-create') });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.define-property.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.define-property.js":[function(require,module,exports){
 var $export = require('./_export');
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
 $export($export.S + $export.F * !require('./_descriptors'), 'Object', { defineProperty: require('./_object-dp').f });
 
-},{"./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.get-prototype-of.js":[function(require,module,exports){
+},{"./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.get-prototype-of.js":[function(require,module,exports){
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject = require('./_to-object');
 var $getPrototypeOf = require('./_object-gpo');
@@ -61523,7 +61553,7 @@ require('./_object-sap')('getPrototypeOf', function () {
   };
 });
 
-},{"./_object-gpo":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gpo.js","./_object-sap":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-sap.js","./_to-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.keys.js":[function(require,module,exports){
+},{"./_object-gpo":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gpo.js","./_object-sap":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-sap.js","./_to-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.keys.js":[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./_to-object');
 var $keys = require('./_object-keys');
@@ -61534,14 +61564,14 @@ require('./_object-sap')('keys', function () {
   };
 });
 
-},{"./_object-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-sap":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-sap.js","./_to-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.set-prototype-of.js":[function(require,module,exports){
+},{"./_object-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-sap":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-sap.js","./_to-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-object.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.set-prototype-of.js":[function(require,module,exports){
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $export = require('./_export');
 $export($export.S, 'Object', { setPrototypeOf: require('./_set-proto').set });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_set-proto":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-proto.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.to-string.js":[function(require,module,exports){
-arguments[4]["/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"][0].apply(exports,arguments)
-},{}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.promise.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_set-proto":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-proto.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.object.to-string.js":[function(require,module,exports){
+arguments[4]["/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"][0].apply(exports,arguments)
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.promise.js":[function(require,module,exports){
 'use strict';
 var LIBRARY = require('./_library');
 var global = require('./_global');
@@ -61829,7 +61859,7 @@ $export($export.S + $export.F * !(USE_NATIVE && require('./_iter-detect')(functi
   }
 });
 
-},{"./_a-function":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js","./_an-instance":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-instance.js","./_classof":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js","./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_ctx":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_for-of":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_for-of.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_iter-detect":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-detect.js","./_library":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_microtask":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_microtask.js","./_new-promise-capability":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js","./_perform":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_perform.js","./_promise-resolve":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_promise-resolve.js","./_redefine-all":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine-all.js","./_set-species":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-species.js","./_set-to-string-tag":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_species-constructor":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_species-constructor.js","./_task":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_task.js","./_user-agent":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_user-agent.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js":[function(require,module,exports){
+},{"./_a-function":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_a-function.js","./_an-instance":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-instance.js","./_classof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_classof.js","./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_ctx":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_ctx.js","./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_for-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_for-of.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_iter-detect":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-detect.js","./_library":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_microtask":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_microtask.js","./_new-promise-capability":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js","./_perform":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_perform.js","./_promise-resolve":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_promise-resolve.js","./_redefine-all":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine-all.js","./_set-species":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-species.js","./_set-to-string-tag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_species-constructor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_species-constructor.js","./_task":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_task.js","./_user-agent":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_user-agent.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.string.iterator.js":[function(require,module,exports){
 'use strict';
 var $at = require('./_string-at')(true);
 
@@ -61848,7 +61878,7 @@ require('./_iter-define')(String, 'String', function (iterated) {
   return { value: point, done: false };
 });
 
-},{"./_iter-define":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-define.js","./_string-at":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_string-at.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.symbol.js":[function(require,module,exports){
+},{"./_iter-define":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iter-define.js","./_string-at":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_string-at.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.symbol.js":[function(require,module,exports){
 'use strict';
 // ECMAScript 6 symbols shim
 var global = require('./_global');
@@ -62084,7 +62114,7 @@ setToStringTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setToStringTag(global.JSON, 'JSON', true);
 
-},{"./_an-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_descriptors":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_enum-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-keys.js","./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_fails":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_has":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_hide":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_is-array":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array.js","./_is-object":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_library":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_meta":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_meta.js","./_object-create":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js","./_object-dp":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_object-gopd":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopd.js","./_object-gopn":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn.js","./_object-gopn-ext":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn-ext.js","./_object-gops":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js","./_object-keys":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_property-desc":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js","./_redefine":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine.js","./_set-to-string-tag":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_shared":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js","./_to-iobject":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js","./_to-primitive":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js","./_uid":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js","./_wks-define":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js","./_wks-ext":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.object.entries.js":[function(require,module,exports){
+},{"./_an-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_an-object.js","./_descriptors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_descriptors.js","./_enum-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_enum-keys.js","./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_fails":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_fails.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_has":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_has.js","./_hide":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_is-array":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-array.js","./_is-object":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_is-object.js","./_library":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_library.js","./_meta":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_meta.js","./_object-create":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-create.js","./_object-dp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-dp.js","./_object-gopd":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopd.js","./_object-gopn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn.js","./_object-gopn-ext":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gopn-ext.js","./_object-gops":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-gops.js","./_object-keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-keys.js","./_object-pie":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-pie.js","./_property-desc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_property-desc.js","./_redefine":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_redefine.js","./_set-to-string-tag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_set-to-string-tag.js","./_shared":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_shared.js","./_to-iobject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-iobject.js","./_to-primitive":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_to-primitive.js","./_uid":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_uid.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js","./_wks-define":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js","./_wks-ext":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-ext.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.object.entries.js":[function(require,module,exports){
 // https://github.com/tc39/proposal-object-values-entries
 var $export = require('./_export');
 var $entries = require('./_object-to-array')(true);
@@ -62095,7 +62125,7 @@ $export($export.S, 'Object', {
   }
 });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-to-array":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_object-to-array.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.finally.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_object-to-array":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_object-to-array.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.finally.js":[function(require,module,exports){
 // https://github.com/tc39/proposal-promise-finally
 'use strict';
 var $export = require('./_export');
@@ -62117,7 +62147,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
   );
 } });
 
-},{"./_core":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_promise-resolve":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_promise-resolve.js","./_species-constructor":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_species-constructor.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.try.js":[function(require,module,exports){
+},{"./_core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_core.js","./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_promise-resolve":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_promise-resolve.js","./_species-constructor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_species-constructor.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.promise.try.js":[function(require,module,exports){
 'use strict';
 // https://github.com/tc39/proposal-promise-try
 var $export = require('./_export');
@@ -62131,13 +62161,13 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
   return promiseCapability.promise;
 } });
 
-},{"./_export":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_new-promise-capability":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js","./_perform":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_perform.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.async-iterator.js":[function(require,module,exports){
+},{"./_export":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_export.js","./_new-promise-capability":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_new-promise-capability.js","./_perform":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_perform.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.async-iterator.js":[function(require,module,exports){
 require('./_wks-define')('asyncIterator');
 
-},{"./_wks-define":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.observable.js":[function(require,module,exports){
+},{"./_wks-define":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es7.symbol.observable.js":[function(require,module,exports){
 require('./_wks-define')('observable');
 
-},{"./_wks-define":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js"}],"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js":[function(require,module,exports){
+},{"./_wks-define":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks-define.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/web.dom.iterable.js":[function(require,module,exports){
 require('./es6.array.iterator');
 var global = require('./_global');
 var hide = require('./_hide');
@@ -62158,7 +62188,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
   Iterators[NAME] = Iterators.Array;
 }
 
-},{"./_global":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_hide":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_iterators":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js","./es6.array.iterator":"/opt/panxf/metamask-extension/node_modules/_core-js@2.5.7@core-js/library/modules/es6.array.iterator.js"}],"/opt/panxf/metamask-extension/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js":[function(require,module,exports){
+},{"./_global":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_global.js","./_hide":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_hide.js","./_iterators":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_iterators.js","./_wks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/_wks.js","./es6.array.iterator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-js@2.5.7@core-js/library/modules/es6.array.iterator.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js":[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -62268,9 +62298,9 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-}).call(this,{"isBuffer":require("../../_is-buffer@1.1.6@is-buffer/index.js")})
+}).call(this,{"isBuffer":require("../../../../_is-buffer@1.1.6@is-buffer/index.js")})
 
-},{"../../_is-buffer@1.1.6@is-buffer/index.js":"/opt/panxf/metamask-extension/node_modules/_is-buffer@1.1.6@is-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_create-ecdh@4.0.3@create-ecdh/browser.js":[function(require,module,exports){
+},{"../../../../_is-buffer@1.1.6@is-buffer/index.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/_is-buffer@1.1.6@is-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-ecdh@4.0.3@create-ecdh/browser.js":[function(require,module,exports){
 (function (Buffer){
 var elliptic = require('elliptic')
 var BN = require('bn.js')
@@ -62399,7 +62429,7 @@ function formatReturnValue (bn, enc, len) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js"}],"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js":[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var MD5 = require('md5.js')
@@ -62431,14 +62461,14 @@ module.exports = function createHash (alg) {
   return new Hash(sha(alg))
 }
 
-},{"cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","md5.js":"/opt/panxf/metamask-extension/node_modules/_md5.js@1.3.4@md5.js/index.js","ripemd160":"/opt/panxf/metamask-extension/node_modules/_ripemd160@2.0.2@ripemd160/index.js","sha.js":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/index.js"}],"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/md5.js":[function(require,module,exports){
+},{"cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","md5.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_md5.js@1.3.4@md5.js/index.js","ripemd160":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ripemd160@2.0.2@ripemd160/index.js","sha.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/md5.js":[function(require,module,exports){
 var MD5 = require('md5.js')
 
 module.exports = function (buffer) {
   return new MD5().update(buffer).digest()
 }
 
-},{"md5.js":"/opt/panxf/metamask-extension/node_modules/_md5.js@1.3.4@md5.js/index.js"}],"/opt/panxf/metamask-extension/node_modules/_create-hmac@1.1.7@create-hmac/browser.js":[function(require,module,exports){
+},{"md5.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_md5.js@1.3.4@md5.js/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hmac@1.1.7@create-hmac/browser.js":[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var Legacy = require('./legacy')
@@ -62502,7 +62532,7 @@ module.exports = function createHmac (alg, key) {
   return new Hmac(alg, key)
 }
 
-},{"./legacy":"/opt/panxf/metamask-extension/node_modules/_create-hmac@1.1.7@create-hmac/legacy.js","cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","create-hash/md5":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/md5.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","ripemd160":"/opt/panxf/metamask-extension/node_modules/_ripemd160@2.0.2@ripemd160/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","sha.js":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/index.js"}],"/opt/panxf/metamask-extension/node_modules/_create-hmac@1.1.7@create-hmac/legacy.js":[function(require,module,exports){
+},{"./legacy":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hmac@1.1.7@create-hmac/legacy.js","cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","create-hash/md5":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/md5.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","ripemd160":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ripemd160@2.0.2@ripemd160/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","sha.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hmac@1.1.7@create-hmac/legacy.js":[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var Buffer = require('safe-buffer').Buffer
@@ -62550,7 +62580,7 @@ Hmac.prototype._final = function () {
 }
 module.exports = Hmac
 
-},{"cipher-base":"/opt/panxf/metamask-extension/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_cross-fetch@2.2.0@cross-fetch/dist/browser-ponyfill.js":[function(require,module,exports){
+},{"cipher-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cipher-base@1.0.4@cipher-base/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cross-fetch@2.2.0@cross-fetch/dist/browser-ponyfill.js":[function(require,module,exports){
 var __root__ = (function (root) {
 function F() { this.fetch = false; }
 F.prototype = root;
@@ -63032,7 +63062,7 @@ if (typeof module === 'object' && module.exports) {
 module.exports = fetch;
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js":[function(require,module,exports){
 'use strict'
 
 exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require('randombytes')
@@ -63131,7 +63161,7 @@ exports.constants = {
   'POINT_CONVERSION_HYBRID': 6
 }
 
-},{"browserify-cipher":"/opt/panxf/metamask-extension/node_modules/_browserify-cipher@1.0.1@browserify-cipher/browser.js","browserify-sign":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/index.js","browserify-sign/algos":"/opt/panxf/metamask-extension/node_modules/_browserify-sign@4.0.4@browserify-sign/algos.js","create-ecdh":"/opt/panxf/metamask-extension/node_modules/_create-ecdh@4.0.3@create-ecdh/browser.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","create-hmac":"/opt/panxf/metamask-extension/node_modules/_create-hmac@1.1.7@create-hmac/browser.js","diffie-hellman":"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/browser.js","pbkdf2":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js","public-encrypt":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/browser.js","randombytes":"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js","randomfill":"/opt/panxf/metamask-extension/node_modules/_randomfill@1.0.4@randomfill/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_debounce-stream@2.0.0@debounce-stream/index.js":[function(require,module,exports){
+},{"browserify-cipher":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-cipher@1.0.1@browserify-cipher/browser.js","browserify-sign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/browser/index.js","browserify-sign/algos":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sign@4.0.4@browserify-sign/algos.js","create-ecdh":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-ecdh@4.0.3@create-ecdh/browser.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","create-hmac":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hmac@1.1.7@create-hmac/browser.js","diffie-hellman":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/browser.js","pbkdf2":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js","public-encrypt":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/browser.js","randombytes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js","randomfill":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randomfill@1.0.4@randomfill/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_debounce-stream@2.0.0@debounce-stream/index.js":[function(require,module,exports){
 var through = require('through')
   , duplexer = require('duplexer')
   , debounce = require('debounce')
@@ -63150,7 +63180,7 @@ function debounceStream(_ms, immediate) {
   }
 }
 
-},{"debounce":"/opt/panxf/metamask-extension/node_modules/_debounce@1.1.0@debounce/index.js","duplexer":"/opt/panxf/metamask-extension/node_modules/_duplexer@0.1.1@duplexer/index.js","through":"/opt/panxf/metamask-extension/node_modules/_through@2.3.8@through/index.js"}],"/opt/panxf/metamask-extension/node_modules/_debounce@1.1.0@debounce/index.js":[function(require,module,exports){
+},{"debounce":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_debounce@1.1.0@debounce/index.js","duplexer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_duplexer@0.1.1@duplexer/index.js","through":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_through@2.3.8@through/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_debounce@1.1.0@debounce/index.js":[function(require,module,exports){
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
  * be triggered. The function will be called after it stops being called for
@@ -63218,7 +63248,7 @@ module.exports = function debounce(func, wait, immediate){
   return debounced;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_deep-equal@1.0.1@deep-equal/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-equal@1.0.1@deep-equal/index.js":[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -63314,7 +63344,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":"/opt/panxf/metamask-extension/node_modules/_deep-equal@1.0.1@deep-equal/lib/is_arguments.js","./lib/keys.js":"/opt/panxf/metamask-extension/node_modules/_deep-equal@1.0.1@deep-equal/lib/keys.js"}],"/opt/panxf/metamask-extension/node_modules/_deep-equal@1.0.1@deep-equal/lib/is_arguments.js":[function(require,module,exports){
+},{"./lib/is_arguments.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-equal@1.0.1@deep-equal/lib/is_arguments.js","./lib/keys.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-equal@1.0.1@deep-equal/lib/keys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-equal@1.0.1@deep-equal/lib/is_arguments.js":[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -63336,7 +63366,7 @@ function unsupported(object){
     false;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_deep-equal@1.0.1@deep-equal/lib/keys.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-equal@1.0.1@deep-equal/lib/keys.js":[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -63347,7 +63377,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_deep-extend@0.5.1@deep-extend/lib/deep-extend.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-extend@0.5.1@deep-extend/lib/deep-extend.js":[function(require,module,exports){
 (function (Buffer){
 /*!
  * @description Recursive object extending
@@ -63502,7 +63532,7 @@ var deepExtend = module.exports = function (/*obj_1, [obj_2], [obj_N]*/) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des.js":[function(require,module,exports){
 'use strict';
 
 exports.utils = require('./des/utils');
@@ -63511,7 +63541,7 @@ exports.DES = require('./des/des');
 exports.CBC = require('./des/cbc');
 exports.EDE = require('./des/ede');
 
-},{"./des/cbc":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/cbc.js","./des/cipher":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/cipher.js","./des/des":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/des.js","./des/ede":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/ede.js","./des/utils":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/cbc.js":[function(require,module,exports){
+},{"./des/cbc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/cbc.js","./des/cipher":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/cipher.js","./des/des":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/des.js","./des/ede":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/ede.js","./des/utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/cbc.js":[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -63578,7 +63608,7 @@ proto._update = function _update(inp, inOff, out, outOff) {
   }
 };
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/cipher.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/cipher.js":[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -63721,7 +63751,7 @@ Cipher.prototype._finalDecrypt = function _finalDecrypt() {
   return this._unpad(out);
 };
 
-},{"minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/des.js":[function(require,module,exports){
+},{"minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/des.js":[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -63866,7 +63896,7 @@ DES.prototype._decrypt = function _decrypt(state, lStart, rStart, out, off) {
   utils.rip(l, r, out, off);
 };
 
-},{"../des":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/ede.js":[function(require,module,exports){
+},{"../des":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/ede.js":[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -63923,7 +63953,7 @@ EDE.prototype._update = function _update(inp, inOff, out, outOff) {
 EDE.prototype._pad = DES.prototype._pad;
 EDE.prototype._unpad = DES.prototype._unpad;
 
-},{"../des":"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_des.js@1.0.0@des.js/lib/des/utils.js":[function(require,module,exports){
+},{"../des":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_des.js@1.0.0@des.js/lib/des/utils.js":[function(require,module,exports){
 'use strict';
 
 exports.readUInt32BE = function readUInt32BE(bytes, off) {
@@ -64181,7 +64211,7 @@ exports.padSplit = function padSplit(num, size, group) {
   return out.join(' ');
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/browser.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/browser.js":[function(require,module,exports){
 (function (Buffer){
 var generatePrime = require('./lib/generatePrime')
 var primes = require('./lib/primes.json')
@@ -64228,7 +64258,7 @@ exports.createDiffieHellman = exports.DiffieHellman = createDiffieHellman
 
 }).call(this,require("buffer").Buffer)
 
-},{"./lib/dh":"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/dh.js","./lib/generatePrime":"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/generatePrime.js","./lib/primes.json":"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/primes.json","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/dh.js":[function(require,module,exports){
+},{"./lib/dh":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/dh.js","./lib/generatePrime":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/generatePrime.js","./lib/primes.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/primes.json","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/dh.js":[function(require,module,exports){
 (function (Buffer){
 var BN = require('bn.js');
 var MillerRabin = require('miller-rabin');
@@ -64397,7 +64427,7 @@ function formatReturnValue(bn, enc) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"./generatePrime":"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/generatePrime.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","miller-rabin":"/opt/panxf/metamask-extension/node_modules/_miller-rabin@4.0.1@miller-rabin/lib/mr.js","randombytes":"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/generatePrime.js":[function(require,module,exports){
+},{"./generatePrime":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/generatePrime.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","miller-rabin":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_miller-rabin@4.0.1@miller-rabin/lib/mr.js","randombytes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/generatePrime.js":[function(require,module,exports){
 var randomBytes = require('randombytes');
 module.exports = findPrime;
 findPrime.simpleSieve = simpleSieve;
@@ -64504,7 +64534,7 @@ function findPrime(bits, gen) {
 
 }
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","miller-rabin":"/opt/panxf/metamask-extension/node_modules/_miller-rabin@4.0.1@miller-rabin/lib/mr.js","randombytes":"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/primes.json":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","miller-rabin":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_miller-rabin@4.0.1@miller-rabin/lib/mr.js","randombytes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_diffie-hellman@5.0.3@diffie-hellman/lib/primes.json":[function(require,module,exports){
 module.exports={
     "modp1": {
         "gen": "02",
@@ -64539,7 +64569,7 @@ module.exports={
         "prime": "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dbe115974a3926f12fee5e438777cb6a932df8cd8bec4d073b931ba3bc832b68d9dd300741fa7bf8afc47ed2576f6936ba424663aab639c5ae4f5683423b4742bf1c978238f16cbe39d652de3fdb8befc848ad922222e04a4037c0713eb57a81a23f0c73473fc646cea306b4bcbc8862f8385ddfa9d4b7fa2c087e879683303ed5bdd3a062b3cf5b3a278a66d2a13f83f44f82ddf310ee074ab6a364597e899a0255dc164f31cc50846851df9ab48195ded7ea1b1d510bd7ee74d73faf36bc31ecfa268359046f4eb879f924009438b481c6cd7889a002ed5ee382bc9190da6fc026e479558e4475677e9aa9e3050e2765694dfc81f56e880b96e7160c980dd98edd3dfffffffffffffffff"
     }
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/index.js":[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter;
 var scrubber = require('./lib/scrub');
 var objectKeys = require('./lib/keys');
@@ -64666,7 +64696,7 @@ Proto.prototype.apply = function (f, args) {
     catch (err) { this.emit('error', err) }
 };
 
-},{"./lib/foreach":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/foreach.js","./lib/is_enum":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/is_enum.js","./lib/keys":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js","./lib/scrub":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/scrub.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js"}],"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/foreach.js":[function(require,module,exports){
+},{"./lib/foreach":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/foreach.js","./lib/is_enum":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/is_enum.js","./lib/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js","./lib/scrub":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/scrub.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/foreach.js":[function(require,module,exports){
 module.exports = function forEach (xs, f) {
     if (xs.forEach) return xs.forEach(f)
     for (var i = 0; i < xs.length; i++) {
@@ -64674,7 +64704,7 @@ module.exports = function forEach (xs, f) {
     }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/is_enum.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/is_enum.js":[function(require,module,exports){
 var objectKeys = require('./keys');
 
 module.exports = function (obj, key) {
@@ -64688,14 +64718,14 @@ module.exports = function (obj, key) {
     return false;
 };
 
-},{"./keys":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js"}],"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js":[function(require,module,exports){
+},{"./keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js":[function(require,module,exports){
 module.exports = Object.keys || function (obj) {
     var keys = [];
     for (var key in obj) keys.push(key);
     return keys;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/scrub.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/scrub.js":[function(require,module,exports){
 var traverse = require('traverse');
 var objectKeys = require('./keys');
 var forEach = require('./foreach');
@@ -64769,14 +64799,14 @@ Scrubber.prototype.unscrub = function (msg, f) {
     return args;
 };
 
-},{"./foreach":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/foreach.js","./keys":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js","traverse":"/opt/panxf/metamask-extension/node_modules/_traverse@0.6.6@traverse/index.js"}],"/opt/panxf/metamask-extension/node_modules/_dnode@1.2.2@dnode/browser.js":[function(require,module,exports){
+},{"./foreach":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/foreach.js","./keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/lib/keys.js","traverse":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_traverse@0.6.6@traverse/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode@1.2.2@dnode/browser.js":[function(require,module,exports){
 var dnode = require('./lib/dnode');
 
 module.exports = function (cons, opts) {
     return new dnode(cons, opts);
 };
 
-},{"./lib/dnode":"/opt/panxf/metamask-extension/node_modules/_dnode@1.2.2@dnode/lib/dnode.js"}],"/opt/panxf/metamask-extension/node_modules/_dnode@1.2.2@dnode/lib/dnode.js":[function(require,module,exports){
+},{"./lib/dnode":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode@1.2.2@dnode/lib/dnode.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode@1.2.2@dnode/lib/dnode.js":[function(require,module,exports){
 (function (process){
 var protocol = require('dnode-protocol');
 var Stream = require('stream');
@@ -64934,7 +64964,7 @@ dnode.prototype.destroy = function () {
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","dnode-protocol":"/opt/panxf/metamask-extension/node_modules/_dnode-protocol@0.2.2@dnode-protocol/index.js","jsonify":"/opt/panxf/metamask-extension/node_modules/_jsonify@0.0.0@jsonify/index.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_duplexer@0.1.1@duplexer/index.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","dnode-protocol":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_dnode-protocol@0.2.2@dnode-protocol/index.js","jsonify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_jsonify@0.0.0@jsonify/index.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_duplexer@0.1.1@duplexer/index.js":[function(require,module,exports){
 var Stream = require("stream")
 var writeMethods = ["write", "end", "destroy"]
 var readMethods = ["resume", "pause"]
@@ -65023,7 +65053,7 @@ function duplex(writer, reader) {
     }
 }
 
-},{"stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js":[function(require,module,exports){
+},{"stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js":[function(require,module,exports){
 'use strict';
 
 var elliptic = exports;
@@ -65038,7 +65068,7 @@ elliptic.curves = require('./elliptic/curves');
 elliptic.ec = require('./elliptic/ec');
 elliptic.eddsa = require('./elliptic/eddsa');
 
-},{"../package.json":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/package.json","./elliptic/curve":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","./elliptic/curves":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curves.js","./elliptic/ec":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/index.js","./elliptic/eddsa":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/index.js","./elliptic/utils":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/utils.js","brorand":"/opt/panxf/metamask-extension/node_modules/_brorand@1.1.0@brorand/index.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/base.js":[function(require,module,exports){
+},{"../package.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/package.json","./elliptic/curve":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","./elliptic/curves":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curves.js","./elliptic/ec":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/index.js","./elliptic/eddsa":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/index.js","./elliptic/utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/utils.js","brorand":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_brorand@1.1.0@brorand/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/base.js":[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -65415,7 +65445,7 @@ BasePoint.prototype.dblp = function dblp(k) {
   return r;
 };
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/edwards.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/edwards.js":[function(require,module,exports){
 'use strict';
 
 var curve = require('../curve');
@@ -65850,7 +65880,7 @@ Point.prototype.eqXToP = function eqXToP(x) {
 Point.prototype.toP = Point.prototype.normalize;
 Point.prototype.mixedAdd = Point.prototype.add;
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","../curve":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","../curve":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js":[function(require,module,exports){
 'use strict';
 
 var curve = exports;
@@ -65860,7 +65890,7 @@ curve.short = require('./short');
 curve.mont = require('./mont');
 curve.edwards = require('./edwards');
 
-},{"./base":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/base.js","./edwards":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/edwards.js","./mont":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/mont.js","./short":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/short.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/mont.js":[function(require,module,exports){
+},{"./base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/base.js","./edwards":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/edwards.js","./mont":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/mont.js","./short":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/short.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/mont.js":[function(require,module,exports){
 'use strict';
 
 var curve = require('../curve');
@@ -66042,7 +66072,7 @@ Point.prototype.getX = function getX() {
   return this.x.fromRed();
 };
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","../curve":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/short.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","../curve":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/short.js":[function(require,module,exports){
 'use strict';
 
 var curve = require('../curve');
@@ -66982,7 +67012,7 @@ JPoint.prototype.isInfinity = function isInfinity() {
   return this.z.cmpn(0) === 0;
 };
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","../curve":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curves.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","../curve":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curve/index.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/curves.js":[function(require,module,exports){
 'use strict';
 
 var curves = exports;
@@ -67189,7 +67219,7 @@ defineCurve('secp256k1', {
   ]
 });
 
-},{"../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","./precomputed/secp256k1":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/precomputed/secp256k1.js","hash.js":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/index.js":[function(require,module,exports){
+},{"../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","./precomputed/secp256k1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/precomputed/secp256k1.js","hash.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/index.js":[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -67431,7 +67461,7 @@ EC.prototype.getKeyRecoveryParam = function(e, signature, Q, enc) {
   throw new Error('Unable to find valid recovery factor');
 };
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","./key":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/key.js","./signature":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/signature.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","hmac-drbg":"/opt/panxf/metamask-extension/node_modules/_hmac-drbg@1.0.1@hmac-drbg/lib/hmac-drbg.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/key.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","./key":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/key.js","./signature":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/signature.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","hmac-drbg":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hmac-drbg@1.0.1@hmac-drbg/lib/hmac-drbg.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/key.js":[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -67552,7 +67582,7 @@ KeyPair.prototype.inspect = function inspect() {
          ' pub: ' + (this.pub && this.pub.inspect()) + ' >';
 };
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/signature.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/ec/signature.js":[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -67689,7 +67719,7 @@ Signature.prototype.toDER = function toDER(enc) {
   return utils.encode(res, enc);
 };
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/index.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/index.js":[function(require,module,exports){
 'use strict';
 
 var hash = require('hash.js');
@@ -67809,7 +67839,7 @@ EDDSA.prototype.isPoint = function isPoint(val) {
   return val instanceof this.pointClass;
 };
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","./key":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/key.js","./signature":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/signature.js","hash.js":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/key.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","./key":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/key.js","./signature":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/signature.js","hash.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/key.js":[function(require,module,exports){
 'use strict';
 
 var elliptic = require('../../elliptic');
@@ -67907,7 +67937,7 @@ KeyPair.prototype.getPublic = function getPublic(enc) {
 
 module.exports = KeyPair;
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/signature.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/eddsa/signature.js":[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -67975,7 +68005,7 @@ Signature.prototype.toHex = function toHex() {
 
 module.exports = Signature;
 
-},{"../../elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/precomputed/secp256k1.js":[function(require,module,exports){
+},{"../../elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/precomputed/secp256k1.js":[function(require,module,exports){
 module.exports = {
   doubles: {
     step: 4,
@@ -68757,7 +68787,7 @@ module.exports = {
   }
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/utils.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic/utils.js":[function(require,module,exports){
 'use strict';
 
 var utils = exports;
@@ -68879,7 +68909,7 @@ function intFromLE(bytes) {
 utils.intFromLE = intFromLE;
 
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js","minimalistic-crypto-utils":"/opt/panxf/metamask-extension/node_modules/_minimalistic-crypto-utils@1.0.1@minimalistic-crypto-utils/lib/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/package.json":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js","minimalistic-crypto-utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-crypto-utils@1.0.1@minimalistic-crypto-utils/lib/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/package.json":[function(require,module,exports){
 module.exports={
   "name": "elliptic",
   "version": "6.4.0",
@@ -68940,7 +68970,7 @@ module.exports={
   "_from": "elliptic@6.4.0",
   "_resolved": "http://registry.npm.taobao.org/elliptic/download/elliptic-6.4.0.tgz"
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js":[function(require,module,exports){
 var once = require('once');
 
 var noop = function() {};
@@ -69029,7 +69059,7 @@ var eos = function(stream, opts, callback) {
 
 module.exports = eos;
 
-},{"once":"/opt/panxf/metamask-extension/node_modules/_once@1.4.0@once/once.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/hexUtils.js":[function(require,module,exports){
+},{"once":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_once@1.4.0@once/once.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/hexUtils.js":[function(require,module,exports){
 'use strict'
 
 const ethjsUtil = require('ethjs-util')
@@ -69051,7 +69081,7 @@ function formatHex (hexNum) {
   return `0x${stripped}`
 }
 
-},{"ethjs-util":"/opt/panxf/metamask-extension/node_modules/_ethjs-util@0.1.4@ethjs-util/lib/index.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/index.js":[function(require,module,exports){
+},{"ethjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-util@0.1.4@ethjs-util/lib/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/index.js":[function(require,module,exports){
 // const EthQuery = require('ethjs-query')
 const EthQuery = require('eth-query')
 const EventEmitter = require('events')
@@ -69294,7 +69324,7 @@ module.exports = RpcBlockTracker
  // ├─ transactionsRoot: 0xb090c32d840dec1e9752719f21bbae4a73e58333aecb89bc3b8ed559fb2712a3
  // └─ uncles
 
-},{"./hexUtils":"/opt/panxf/metamask-extension/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/hexUtils.js","eth-query":"/opt/panxf/metamask-extension/node_modules/_eth-query@2.1.2@eth-query/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","pify":"/opt/panxf/metamask-extension/node_modules/_pify@2.3.0@pify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-hd-keyring@1.2.2@eth-hd-keyring/index.js":[function(require,module,exports){
+},{"./hexUtils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/hexUtils.js","eth-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-query@2.1.2@eth-query/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","pify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pify@2.3.0@pify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-hd-keyring@1.2.2@eth-hd-keyring/index.js":[function(require,module,exports){
 (function (Buffer){
 const EventEmitter = require('events').EventEmitter
 const hdkey = require('ethereumjs-wallet/hdkey')
@@ -69445,7 +69475,7 @@ module.exports = HdKeyring
 
 }).call(this,require("buffer").Buffer)
 
-},{"bip39":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","ethereumjs-wallet/hdkey":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/hdkey.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js":[function(require,module,exports){
+},{"bip39":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","ethereumjs-wallet/hdkey":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/hdkey.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js":[function(require,module,exports){
 class BaseFilter {
 
   constructor () {
@@ -69481,7 +69511,7 @@ class BaseFilter {
 }
 
 module.exports = BaseFilter
-},{}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/block-filter.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/block-filter.js":[function(require,module,exports){
 const BaseFilter = require('./base-filter')
 const getBlocksForRange = require('./getBlocksForRange')
 
@@ -69506,7 +69536,7 @@ module.exports = BlockFilter
 function hexToInt(hex) {
   return Number.parseInt(hex, 16)
 }
-},{"./base-filter":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js","./getBlocksForRange":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/getBlocksForRange.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/getBlocksForRange.js":[function(require,module,exports){
+},{"./base-filter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js","./getBlocksForRange":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/getBlocksForRange.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/getBlocksForRange.js":[function(require,module,exports){
 module.exports = getBlocksForRange
 
 async function getBlocksForRange({ ethQuery, oldBlock, newBlock }) {
@@ -69538,7 +69568,7 @@ function intToHex(int) {
 function hexToInt(hex) {
   return Number.parseInt(hex, 16)
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/index.js":[function(require,module,exports){
 const Mutex = require('await-semaphore').Mutex
 const EthQuery = require('ethjs-query')
 const createAsyncMiddleware = require('json-rpc-engine/src/createAsyncMiddleware')
@@ -69701,7 +69731,7 @@ function hexToInt(hex) {
   return Number.parseInt(hex, 16)
 }
 
-},{"./block-filter.js":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/block-filter.js","./log-filter.js":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/log-filter.js","./tx-filter.js":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/tx-filter.js","await-semaphore":"/opt/panxf/metamask-extension/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js","eth-json-rpc-middleware/scaffold":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/scaffold.js","ethjs-query":"/opt/panxf/metamask-extension/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js","json-rpc-engine/src/createAsyncMiddleware":"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createAsyncMiddleware.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/log-filter.js":[function(require,module,exports){
+},{"./block-filter.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/block-filter.js","./log-filter.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/log-filter.js","./tx-filter.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/tx-filter.js","await-semaphore":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_await-semaphore@0.1.3@await-semaphore/index.js","eth-json-rpc-middleware/scaffold":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/scaffold.js","ethjs-query":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js","json-rpc-engine/src/createAsyncMiddleware":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createAsyncMiddleware.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/log-filter.js":[function(require,module,exports){
 const BaseFilter = require('./base-filter')
 
 class LogFilter extends BaseFilter {
@@ -69847,7 +69877,7 @@ function blockTagIsNumber(blockTag){
 
 module.exports = LogFilter
 
-},{"./base-filter":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/tx-filter.js":[function(require,module,exports){
+},{"./base-filter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/tx-filter.js":[function(require,module,exports){
 const flatMap = require('lodash.flatmap')
 const BaseFilter = require('./base-filter')
 const getBlocksForRange = require('./getBlocksForRange')
@@ -69872,7 +69902,7 @@ class TxFilter extends BaseFilter {
 
 module.exports = TxFilter
 
-},{"./base-filter":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js","./getBlocksForRange":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/getBlocksForRange.js","lodash.flatmap":"/opt/panxf/metamask-extension/node_modules/_lodash.flatmap@4.5.0@lodash.flatmap/index.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/createProvider.js":[function(require,module,exports){
+},{"./base-filter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/base-filter.js","./getBlocksForRange":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-filters@1.2.8@eth-json-rpc-filters/getBlocksForRange.js","lodash.flatmap":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash.flatmap@4.5.0@lodash.flatmap/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/createProvider.js":[function(require,module,exports){
 const RpcEngine = require('json-rpc-engine')
 const providerFromEngine = require('eth-json-rpc-middleware/providerFromEngine')
 const createInfuraMiddleware = require('./index')
@@ -69886,7 +69916,7 @@ function createProvider(opts){
   return providerFromEngine(engine)
 }
 
-},{"./index":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/index.js","eth-json-rpc-middleware/providerFromEngine":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/providerFromEngine.js","json-rpc-engine":"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/index.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/index.js":[function(require,module,exports){
+},{"./index":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/index.js","eth-json-rpc-middleware/providerFromEngine":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/providerFromEngine.js","json-rpc-engine":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/index.js":[function(require,module,exports){
 const createAsyncMiddleware = require('json-rpc-engine/src/createAsyncMiddleware')
 const JsonRpcError = require('json-rpc-error')
 const fetch = require('cross-fetch')
@@ -70037,7 +70067,7 @@ function createInternalError (msg) {
   return new JsonRpcError.InternalError(err)
 }
 
-},{"cross-fetch":"/opt/panxf/metamask-extension/node_modules/_cross-fetch@2.2.0@cross-fetch/dist/browser-ponyfill.js","json-rpc-engine/src/createAsyncMiddleware":"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createAsyncMiddleware.js","json-rpc-error":"/opt/panxf/metamask-extension/node_modules/_json-rpc-error@2.0.0@json-rpc-error/index.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/providerFromEngine.js":[function(require,module,exports){
+},{"cross-fetch":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cross-fetch@2.2.0@cross-fetch/dist/browser-ponyfill.js","json-rpc-engine/src/createAsyncMiddleware":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createAsyncMiddleware.js","json-rpc-error":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-error@2.0.0@json-rpc-error/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/providerFromEngine.js":[function(require,module,exports){
 module.exports = providerFromEngine
 
 function providerFromEngine (engine) {
@@ -70045,11 +70075,11 @@ function providerFromEngine (engine) {
   return provider
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/scaffold.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-middleware@1.6.0@eth-json-rpc-middleware/scaffold.js":[function(require,module,exports){
 // for backwards compat
 module.exports = require('json-rpc-engine/src/createScaffoldMiddleware')
 
-},{"json-rpc-engine/src/createScaffoldMiddleware":"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createScaffoldMiddleware.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-keyring-controller@3.1.2@eth-keyring-controller/index.js":[function(require,module,exports){
+},{"json-rpc-engine/src/createScaffoldMiddleware":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createScaffoldMiddleware.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-keyring-controller@3.1.4@eth-keyring-controller/index.js":[function(require,module,exports){
 const log = require('loglevel')
 const ethUtil = require('ethereumjs-util')
 const BN = ethUtil.BN
@@ -70257,7 +70287,6 @@ class KeyringController extends EventEmitter {
       accounts.forEach((hexAccount) => {
         this.emit('newAccount', hexAccount)
       })
-      return accounts
     })
     .then(this.persistAllKeyrings.bind(this))
     .then(this._updateMemStoreKeyrings.bind(this))
@@ -70375,6 +70404,10 @@ class KeyringController extends EventEmitter {
   // encrypts that array with the provided `password`,
   // and persists that encrypted string to storage.
   persistAllKeyrings (password = this.password) {
+    if (typeof password !== 'string') {
+      return Promise.reject('KeyringController - password is not a string')
+    }
+
     this.password = password
     this.memStore.updateState({ isUnlocked: true })
     return Promise.all(this.keyrings.map((keyring) => {
@@ -70557,7 +70590,7 @@ class KeyringController extends EventEmitter {
 
 module.exports = KeyringController
 
-},{"bip39":"/opt/panxf/metamask-extension/node_modules/_bip39@2.5.0@bip39/index.js","browser-passworder":"/opt/panxf/metamask-extension/node_modules/_browser-passworder@2.0.3@browser-passworder/index.js","eth-hd-keyring":"/opt/panxf/metamask-extension/node_modules/_eth-hd-keyring@1.2.2@eth-hd-keyring/index.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","eth-simple-keyring":"/opt/panxf/metamask-extension/node_modules/_eth-simple-keyring@1.2.1@eth-simple-keyring/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","loglevel":"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/opt/panxf/metamask-extension/node_modules/_obs-store@2.4.1@obs-store/index.js","promise-filter":"/opt/panxf/metamask-extension/node_modules/_promise-filter@1.1.0@promise-filter/index.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/config.json":[function(require,module,exports){
+},{"bip39":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip39@2.5.0@bip39/index.js","browser-passworder":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-passworder@2.0.3@browser-passworder/index.js","eth-hd-keyring":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-hd-keyring@1.2.2@eth-hd-keyring/index.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","eth-simple-keyring":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-simple-keyring@1.2.2@eth-simple-keyring/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","loglevel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js","obs-store":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@2.4.1@obs-store/index.js","promise-filter":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-filter@1.1.0@promise-filter/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/config.json":[function(require,module,exports){
 module.exports={
   "version": 2,
   "tolerance": 2,
@@ -72416,7 +72449,7 @@ module.exports={
   ]
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/detector.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-phishing-detect@1.1.13@eth-phishing-detect/src/detector.js":[function(require,module,exports){
 const levenshtein = require('fast-levenshtein')
 const DEFAULT_TOLERANCE = 3
 
@@ -72496,7 +72529,7 @@ function matchPartsAgainstList(source, list) {
     return target.every((part, index) => source[index] === part)
   })
 }
-},{"fast-levenshtein":"/opt/panxf/metamask-extension/node_modules/_fast-levenshtein@2.0.6@fast-levenshtein/levenshtein.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-query@2.1.2@eth-query/index.js":[function(require,module,exports){
+},{"fast-levenshtein":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-levenshtein@2.0.6@fast-levenshtein/levenshtein.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-query@2.1.2@eth-query/index.js":[function(require,module,exports){
 const extend = require('xtend')
 const createRandomId = require('json-rpc-random-id')()
 
@@ -72607,7 +72640,7 @@ function createPayload(data){
   }, data)
 }
 
-},{"json-rpc-random-id":"/opt/panxf/metamask-extension/node_modules/_json-rpc-random-id@1.0.1@json-rpc-random-id/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js":[function(require,module,exports){
+},{"json-rpc-random-id":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-random-id@1.0.1@json-rpc-random-id/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js":[function(require,module,exports){
 const ethUtil = require('ethereumjs-util')
 const ethAbi = require('ethereumjs-abi')
 
@@ -72727,7 +72760,7 @@ function padWithZeroes (number, length) {
   return myString
 }
 
-},{"ethereumjs-abi":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js"}],"/opt/panxf/metamask-extension/node_modules/_eth-simple-keyring@1.2.1@eth-simple-keyring/index.js":[function(require,module,exports){
+},{"ethereumjs-abi":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-simple-keyring@1.2.2@eth-simple-keyring/index.js":[function(require,module,exports){
 (function (Buffer){
 const EventEmitter = require('events').EventEmitter
 const Wallet = require('ethereumjs-wallet')
@@ -72742,8 +72775,8 @@ class SimpleKeyring extends EventEmitter {
   constructor (opts) {
     super()
     this.type = type
-    this.opts = opts || {}
     this.wallets = []
+    this.deserialize(opts)
   }
 
   serialize () {
@@ -72838,7 +72871,7 @@ module.exports = SimpleKeyring
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","ethereumjs-wallet":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereum-common@0.0.18@ethereum-common/params.json":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","ethereumjs-wallet":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereum-common@0.0.18@ethereum-common/params.json":[function(require,module,exports){
 module.exports={
   "genesisGasLimit": {
     "v": 5000,
@@ -73075,10 +73108,10 @@ module.exports={
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/index.js":[function(require,module,exports){
 module.exports = require('./lib/index.js')
 
-},{"./lib/index.js":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/lib/index.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/lib/index.js":[function(require,module,exports){
+},{"./lib/index.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/lib/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-abi@0.6.5@ethereumjs-abi/lib/index.js":[function(require,module,exports){
 (function (Buffer){
 const utils = require('ethereumjs-util')
 const BN = require('bn.js')
@@ -73640,7 +73673,7 @@ module.exports = ABI
 
 }).call(this,require("buffer").Buffer)
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-tx@1.3.4@ethereumjs-tx/es5/index.js":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-tx@1.3.4@ethereumjs-tx/es5/index.js":[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -73969,7 +74002,7 @@ var Transaction = function () {
 module.exports = Transaction;
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","ethereum-common/params.json":"/opt/panxf/metamask-extension/node_modules/_ethereum-common@0.0.18@ethereum-common/params.json","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","ethereum-common/params.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereum-common@0.0.18@ethereum-common/params.json","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js":[function(require,module,exports){
 (function (Buffer){
 const SHA3 = require('keccakjs')
 const secp256k1 = require('secp256k1')
@@ -74675,7 +74708,7 @@ exports.defineProperties = function (self, fields, data) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","keccakjs":"/opt/panxf/metamask-extension/node_modules/_keccakjs@0.2.1@keccakjs/browser.js","rlp":"/opt/panxf/metamask-extension/node_modules/_rlp@2.0.0@rlp/index.js","secp256k1":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js":[function(require,module,exports){
+},{"assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","keccakjs":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccakjs@0.2.1@keccakjs/browser.js","rlp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_rlp@2.0.0@rlp/index.js","secp256k1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.0.1@ethereumjs-util/index.js":[function(require,module,exports){
 (function (Buffer){
 const createKeccakHash = require('keccak')
 const secp256k1 = require('secp256k1')
@@ -75402,7 +75435,7 @@ exports.defineProperties = function (self, fields, data) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","keccak":"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/js.js","rlp":"/opt/panxf/metamask-extension/node_modules/_rlp@2.0.0@rlp/index.js","secp256k1":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js":[function(require,module,exports){
+},{"assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","keccak":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/js.js","rlp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_rlp@2.0.0@rlp/index.js","secp256k1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -76118,7 +76151,7 @@ exports.defineProperties = function (self, fields, data) {
     }
   }
 };
-},{"assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","ethjs-util":"/opt/panxf/metamask-extension/node_modules/_ethjs-util@0.1.4@ethjs-util/lib/index.js","keccak":"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/js.js","rlp":"/opt/panxf/metamask-extension/node_modules/_rlp@2.0.0@rlp/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","secp256k1":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/hdkey.js":[function(require,module,exports){
+},{"assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","ethjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-util@0.1.4@ethjs-util/lib/index.js","keccak":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/js.js","rlp":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_rlp@2.0.0@rlp/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","secp256k1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/hdkey.js":[function(require,module,exports){
 const HDKey = require('hdkey')
 const Wallet = require('./index.js')
 
@@ -76172,7 +76205,7 @@ EthereumHDKey.prototype.getWallet = function () {
 
 module.exports = EthereumHDKey
 
-},{"./index.js":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","hdkey":"/opt/panxf/metamask-extension/node_modules/_hdkey@0.7.1@hdkey/lib/hdkey.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js":[function(require,module,exports){
+},{"./index.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","hdkey":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hdkey@0.7.1@hdkey/lib/hdkey.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js":[function(require,module,exports){
 (function (Buffer){
 var ethUtil = require('ethereumjs-util')
 var crypto = require('crypto')
@@ -76470,7 +76503,7 @@ module.exports = Wallet
 
 }).call(this,require("buffer").Buffer)
 
-},{"bs58check":"/opt/panxf/metamask-extension/node_modules/_bs58check@1.3.4@bs58check/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","crypto":"/opt/panxf/metamask-extension/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js","scrypt.js":"/opt/panxf/metamask-extension/node_modules/_scrypt.js@0.2.0@scrypt.js/js.js","uuid":"/opt/panxf/metamask-extension/node_modules/_uuid@2.0.3@uuid/uuid.js"}],"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/thirdparty.js":[function(require,module,exports){
+},{"bs58check":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bs58check@1.3.4@bs58check/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","crypto":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js","scrypt.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_scrypt.js@0.2.0@scrypt.js/js.js","uuid":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_uuid@2.0.3@uuid/uuid.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/thirdparty.js":[function(require,module,exports){
 (function (Buffer){
 var Wallet = require('./index.js')
 var ethUtil = require('ethereumjs-util')
@@ -76707,7 +76740,7 @@ module.exports = Thirdparty
 
 }).call(this,require("buffer").Buffer)
 
-},{"./index.js":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","aes-js":"/opt/panxf/metamask-extension/node_modules/_aes-js@0.2.4@aes-js/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","crypto":"/opt/panxf/metamask-extension/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js","scrypt.js":"/opt/panxf/metamask-extension/node_modules/_scrypt.js@0.2.0@scrypt.js/js.js","utf8":"/opt/panxf/metamask-extension/node_modules/_utf8@2.1.2@utf8/utf8.js"}],"/opt/panxf/metamask-extension/node_modules/_ethjs-format@0.2.7@ethjs-format/lib/index.js":[function(require,module,exports){
+},{"./index.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-wallet@0.6.0@ethereumjs-wallet/index.js","aes-js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_aes-js@0.2.4@aes-js/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","crypto":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@4.5.0@ethereumjs-util/index.js","scrypt.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_scrypt.js@0.2.0@scrypt.js/js.js","utf8":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_utf8@2.1.2@utf8/utf8.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-format@0.2.7@ethjs-format/lib/index.js":[function(require,module,exports){
 'use strict';
 
 var schema = require('ethjs-schema');
@@ -76962,7 +76995,7 @@ module.exports = {
   formatInputs: formatInputs,
   formatOutputs: formatOutputs
 };
-},{"ethjs-schema":"/opt/panxf/metamask-extension/node_modules/_ethjs-schema@0.2.1@ethjs-schema/src/schema.json","ethjs-util":"/opt/panxf/metamask-extension/node_modules/_ethjs-util@0.1.3@ethjs-util/lib/index.js","number-to-bn":"/opt/panxf/metamask-extension/node_modules/_number-to-bn@1.7.0@number-to-bn/src/index.js","strip-hex-prefix":"/opt/panxf/metamask-extension/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/opt/panxf/metamask-extension/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js":[function(require,module,exports){
+},{"ethjs-schema":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-schema@0.2.1@ethjs-schema/src/schema.json","ethjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-util@0.1.3@ethjs-util/lib/index.js","number-to-bn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_number-to-bn@1.7.0@number-to-bn/src/index.js","strip-hex-prefix":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-query@0.3.8@ethjs-query/lib/index.js":[function(require,module,exports){
 'use strict';
 
 var format = require('ethjs-format');
@@ -77078,7 +77111,7 @@ function generateFnFor(rpcMethodName, methodObject) {
     }
   };
 }
-},{"ethjs-format":"/opt/panxf/metamask-extension/node_modules/_ethjs-format@0.2.7@ethjs-format/lib/index.js","ethjs-rpc":"/opt/panxf/metamask-extension/node_modules/_ethjs-rpc@0.2.0@ethjs-rpc/lib/index.js","promise-to-callback":"/opt/panxf/metamask-extension/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/opt/panxf/metamask-extension/node_modules/_ethjs-rpc@0.2.0@ethjs-rpc/lib/index.js":[function(require,module,exports){
+},{"ethjs-format":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-format@0.2.7@ethjs-format/lib/index.js","ethjs-rpc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-rpc@0.2.0@ethjs-rpc/lib/index.js","promise-to-callback":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-rpc@0.2.0@ethjs-rpc/lib/index.js":[function(require,module,exports){
 'use strict';
 
 var promiseToCallback = require('promise-to-callback');
@@ -77170,7 +77203,7 @@ function createPayload(data, id) {
     params: []
   }, data);
 }
-},{"promise-to-callback":"/opt/panxf/metamask-extension/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/opt/panxf/metamask-extension/node_modules/_ethjs-schema@0.2.1@ethjs-schema/src/schema.json":[function(require,module,exports){
+},{"promise-to-callback":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-schema@0.2.1@ethjs-schema/src/schema.json":[function(require,module,exports){
 module.exports={
   "methods": {
     "web3_clientVersion": [[], "S"],
@@ -77384,7 +77417,7 @@ module.exports={
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_ethjs-util@0.1.3@ethjs-util/lib/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-util@0.1.3@ethjs-util/lib/index.js":[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -77608,7 +77641,7 @@ module.exports = {
 };
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","is-hex-prefixed":"/opt/panxf/metamask-extension/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js","strip-hex-prefix":"/opt/panxf/metamask-extension/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/opt/panxf/metamask-extension/node_modules/_ethjs-util@0.1.4@ethjs-util/lib/index.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","is-hex-prefixed":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js","strip-hex-prefix":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethjs-util@0.1.4@ethjs-util/lib/index.js":[function(require,module,exports){
 (function (Buffer){
 'use strict';
 
@@ -77832,7 +77865,7 @@ module.exports = {
 };
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","is-hex-prefixed":"/opt/panxf/metamask-extension/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js","strip-hex-prefix":"/opt/panxf/metamask-extension/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","is-hex-prefixed":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js","strip-hex-prefix":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -78357,7 +78390,7 @@ function functionBindPolyfill(context) {
   };
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var MD5 = require('md5.js')
 
@@ -78404,7 +78437,7 @@ function EVP_BytesToKey (password, salt, keyBits, ivLen) {
 
 module.exports = EVP_BytesToKey
 
-},{"md5.js":"/opt/panxf/metamask-extension/node_modules/_md5.js@1.3.4@md5.js/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/extension-instance.js":[function(require,module,exports){
+},{"md5.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_md5.js@1.3.4@md5.js/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/extension-instance.js":[function(require,module,exports){
 const apis = [
   'alarms',
   'bookmarks',
@@ -78492,7 +78525,7 @@ function Extension () {
 
 module.exports = Extension
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/index.js":[function(require,module,exports){
 /* Extension.js
  *
  * A module for unifying browser differences in the WebExtension API.
@@ -78508,7 +78541,7 @@ module.exports = Extension
 const Extension = require('./extension-instance')
 module.exports = new Extension()
 
-},{"./extension-instance":"/opt/panxf/metamask-extension/node_modules/_extensionizer@1.0.1@extensionizer/extension-instance.js"}],"/opt/panxf/metamask-extension/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/core.js":[function(require,module,exports){
+},{"./extension-instance":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_extensionizer@1.0.1@extensionizer/extension-instance.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/core.js":[function(require,module,exports){
 var equalsOptions = { strict: true };
 var _equals = require('deep-equal');
 var areEquals = function (a, b) {
@@ -78887,7 +78920,7 @@ function validate(sequence, document, externalValidator) {
 }
 exports.validate = validate;
 
-},{"./helpers":"/opt/panxf/metamask-extension/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/helpers.js","deep-equal":"/opt/panxf/metamask-extension/node_modules/_deep-equal@1.0.1@deep-equal/index.js"}],"/opt/panxf/metamask-extension/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/duplex.js":[function(require,module,exports){
+},{"./helpers":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/helpers.js","deep-equal":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-equal@1.0.1@deep-equal/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/duplex.js":[function(require,module,exports){
 var equalsOptions = { strict: true };
 var _equals = require('deep-equal');
 var areEquals = function (a, b) {
@@ -79103,7 +79136,7 @@ function compare(tree1, tree2) {
 }
 exports.compare = compare;
 
-},{"./core":"/opt/panxf/metamask-extension/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/core.js","./helpers":"/opt/panxf/metamask-extension/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/helpers.js","deep-equal":"/opt/panxf/metamask-extension/node_modules/_deep-equal@1.0.1@deep-equal/index.js"}],"/opt/panxf/metamask-extension/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/helpers.js":[function(require,module,exports){
+},{"./core":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/core.js","./helpers":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/helpers.js","deep-equal":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_deep-equal@1.0.1@deep-equal/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-json-patch@2.0.6@fast-json-patch/lib/helpers.js":[function(require,module,exports){
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -79264,7 +79297,7 @@ var PatchError = (function (_super) {
 }(Error));
 exports.PatchError = PatchError;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_fast-levenshtein@2.0.6@fast-levenshtein/levenshtein.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_fast-levenshtein@2.0.6@fast-levenshtein/levenshtein.js":[function(require,module,exports){
 (function() {
   'use strict';
   
@@ -79402,7 +79435,7 @@ exports.PatchError = PatchError;
 }());
 
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_hash-base@3.0.4@hash-base/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash-base@3.0.4@hash-base/index.js":[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('stream').Transform
@@ -79499,7 +79532,7 @@ HashBase.prototype._digest = function () {
 
 module.exports = HashBase
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js":[function(require,module,exports){
 var hash = exports;
 
 hash.utils = require('./hash/utils');
@@ -79516,7 +79549,7 @@ hash.sha384 = hash.sha.sha384;
 hash.sha512 = hash.sha.sha512;
 hash.ripemd160 = hash.ripemd.ripemd160;
 
-},{"./hash/common":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","./hash/hmac":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/hmac.js","./hash/ripemd":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/ripemd.js","./hash/sha":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha.js","./hash/utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js":[function(require,module,exports){
+},{"./hash/common":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","./hash/hmac":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/hmac.js","./hash/ripemd":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/ripemd.js","./hash/sha":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha.js","./hash/utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -79610,7 +79643,7 @@ BlockHash.prototype._pad = function pad() {
   return res;
 };
 
-},{"./utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/hmac.js":[function(require,module,exports){
+},{"./utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/hmac.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -79659,7 +79692,7 @@ Hmac.prototype.digest = function digest(enc) {
   return this.outer.digest(enc);
 };
 
-},{"./utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/ripemd.js":[function(require,module,exports){
+},{"./utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/ripemd.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -79807,7 +79840,7 @@ var sh = [
   8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11
 ];
 
-},{"./common":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","./utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha.js":[function(require,module,exports){
+},{"./common":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","./utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha.js":[function(require,module,exports){
 'use strict';
 
 exports.sha1 = require('./sha/1');
@@ -79816,7 +79849,7 @@ exports.sha256 = require('./sha/256');
 exports.sha384 = require('./sha/384');
 exports.sha512 = require('./sha/512');
 
-},{"./sha/1":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/1.js","./sha/224":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/224.js","./sha/256":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/256.js","./sha/384":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/384.js","./sha/512":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/512.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/1.js":[function(require,module,exports){
+},{"./sha/1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/1.js","./sha/224":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/224.js","./sha/256":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/256.js","./sha/384":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/384.js","./sha/512":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/512.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/1.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -79892,7 +79925,7 @@ SHA1.prototype._digest = function digest(enc) {
     return utils.split32(this.h, 'big');
 };
 
-},{"../common":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","../utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./common":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/common.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/224.js":[function(require,module,exports){
+},{"../common":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","../utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./common":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/common.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/224.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -79924,7 +79957,7 @@ SHA224.prototype._digest = function digest(enc) {
 };
 
 
-},{"../utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./256":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/256.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/256.js":[function(require,module,exports){
+},{"../utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./256":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/256.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/256.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -80031,7 +80064,7 @@ SHA256.prototype._digest = function digest(enc) {
     return utils.split32(this.h, 'big');
 };
 
-},{"../common":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","../utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./common":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/common.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/384.js":[function(require,module,exports){
+},{"../common":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","../utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./common":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/common.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/384.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -80068,7 +80101,7 @@ SHA384.prototype._digest = function digest(enc) {
     return utils.split32(this.h.slice(0, 12), 'big');
 };
 
-},{"../utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./512":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/512.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/512.js":[function(require,module,exports){
+},{"../utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","./512":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/512.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/512.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -80400,7 +80433,7 @@ function g1_512_lo(xh, xl) {
   return r;
 }
 
-},{"../common":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","../utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/common.js":[function(require,module,exports){
+},{"../common":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/common.js","../utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/sha/common.js":[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -80451,7 +80484,7 @@ function g1_256(x) {
 }
 exports.g1_256 = g1_256;
 
-},{"../utils":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js":[function(require,module,exports){
+},{"../utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash/utils.js":[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -80706,7 +80739,7 @@ function shr64_lo(ah, al, num) {
 }
 exports.shr64_lo = shr64_lo;
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/opt/panxf/metamask-extension/node_modules/_hdkey@0.7.1@hdkey/lib/hdkey.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hdkey@0.7.1@hdkey/lib/hdkey.js":[function(require,module,exports){
 (function (Buffer){
 var assert = require('assert')
 var crypto = require('crypto')
@@ -80938,7 +80971,7 @@ module.exports = HDKey
 
 }).call(this,require("buffer").Buffer)
 
-},{"assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","coinstring":"/opt/panxf/metamask-extension/node_modules/_coinstring@2.3.0@coinstring/lib/coinstring.js","crypto":"/opt/panxf/metamask-extension/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js","secp256k1":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/opt/panxf/metamask-extension/node_modules/_hmac-drbg@1.0.1@hmac-drbg/lib/hmac-drbg.js":[function(require,module,exports){
+},{"assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","coinstring":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_coinstring@2.3.0@coinstring/lib/coinstring.js","crypto":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_crypto-browserify@3.12.0@crypto-browserify/index.js","secp256k1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hmac-drbg@1.0.1@hmac-drbg/lib/hmac-drbg.js":[function(require,module,exports){
 'use strict';
 
 var hash = require('hash.js');
@@ -81053,7 +81086,7 @@ HmacDRBG.prototype.generate = function generate(len, enc, add, addEnc) {
   return utils.encode(res, enc);
 };
 
-},{"hash.js":"/opt/panxf/metamask-extension/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js","minimalistic-assert":"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js","minimalistic-crypto-utils":"/opt/panxf/metamask-extension/node_modules/_minimalistic-crypto-utils@1.0.1@minimalistic-crypto-utils/lib/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_ieee754@1.1.11@ieee754/index.js":[function(require,module,exports){
+},{"hash.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash.js@1.1.3@hash.js/lib/hash.js","minimalistic-assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js","minimalistic-crypto-utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-crypto-utils@1.0.1@minimalistic-crypto-utils/lib/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ieee754@1.1.11@ieee754/index.js":[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -81139,7 +81172,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.1@inherits/inherits_browser.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.1@inherits/inherits_browser.js":[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -81164,32 +81197,11 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js":[function(require,module,exports){
-arguments[4]["/opt/panxf/metamask-extension/node_modules/_inherits@2.0.1@inherits/inherits_browser.js"][0].apply(exports,arguments)
-},{}],"/opt/panxf/metamask-extension/node_modules/_is-buffer@1.1.6@is-buffer/index.js":[function(require,module,exports){
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
-
-},{}],"/opt/panxf/metamask-extension/node_modules/_is-fn@1.0.0@is-fn/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js":[function(require,module,exports){
+arguments[4]["/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.1@inherits/inherits_browser.js"][0].apply(exports,arguments)
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-buffer@1.1.6@is-buffer/index.js":[function(require,module,exports){
+arguments[4]["/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/_is-buffer@1.1.6@is-buffer/index.js"][0].apply(exports,arguments)
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-fn@1.0.0@is-fn/index.js":[function(require,module,exports){
 'use strict';
 var toString = Object.prototype.toString;
 
@@ -81197,7 +81209,7 @@ module.exports = function (x) {
 	return toString.call(x) === '[object Function]';
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js":[function(require,module,exports){
 /**
  * Returns a `Boolean` on whether or not the a `String` starts with '0x'
  * @param {String} str the string input value
@@ -81212,14 +81224,14 @@ module.exports = function isHexPrefixed(str) {
   return str.slice(0, 2) === '0x';
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_isarray@1.0.0@isarray/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_isarray@1.0.0@isarray/index.js":[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_js-sha3@0.3.1@js-sha3/src/sha3.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_js-sha3@0.3.1@js-sha3/src/sha3.js":[function(require,module,exports){
 (function (global){
 /*
  * js-sha3 v0.3.1
@@ -81656,7 +81668,7 @@ module.exports = Array.isArray || function (arr) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createAsyncMiddleware.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createAsyncMiddleware.js":[function(require,module,exports){
 'use strict';
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -81736,7 +81748,7 @@ function createAsyncMiddleware(asyncMiddleware) {
   };
 }
 
-},{"babel-runtime/core-js/promise":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","promise-to-callback":"/opt/panxf/metamask-extension/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createScaffoldMiddleware.js":[function(require,module,exports){
+},{"babel-runtime/core-js/promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/promise.js","babel-runtime/helpers/asyncToGenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/asyncToGenerator.js","babel-runtime/regenerator":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/regenerator/index.js","promise-to-callback":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/createScaffoldMiddleware.js":[function(require,module,exports){
 'use strict';
 
 module.exports = createScaffoldMiddleware;
@@ -81758,7 +81770,7 @@ function createScaffoldMiddleware(handlers) {
   };
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-engine@3.7.3@json-rpc-engine/src/index.js":[function(require,module,exports){
 'use strict';
 
 var _stringify = require('babel-runtime/core-js/json/stringify');
@@ -81925,9 +81937,9 @@ var RpcEngine = function () {
 
 module.exports = RpcEngine;
 
-},{"async":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/dist/async.js","babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js"}],"/opt/panxf/metamask-extension/node_modules/_json-rpc-error@2.0.0@json-rpc-error/index.js":[function(require,module,exports){
+},{"async":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/dist/async.js","babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-error@2.0.0@json-rpc-error/index.js":[function(require,module,exports){
 module.exports = require('./lib/errors');
-},{"./lib/errors":"/opt/panxf/metamask-extension/node_modules/_json-rpc-error@2.0.0@json-rpc-error/lib/errors.js"}],"/opt/panxf/metamask-extension/node_modules/_json-rpc-error@2.0.0@json-rpc-error/lib/errors.js":[function(require,module,exports){
+},{"./lib/errors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-error@2.0.0@json-rpc-error/lib/errors.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-error@2.0.0@json-rpc-error/lib/errors.js":[function(require,module,exports){
 var inherits = require('inherits');
 
 var JsonRpcError = function(message, code, data) {
@@ -82028,7 +82040,7 @@ module.exports = JsonRpcError;
 
 
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_json-rpc-middleware-stream@1.0.1@json-rpc-middleware-stream/engineStream.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-middleware-stream@1.0.1@json-rpc-middleware-stream/engineStream.js":[function(require,module,exports){
 const DuplexStream = require('readable-stream').Duplex
 
 module.exports = createEngineStream
@@ -82048,7 +82060,7 @@ function createEngineStream({ engine }) {
     cb()
   }
 }
-},{"readable-stream":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/opt/panxf/metamask-extension/node_modules/_json-rpc-random-id@1.0.1@json-rpc-random-id/index.js":[function(require,module,exports){
+},{"readable-stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-random-id@1.0.1@json-rpc-random-id/index.js":[function(require,module,exports){
 module.exports = IdIterator
 
 function IdIterator(opts){
@@ -82062,7 +82074,7 @@ function IdIterator(opts){
   }
 
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_json-stable-stringify@1.0.1@json-stable-stringify/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-stable-stringify@1.0.1@json-stable-stringify/index.js":[function(require,module,exports){
 var json = typeof JSON !== 'undefined' ? JSON : require('jsonify');
 
 module.exports = function (obj, opts) {
@@ -82148,11 +82160,11 @@ var objectKeys = Object.keys || function (obj) {
     return keys;
 };
 
-},{"jsonify":"/opt/panxf/metamask-extension/node_modules/_jsonify@0.0.0@jsonify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_jsonify@0.0.0@jsonify/index.js":[function(require,module,exports){
+},{"jsonify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_jsonify@0.0.0@jsonify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_jsonify@0.0.0@jsonify/index.js":[function(require,module,exports){
 exports.parse = require('./lib/parse');
 exports.stringify = require('./lib/stringify');
 
-},{"./lib/parse":"/opt/panxf/metamask-extension/node_modules/_jsonify@0.0.0@jsonify/lib/parse.js","./lib/stringify":"/opt/panxf/metamask-extension/node_modules/_jsonify@0.0.0@jsonify/lib/stringify.js"}],"/opt/panxf/metamask-extension/node_modules/_jsonify@0.0.0@jsonify/lib/parse.js":[function(require,module,exports){
+},{"./lib/parse":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_jsonify@0.0.0@jsonify/lib/parse.js","./lib/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_jsonify@0.0.0@jsonify/lib/stringify.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_jsonify@0.0.0@jsonify/lib/parse.js":[function(require,module,exports){
 var at, // The index of the current character
     ch, // The current character
     escapee = {
@@ -82427,7 +82439,7 @@ module.exports = function (source, reviver) {
     }({'': result}, '')) : result;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_jsonify@0.0.0@jsonify/lib/stringify.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_jsonify@0.0.0@jsonify/lib/stringify.js":[function(require,module,exports){
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     gap,
@@ -82583,11 +82595,11 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/js.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/js.js":[function(require,module,exports){
 'use strict'
 module.exports = require('./lib/api')(require('./lib/keccak'))
 
-},{"./lib/api":"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/api/index.js","./lib/keccak":"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/keccak.js"}],"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/api/index.js":[function(require,module,exports){
+},{"./lib/api":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/api/index.js","./lib/keccak":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/keccak.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/api/index.js":[function(require,module,exports){
 'use strict'
 var createKeccak = require('./keccak')
 var createShake = require('./shake')
@@ -82617,7 +82629,7 @@ module.exports = function (KeccakState) {
   }
 }
 
-},{"./keccak":"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/api/keccak.js","./shake":"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/api/shake.js"}],"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/api/keccak.js":[function(require,module,exports){
+},{"./keccak":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/api/keccak.js","./shake":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/api/shake.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/api/keccak.js":[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('stream').Transform
@@ -82703,7 +82715,7 @@ module.exports = function (KeccakState) {
   return Keccak
 }
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/api/shake.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/api/shake.js":[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('stream').Transform
@@ -82780,7 +82792,7 @@ module.exports = function (KeccakState) {
   return Shake
 }
 
-},{"inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/keccak-state-unroll.js":[function(require,module,exports){
+},{"inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/keccak-state-unroll.js":[function(require,module,exports){
 'use strict'
 var P1600_ROUND_CONSTANTS = [1, 0, 32898, 0, 32906, 2147483648, 2147516416, 2147483648, 32907, 0, 2147483649, 0, 2147516545, 2147483648, 32777, 2147483648, 138, 0, 136, 0, 2147516425, 0, 2147483658, 0, 2147516555, 0, 139, 2147483648, 32905, 2147483648, 32771, 2147483648, 32770, 2147483648, 128, 2147483648, 32778, 0, 2147483658, 2147483648, 2147516545, 2147483648, 32896, 2147483648, 2147483649, 0, 2147516424, 2147483648]
 
@@ -82969,7 +82981,7 @@ exports.p1600 = function (s) {
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/keccak.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/keccak.js":[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var keccakState = require('./keccak-state-unroll')
@@ -83041,10 +83053,10 @@ Keccak.prototype.copy = function (dest) {
 
 module.exports = Keccak
 
-},{"./keccak-state-unroll":"/opt/panxf/metamask-extension/node_modules/_keccak@1.4.0@keccak/lib/keccak-state-unroll.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_keccakjs@0.2.1@keccakjs/browser.js":[function(require,module,exports){
+},{"./keccak-state-unroll":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccak@1.4.0@keccak/lib/keccak-state-unroll.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_keccakjs@0.2.1@keccakjs/browser.js":[function(require,module,exports){
 module.exports = require('browserify-sha3').SHA3Hash
 
-},{"browserify-sha3":"/opt/panxf/metamask-extension/node_modules/_browserify-sha3@0.0.1@browserify-sha3/index.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash.flatmap@4.5.0@lodash.flatmap/index.js":[function(require,module,exports){
+},{"browserify-sha3":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-sha3@0.0.1@browserify-sha3/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash.flatmap@4.5.0@lodash.flatmap/index.js":[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -85507,7 +85519,7 @@ module.exports = flatMap;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash.uniqby@4.7.0@lodash.uniqby/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash.uniqby@4.7.0@lodash.uniqby/index.js":[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -87926,7 +87938,7 @@ module.exports = uniqBy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_Symbol.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_Symbol.js":[function(require,module,exports){
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -87934,7 +87946,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-},{"./_root":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_root.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_arrayLikeKeys.js":[function(require,module,exports){
+},{"./_root":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_root.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_arrayLikeKeys.js":[function(require,module,exports){
 var baseTimes = require('./_baseTimes'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray'),
@@ -87985,7 +87997,7 @@ function arrayLikeKeys(value, inherited) {
 
 module.exports = arrayLikeKeys;
 
-},{"./_baseTimes":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseTimes.js","./_isIndex":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_isIndex.js","./isArguments":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArguments.js","./isArray":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArray.js","./isBuffer":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isBuffer.js","./isTypedArray":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isTypedArray.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js":[function(require,module,exports){
+},{"./_baseTimes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseTimes.js","./_isIndex":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_isIndex.js","./isArguments":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArguments.js","./isArray":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArray.js","./isBuffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isBuffer.js","./isTypedArray":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isTypedArray.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js":[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -88015,7 +88027,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-},{"./_Symbol":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_Symbol.js","./_getRawTag":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_getRawTag.js","./_objectToString":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_objectToString.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseIsArguments.js":[function(require,module,exports){
+},{"./_Symbol":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_Symbol.js","./_getRawTag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_getRawTag.js","./_objectToString":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_objectToString.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseIsArguments.js":[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isObjectLike = require('./isObjectLike');
 
@@ -88035,7 +88047,7 @@ function baseIsArguments(value) {
 
 module.exports = baseIsArguments;
 
-},{"./_baseGetTag":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js","./isObjectLike":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isObjectLike.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseIsTypedArray.js":[function(require,module,exports){
+},{"./_baseGetTag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js","./isObjectLike":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isObjectLike.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseIsTypedArray.js":[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isLength = require('./isLength'),
     isObjectLike = require('./isObjectLike');
@@ -88097,7 +88109,7 @@ function baseIsTypedArray(value) {
 
 module.exports = baseIsTypedArray;
 
-},{"./_baseGetTag":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js","./isLength":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isLength.js","./isObjectLike":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isObjectLike.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseKeys.js":[function(require,module,exports){
+},{"./_baseGetTag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js","./isLength":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isLength.js","./isObjectLike":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isObjectLike.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseKeys.js":[function(require,module,exports){
 var isPrototype = require('./_isPrototype'),
     nativeKeys = require('./_nativeKeys');
 
@@ -88129,7 +88141,7 @@ function baseKeys(object) {
 
 module.exports = baseKeys;
 
-},{"./_isPrototype":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_isPrototype.js","./_nativeKeys":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_nativeKeys.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseTimes.js":[function(require,module,exports){
+},{"./_isPrototype":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_isPrototype.js","./_nativeKeys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_nativeKeys.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseTimes.js":[function(require,module,exports){
 /**
  * The base implementation of `_.times` without support for iteratee shorthands
  * or max array length checks.
@@ -88151,7 +88163,7 @@ function baseTimes(n, iteratee) {
 
 module.exports = baseTimes;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseUnary.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseUnary.js":[function(require,module,exports){
 /**
  * The base implementation of `_.unary` without support for storing metadata.
  *
@@ -88167,7 +88179,7 @@ function baseUnary(func) {
 
 module.exports = baseUnary;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_freeGlobal.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_freeGlobal.js":[function(require,module,exports){
 (function (global){
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -88176,7 +88188,7 @@ module.exports = freeGlobal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_getRawTag.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_getRawTag.js":[function(require,module,exports){
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -88224,7 +88236,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-},{"./_Symbol":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_Symbol.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_isIndex.js":[function(require,module,exports){
+},{"./_Symbol":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_Symbol.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_isIndex.js":[function(require,module,exports){
 /** Used as references for various `Number` constants. */
 var MAX_SAFE_INTEGER = 9007199254740991;
 
@@ -88251,7 +88263,7 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_isPrototype.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_isPrototype.js":[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -88271,7 +88283,7 @@ function isPrototype(value) {
 
 module.exports = isPrototype;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_nativeKeys.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_nativeKeys.js":[function(require,module,exports){
 var overArg = require('./_overArg');
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -88279,7 +88291,7 @@ var nativeKeys = overArg(Object.keys, Object);
 
 module.exports = nativeKeys;
 
-},{"./_overArg":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_overArg.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_nodeUtil.js":[function(require,module,exports){
+},{"./_overArg":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_overArg.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_nodeUtil.js":[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `exports`. */
@@ -88311,7 +88323,7 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-},{"./_freeGlobal":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_freeGlobal.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_objectToString.js":[function(require,module,exports){
+},{"./_freeGlobal":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_freeGlobal.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_objectToString.js":[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -88335,7 +88347,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_overArg.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_overArg.js":[function(require,module,exports){
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -88352,7 +88364,7 @@ function overArg(func, transform) {
 
 module.exports = overArg;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_root.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_root.js":[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -88363,7 +88375,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-},{"./_freeGlobal":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_freeGlobal.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/constant.js":[function(require,module,exports){
+},{"./_freeGlobal":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_freeGlobal.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/constant.js":[function(require,module,exports){
 /**
  * Creates a function that returns `value`.
  *
@@ -88391,7 +88403,7 @@ function constant(value) {
 
 module.exports = constant;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArguments.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArguments.js":[function(require,module,exports){
 var baseIsArguments = require('./_baseIsArguments'),
     isObjectLike = require('./isObjectLike');
 
@@ -88429,7 +88441,7 @@ var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsAr
 
 module.exports = isArguments;
 
-},{"./_baseIsArguments":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseIsArguments.js","./isObjectLike":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isObjectLike.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArray.js":[function(require,module,exports){
+},{"./_baseIsArguments":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseIsArguments.js","./isObjectLike":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isObjectLike.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArray.js":[function(require,module,exports){
 /**
  * Checks if `value` is classified as an `Array` object.
  *
@@ -88457,7 +88469,7 @@ var isArray = Array.isArray;
 
 module.exports = isArray;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArrayLike.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArrayLike.js":[function(require,module,exports){
 var isFunction = require('./isFunction'),
     isLength = require('./isLength');
 
@@ -88492,7 +88504,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"./isFunction":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isFunction.js","./isLength":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isLength.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isBuffer.js":[function(require,module,exports){
+},{"./isFunction":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isFunction.js","./isLength":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isLength.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isBuffer.js":[function(require,module,exports){
 var root = require('./_root'),
     stubFalse = require('./stubFalse');
 
@@ -88532,7 +88544,7 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-},{"./_root":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_root.js","./stubFalse":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/stubFalse.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isFunction.js":[function(require,module,exports){
+},{"./_root":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_root.js","./stubFalse":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/stubFalse.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isFunction.js":[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isObject = require('./isObject');
 
@@ -88571,7 +88583,7 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"./_baseGetTag":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js","./isObject":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isObject.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isLength.js":[function(require,module,exports){
+},{"./_baseGetTag":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseGetTag.js","./isObject":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isObject.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isLength.js":[function(require,module,exports){
 /** Used as references for various `Number` constants. */
 var MAX_SAFE_INTEGER = 9007199254740991;
 
@@ -88608,7 +88620,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isObject.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isObject.js":[function(require,module,exports){
 /**
  * Checks if `value` is the
  * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
@@ -88641,7 +88653,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isObjectLike.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isObjectLike.js":[function(require,module,exports){
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -88672,7 +88684,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isTypedArray.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isTypedArray.js":[function(require,module,exports){
 var baseIsTypedArray = require('./_baseIsTypedArray'),
     baseUnary = require('./_baseUnary'),
     nodeUtil = require('./_nodeUtil');
@@ -88701,7 +88713,7 @@ var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedA
 
 module.exports = isTypedArray;
 
-},{"./_baseIsTypedArray":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseIsTypedArray.js","./_baseUnary":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseUnary.js","./_nodeUtil":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_nodeUtil.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/keys.js":[function(require,module,exports){
+},{"./_baseIsTypedArray":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseIsTypedArray.js","./_baseUnary":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseUnary.js","./_nodeUtil":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_nodeUtil.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/keys.js":[function(require,module,exports){
 var arrayLikeKeys = require('./_arrayLikeKeys'),
     baseKeys = require('./_baseKeys'),
     isArrayLike = require('./isArrayLike');
@@ -88740,7 +88752,7 @@ function keys(object) {
 
 module.exports = keys;
 
-},{"./_arrayLikeKeys":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_arrayLikeKeys.js","./_baseKeys":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/_baseKeys.js","./isArrayLike":"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/isArrayLike.js"}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/noop.js":[function(require,module,exports){
+},{"./_arrayLikeKeys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_arrayLikeKeys.js","./_baseKeys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/_baseKeys.js","./isArrayLike":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/isArrayLike.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/noop.js":[function(require,module,exports){
 /**
  * This method returns `undefined`.
  *
@@ -88759,7 +88771,7 @@ function noop() {
 
 module.exports = noop;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_lodash@4.17.10@lodash/stubFalse.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_lodash@4.17.10@lodash/stubFalse.js":[function(require,module,exports){
 /**
  * This method returns `false`.
  *
@@ -88779,7 +88791,7 @@ function stubFalse() {
 
 module.exports = stubFalse;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_loglevel@1.6.1@loglevel/lib/loglevel.js":[function(require,module,exports){
 /*
 * loglevel - https://github.com/pimterry/loglevel
 *
@@ -89031,7 +89043,7 @@ module.exports = stubFalse;
     return defaultLogger;
 }));
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_md5.js@1.3.4@md5.js/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_md5.js@1.3.4@md5.js/index.js":[function(require,module,exports){
 (function (Buffer){
 'use strict'
 var inherits = require('inherits')
@@ -89181,7 +89193,7 @@ module.exports = MD5
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","hash-base":"/opt/panxf/metamask-extension/node_modules/_hash-base@3.0.4@hash-base/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_miller-rabin@4.0.1@miller-rabin/lib/mr.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","hash-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash-base@3.0.4@hash-base/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_miller-rabin@4.0.1@miller-rabin/lib/mr.js":[function(require,module,exports){
 var bn = require('bn.js');
 var brorand = require('brorand');
 
@@ -89298,7 +89310,7 @@ MillerRabin.prototype.getDivisor = function getDivisor(n, k) {
   return false;
 };
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","brorand":"/opt/panxf/metamask-extension/node_modules/_brorand@1.1.0@brorand/index.js"}],"/opt/panxf/metamask-extension/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","brorand":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_brorand@1.1.0@brorand/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-assert@1.0.1@minimalistic-assert/index.js":[function(require,module,exports){
 module.exports = assert;
 
 function assert(val, msg) {
@@ -89311,7 +89323,7 @@ assert.equal = function assertEqual(l, r, msg) {
     throw new Error(msg || ('Assertion failed: ' + l + ' != ' + r));
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_minimalistic-crypto-utils@1.0.1@minimalistic-crypto-utils/lib/utils.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_minimalistic-crypto-utils@1.0.1@minimalistic-crypto-utils/lib/utils.js":[function(require,module,exports){
 'use strict';
 
 var utils = exports;
@@ -89371,7 +89383,7 @@ utils.encode = function encode(arr, enc) {
     return arr;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_number-to-bn@1.7.0@number-to-bn/src/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_number-to-bn@1.7.0@number-to-bn/src/index.js":[function(require,module,exports){
 var BN = require('bn.js');
 var stripHexPrefix = require('strip-hex-prefix');
 
@@ -89411,7 +89423,7 @@ module.exports = function numberToBN(arg) {
   throw new Error('[number-to-bn] while converting number ' + JSON.stringify(arg) + ' to BN.js instance, error: invalid number value. Value must be an integer, hex string, BN or BigNumber instance. Note, decimals are not supported.');
 }
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.6@bn.js/lib/bn.js","strip-hex-prefix":"/opt/panxf/metamask-extension/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/opt/panxf/metamask-extension/node_modules/_obj-multiplex@1.0.0@obj-multiplex/index.js":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.6@bn.js/lib/bn.js","strip-hex-prefix":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obj-multiplex@1.0.0@obj-multiplex/index.js":[function(require,module,exports){
 const { Duplex } = require('readable-stream')
 const endOfStream = require('end-of-stream')
 const once = require('once')
@@ -89520,7 +89532,7 @@ function anyStreamEnd(stream, _cb) {
   endOfStream(stream, { readable: false }, cb)
   endOfStream(stream, { writable: false }, cb)
 }
-},{"end-of-stream":"/opt/panxf/metamask-extension/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js","once":"/opt/panxf/metamask-extension/node_modules/_once@1.4.0@once/once.js","readable-stream":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/opt/panxf/metamask-extension/node_modules/_obs-store@2.4.1@obs-store/index.js":[function(require,module,exports){
+},{"end-of-stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js","once":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_once@1.4.0@once/once.js","readable-stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@2.4.1@obs-store/index.js":[function(require,module,exports){
 'use strict';
 
 var _assign = require('babel-runtime/core-js/object/assign');
@@ -89681,7 +89693,7 @@ var ObservableStore = function (_DuplexStream) {
 
 module.exports = ObservableStore;
 
-},{"babel-runtime/core-js/object/assign":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/assign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js":[function(require,module,exports){
 'use strict';
 
 var _assign = require('babel-runtime/core-js/object/assign');
@@ -89803,7 +89815,7 @@ var ObservableStore = function (_EventEmitter) {
 
 module.exports = ObservableStore;
 
-},{"babel-runtime/core-js/object/assign":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/helpers/typeof":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/asStream.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/assign":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/assign.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","babel-runtime/helpers/typeof":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/typeof.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/asStream.js":[function(require,module,exports){
 'use strict';
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
@@ -89891,7 +89903,7 @@ var ObsStoreStream = function (_DuplexStream) {
   return ObsStoreStream;
 }(DuplexStream);
 
-},{"babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/composed.js":[function(require,module,exports){
+},{"babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/composed.js":[function(require,module,exports){
 'use strict';
 
 var _keys = require('babel-runtime/core-js/object/keys');
@@ -89961,7 +89973,7 @@ var ComposedStore = function (_ObservableStore) {
 
 module.exports = ComposedStore;
 
-},{"../":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js"}],"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/localStorage.js":[function(require,module,exports){
+},{"../":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/core-js/object/keys":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/keys.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/localStorage.js":[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -90039,7 +90051,7 @@ module.exports = LocalStorageStore;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../":"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/index.js","babel-runtime/core-js/json/stringify":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/opt/panxf/metamask-extension/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js"}],"/opt/panxf/metamask-extension/node_modules/_obs-store@3.0.0@obs-store/lib/transform.js":[function(require,module,exports){
+},{"../":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/index.js","babel-runtime/core-js/json/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/json/stringify.js","babel-runtime/core-js/object/get-prototype-of":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/core-js/object/get-prototype-of.js","babel-runtime/helpers/classCallCheck":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/classCallCheck.js","babel-runtime/helpers/createClass":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/createClass.js","babel-runtime/helpers/inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/inherits.js","babel-runtime/helpers/possibleConstructorReturn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_babel-runtime@6.26.0@babel-runtime/helpers/possibleConstructorReturn.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_obs-store@3.0.0@obs-store/lib/transform.js":[function(require,module,exports){
 'use strict';
 
 var TransformStream = require('through2').obj;
@@ -90057,7 +90069,7 @@ function transformStore(syncTransformFn) {
   });
 }
 
-},{"through2":"/opt/panxf/metamask-extension/node_modules/_through2@2.0.3@through2/through2.js"}],"/opt/panxf/metamask-extension/node_modules/_once@1.4.0@once/once.js":[function(require,module,exports){
+},{"through2":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_through2@2.0.3@through2/through2.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_once@1.4.0@once/once.js":[function(require,module,exports){
 var wrappy = require('wrappy')
 module.exports = wrappy(once)
 module.exports.strict = wrappy(onceStrict)
@@ -90101,7 +90113,7 @@ function onceStrict (fn) {
   return f
 }
 
-},{"wrappy":"/opt/panxf/metamask-extension/node_modules/_wrappy@1.0.2@wrappy/wrappy.js"}],"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/aesid.json":[function(require,module,exports){
+},{"wrappy":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_wrappy@1.0.2@wrappy/wrappy.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/aesid.json":[function(require,module,exports){
 module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
 "2.16.840.1.101.3.4.1.3": "aes-128-ofb",
@@ -90115,7 +90127,7 @@ module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.43": "aes-256-ofb",
 "2.16.840.1.101.3.4.1.44": "aes-256-cfb"
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/asn1.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/asn1.js":[function(require,module,exports){
 // from https://github.com/indutny/self-signed/blob/gh-pages/lib/asn1.js
 // Fedor, you are amazing.
 'use strict'
@@ -90239,7 +90251,7 @@ exports.signature = asn1.define('signature', function () {
   )
 })
 
-},{"./certificate":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/certificate.js","asn1.js":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js"}],"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/certificate.js":[function(require,module,exports){
+},{"./certificate":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/certificate.js","asn1.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/certificate.js":[function(require,module,exports){
 // from https://github.com/Rantanen/node-dtls/blob/25a7dc861bda38cfeac93a723500eea4f0ac2e86/Certificate.js
 // thanks to @Rantanen
 
@@ -90329,7 +90341,7 @@ var X509Certificate = asn.define('X509Certificate', function () {
 
 module.exports = X509Certificate
 
-},{"asn1.js":"/opt/panxf/metamask-extension/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js"}],"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/fixProc.js":[function(require,module,exports){
+},{"asn1.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_asn1.js@4.10.1@asn1.js/lib/asn1.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/fixProc.js":[function(require,module,exports){
 (function (Buffer){
 // adapted from https://github.com/apatil/pemstrip
 var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r\+\/\=]+)[\n\r]+/m
@@ -90364,7 +90376,7 @@ module.exports = function (okey, password) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"browserify-aes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","evp_bytestokey":"/opt/panxf/metamask-extension/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js"}],"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js":[function(require,module,exports){
+},{"browserify-aes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","evp_bytestokey":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_evp_bytestokey@1.0.3@evp_bytestokey/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js":[function(require,module,exports){
 (function (Buffer){
 var asn1 = require('./asn1')
 var aesid = require('./aesid.json')
@@ -90475,11 +90487,11 @@ function decrypt (data, password) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"./aesid.json":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/aesid.json","./asn1":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/asn1.js","./fixProc":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/fixProc.js","browserify-aes":"/opt/panxf/metamask-extension/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","pbkdf2":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js":[function(require,module,exports){
+},{"./aesid.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/aesid.json","./asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/asn1.js","./fixProc":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/fixProc.js","browserify-aes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-aes@1.2.0@browserify-aes/browser.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","pbkdf2":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js":[function(require,module,exports){
 exports.pbkdf2 = require('./lib/async')
 exports.pbkdf2Sync = require('./lib/sync')
 
-},{"./lib/async":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/async.js","./lib/sync":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/sync-browser.js"}],"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/async.js":[function(require,module,exports){
+},{"./lib/async":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/async.js","./lib/sync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/sync-browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/async.js":[function(require,module,exports){
 (function (process,global){
 var checkParameters = require('./precondition')
 var defaultEncoding = require('./default-encoding')
@@ -90584,7 +90596,7 @@ module.exports = function (password, salt, iterations, keylen, digest, callback)
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./default-encoding":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/default-encoding.js","./precondition":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/precondition.js","./sync":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/sync-browser.js","_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/default-encoding.js":[function(require,module,exports){
+},{"./default-encoding":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/default-encoding.js","./precondition":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/precondition.js","./sync":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/sync-browser.js","_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/default-encoding.js":[function(require,module,exports){
 (function (process){
 var defaultEncoding
 /* istanbul ignore next */
@@ -90599,7 +90611,7 @@ module.exports = defaultEncoding
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/precondition.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/precondition.js":[function(require,module,exports){
 (function (Buffer){
 var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
@@ -90632,7 +90644,7 @@ module.exports = function (password, salt, iterations, keylen) {
 
 }).call(this,{"isBuffer":require("../../_is-buffer@1.1.6@is-buffer/index.js")})
 
-},{"../../_is-buffer@1.1.6@is-buffer/index.js":"/opt/panxf/metamask-extension/node_modules/_is-buffer@1.1.6@is-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/sync-browser.js":[function(require,module,exports){
+},{"../../_is-buffer@1.1.6@is-buffer/index.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-buffer@1.1.6@is-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/sync-browser.js":[function(require,module,exports){
 var md5 = require('create-hash/md5')
 var rmd160 = require('ripemd160')
 var sha = require('sha.js')
@@ -90735,7 +90747,7 @@ function pbkdf2 (password, salt, iterations, keylen, digest) {
 
 module.exports = pbkdf2
 
-},{"./default-encoding":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/default-encoding.js","./precondition":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/precondition.js","create-hash/md5":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/md5.js","ripemd160":"/opt/panxf/metamask-extension/node_modules/_ripemd160@2.0.2@ripemd160/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","sha.js":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/index.js"}],"/opt/panxf/metamask-extension/node_modules/_percentile@1.2.0@percentile/lib/index.js":[function(require,module,exports){
+},{"./default-encoding":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/default-encoding.js","./precondition":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/lib/precondition.js","create-hash/md5":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/md5.js","ripemd160":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ripemd160@2.0.2@ripemd160/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","sha.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_percentile@1.2.0@percentile/lib/index.js":[function(require,module,exports){
 /**
  * Error message for case when percentile is less than 0
  *
@@ -90814,7 +90826,7 @@ function percentile(p, list, fn) {
 
 module.exports = percentile;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_pify@2.3.0@pify/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pify@2.3.0@pify/index.js":[function(require,module,exports){
 'use strict';
 
 var processFn = function (fn, P, opts) {
@@ -90884,7 +90896,7 @@ var pify = module.exports = function (obj, P, opts) {
 
 pify.all = pify;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_pify@3.0.0@pify/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pify@3.0.0@pify/index.js":[function(require,module,exports){
 'use strict';
 
 const processFn = (fn, opts) => function () {
@@ -90970,14 +90982,14 @@ module.exports = (obj, opts) => {
 	return ret;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/index.js":[function(require,module,exports){
 /*
  * Copyright (c) 2012 Mathieu Turcotte
  * Licensed under the MIT license.
  */
 
 module.exports = require('./lib/checks');
-},{"./lib/checks":"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/lib/checks.js"}],"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/lib/checks.js":[function(require,module,exports){
+},{"./lib/checks":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/lib/checks.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/lib/checks.js":[function(require,module,exports){
 /*
  * Copyright (c) 2012 Mathieu Turcotte
  * Licensed under the MIT license.
@@ -91073,7 +91085,7 @@ module.exports.checkIsBoolean = typeCheck('boolean');
 module.exports.checkIsFunction = typeCheck('function');
 module.exports.checkIsObject = typeCheck('object');
 
-},{"./errors":"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/lib/errors.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_precond@0.2.3@precond/lib/errors.js":[function(require,module,exports){
+},{"./errors":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/lib/errors.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_precond@0.2.3@precond/lib/errors.js":[function(require,module,exports){
 /*
  * Copyright (c) 2012 Mathieu Turcotte
  * Licensed under the MIT license.
@@ -91099,7 +91111,7 @@ IllegalStateError.prototype.name = 'IllegalStateError';
 
 module.exports.IllegalStateError = IllegalStateError;
 module.exports.IllegalArgumentError = IllegalArgumentError;
-},{"util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js":[function(require,module,exports){
+},{"util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js":[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -91148,7 +91160,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js":[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -91334,7 +91346,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_promise-filter@1.1.0@promise-filter/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-filter@1.1.0@promise-filter/index.js":[function(require,module,exports){
 const assert  = require('assert')
 const Promise = require('any-promise')
 
@@ -91352,7 +91364,7 @@ function filter(fn, ctx) {
   }
 }
 
-},{"any-promise":"/opt/panxf/metamask-extension/node_modules/_any-promise@0.1.0@any-promise/any-promise-shim.js","assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js"}],"/opt/panxf/metamask-extension/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js":[function(require,module,exports){
+},{"any-promise":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_any-promise@0.1.0@any-promise/any-promise-shim.js","assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js":[function(require,module,exports){
 'use strict';
 var isFn = require('is-fn');
 var setImmediate = require('set-immediate-shim');
@@ -91371,7 +91383,7 @@ module.exports = function (promise) {
 	};
 };
 
-},{"is-fn":"/opt/panxf/metamask-extension/node_modules/_is-fn@1.0.0@is-fn/index.js","set-immediate-shim":"/opt/panxf/metamask-extension/node_modules/_set-immediate-shim@1.0.1@set-immediate-shim/index.js"}],"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/browser.js":[function(require,module,exports){
+},{"is-fn":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-fn@1.0.0@is-fn/index.js","set-immediate-shim":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_set-immediate-shim@1.0.1@set-immediate-shim/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/browser.js":[function(require,module,exports){
 exports.publicEncrypt = require('./publicEncrypt');
 exports.privateDecrypt = require('./privateDecrypt');
 
@@ -91382,7 +91394,7 @@ exports.privateEncrypt = function privateEncrypt(key, buf) {
 exports.publicDecrypt = function publicDecrypt(key, buf) {
   return exports.privateDecrypt(key, buf, true);
 };
-},{"./privateDecrypt":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/privateDecrypt.js","./publicEncrypt":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/publicEncrypt.js"}],"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/mgf.js":[function(require,module,exports){
+},{"./privateDecrypt":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/privateDecrypt.js","./publicEncrypt":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/publicEncrypt.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/mgf.js":[function(require,module,exports){
 (function (Buffer){
 var createHash = require('create-hash');
 module.exports = function (seed, len) {
@@ -91402,7 +91414,7 @@ function i2ops(c) {
 }
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/privateDecrypt.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/privateDecrypt.js":[function(require,module,exports){
 (function (Buffer){
 var parseKeys = require('parse-asn1');
 var mgf = require('./mgf');
@@ -91514,7 +91526,7 @@ function compare(a, b){
 }
 }).call(this,require("buffer").Buffer)
 
-},{"./mgf":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/mgf.js","./withPublic":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/withPublic.js","./xor":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/xor.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","browserify-rsa":"/opt/panxf/metamask-extension/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","parse-asn1":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js"}],"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/publicEncrypt.js":[function(require,module,exports){
+},{"./mgf":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/mgf.js","./withPublic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/withPublic.js","./xor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/xor.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","browserify-rsa":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","parse-asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/publicEncrypt.js":[function(require,module,exports){
 (function (Buffer){
 var parseKeys = require('parse-asn1');
 var randomBytes = require('randombytes');
@@ -91613,7 +91625,7 @@ function nonZero(len, crypto) {
 }
 }).call(this,require("buffer").Buffer)
 
-},{"./mgf":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/mgf.js","./withPublic":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/withPublic.js","./xor":"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/xor.js","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","browserify-rsa":"/opt/panxf/metamask-extension/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","parse-asn1":"/opt/panxf/metamask-extension/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js","randombytes":"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/withPublic.js":[function(require,module,exports){
+},{"./mgf":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/mgf.js","./withPublic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/withPublic.js","./xor":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/xor.js","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","browserify-rsa":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browserify-rsa@4.0.1@browserify-rsa/index.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","parse-asn1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_parse-asn1@5.1.1@parse-asn1/index.js","randombytes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/withPublic.js":[function(require,module,exports){
 (function (Buffer){
 var bn = require('bn.js');
 function withPublic(paddedMsg, key) {
@@ -91627,7 +91639,7 @@ function withPublic(paddedMsg, key) {
 module.exports = withPublic;
 }).call(this,require("buffer").Buffer)
 
-},{"bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_public-encrypt@4.0.2@public-encrypt/xor.js":[function(require,module,exports){
+},{"bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_public-encrypt@4.0.2@public-encrypt/xor.js":[function(require,module,exports){
 module.exports = function xor(a, b) {
   var len = a.length;
   var i = -1;
@@ -91636,7 +91648,7 @@ module.exports = function xor(a, b) {
   }
   return a
 };
-},{}],"/opt/panxf/metamask-extension/node_modules/_pump@3.0.0@pump/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pump@3.0.0@pump/index.js":[function(require,module,exports){
 (function (process){
 var once = require('once')
 var eos = require('end-of-stream')
@@ -91723,7 +91735,7 @@ module.exports = pump
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","end-of-stream":"/opt/panxf/metamask-extension/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js","fs":"/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js","once":"/opt/panxf/metamask-extension/node_modules/_once@1.4.0@once/once.js"}],"/opt/panxf/metamask-extension/node_modules/_punycode@1.4.1@punycode/punycode.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","end-of-stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_end-of-stream@1.4.1@end-of-stream/index.js","fs":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js","once":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_once@1.4.0@once/once.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_punycode@1.4.1@punycode/punycode.js":[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -92261,7 +92273,7 @@ module.exports = pump
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_querystring-es3@0.2.1@querystring-es3/decode.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_querystring-es3@0.2.1@querystring-es3/decode.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -92347,7 +92359,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_querystring-es3@0.2.1@querystring-es3/encode.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_querystring-es3@0.2.1@querystring-es3/encode.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -92434,13 +92446,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_querystring-es3@0.2.1@querystring-es3/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_querystring-es3@0.2.1@querystring-es3/index.js":[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":"/opt/panxf/metamask-extension/node_modules/_querystring-es3@0.2.1@querystring-es3/decode.js","./encode":"/opt/panxf/metamask-extension/node_modules/_querystring-es3@0.2.1@querystring-es3/encode.js"}],"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js":[function(require,module,exports){
+},{"./decode":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_querystring-es3@0.2.1@querystring-es3/decode.js","./encode":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_querystring-es3@0.2.1@querystring-es3/encode.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js":[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -92483,7 +92495,7 @@ function randomBytes (size, cb) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_randomfill@1.0.4@randomfill/browser.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randomfill@1.0.4@randomfill/browser.js":[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -92596,7 +92608,7 @@ function randomFillSync (buf, offset, size) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","randombytes":"/opt/panxf/metamask-extension/node_modules/_randombytes@2.0.6@randombytes/browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/configError.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","randombytes":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_randombytes@2.0.6@randombytes/browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/configError.js":[function(require,module,exports){
 function RavenConfigError(message) {
   this.name = 'RavenConfigError';
   this.message = message;
@@ -92606,7 +92618,7 @@ RavenConfigError.prototype.constructor = RavenConfigError;
 
 module.exports = RavenConfigError;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/console.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/console.js":[function(require,module,exports){
 var utils = require('./utils');
 
 var wrapMethod = function(console, level, callback) {
@@ -92650,7 +92662,7 @@ module.exports = {
   wrapMethod: wrapMethod
 };
 
-},{"./utils":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/raven.js":[function(require,module,exports){
+},{"./utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/raven.js":[function(require,module,exports){
 (function (global){
 /*global XDomainRequest:false */
 
@@ -94840,7 +94852,7 @@ module.exports = Raven;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../vendor/TraceKit/tracekit":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/vendor/TraceKit/tracekit.js","../vendor/json-stringify-safe/stringify":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/vendor/json-stringify-safe/stringify.js","../vendor/md5/md5":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/vendor/md5/md5.js","./configError":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/configError.js","./console":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/console.js","./utils":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/singleton.js":[function(require,module,exports){
+},{"../vendor/TraceKit/tracekit":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/vendor/TraceKit/tracekit.js","../vendor/json-stringify-safe/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/vendor/json-stringify-safe/stringify.js","../vendor/md5/md5":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/vendor/md5/md5.js","./configError":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/configError.js","./console":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/console.js","./utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/singleton.js":[function(require,module,exports){
 (function (global){
 /**
  * Enforces a single instance of the Raven client, and the
@@ -94912,7 +94924,7 @@ module.exports.Client = RavenConstructor;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./raven":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/raven.js"}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/utils.js":[function(require,module,exports){
+},{"./raven":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/raven.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/utils.js":[function(require,module,exports){
 (function (global){
 var stringify = require('../vendor/json-stringify-safe/stringify');
 
@@ -95562,7 +95574,7 @@ module.exports = {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../vendor/json-stringify-safe/stringify":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/vendor/json-stringify-safe/stringify.js"}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/vendor/TraceKit/tracekit.js":[function(require,module,exports){
+},{"../vendor/json-stringify-safe/stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/vendor/json-stringify-safe/stringify.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/vendor/TraceKit/tracekit.js":[function(require,module,exports){
 (function (global){
 var utils = require('../../src/utils');
 
@@ -96248,7 +96260,7 @@ module.exports = TraceKit;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../../src/utils":"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/src/utils.js"}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/vendor/json-stringify-safe/stringify.js":[function(require,module,exports){
+},{"../../src/utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/src/utils.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/vendor/json-stringify-safe/stringify.js":[function(require,module,exports){
 /*
  json-stringify-safe
  Like JSON.stringify, but doesn't throw on circular references.
@@ -96324,7 +96336,7 @@ function serializer(replacer, cycleReplacer) {
   };
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_raven-js@3.25.2@raven-js/vendor/md5/md5.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_raven-js@3.25.2@raven-js/vendor/md5/md5.js":[function(require,module,exports){
 /*
  * JavaScript MD5
  * https://github.com/blueimp/JavaScript-MD5
@@ -96592,10 +96604,10 @@ function md5(string, key, raw) {
 
 module.exports = md5;
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/duplex-browser.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/duplex-browser.js":[function(require,module,exports){
 module.exports = require('./lib/_stream_duplex.js');
 
-},{"./lib/_stream_duplex.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js":[function(require,module,exports){
+},{"./lib/_stream_duplex.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -96727,7 +96739,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"./_stream_readable":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_readable.js","./_stream_writable":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js","core-util-is":"/opt/panxf/metamask-extension/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","process-nextick-args":"/opt/panxf/metamask-extension/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_passthrough.js":[function(require,module,exports){
+},{"./_stream_readable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_readable.js","./_stream_writable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js","core-util-is":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","process-nextick-args":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_passthrough.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -96775,7 +96787,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_transform.js","core-util-is":"/opt/panxf/metamask-extension/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_readable.js":[function(require,module,exports){
+},{"./_stream_transform":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_transform.js","core-util-is":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_readable.js":[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -97798,7 +97810,7 @@ function indexOf(xs, x) {
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./_stream_duplex":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","./internal/streams/BufferList":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/BufferList.js","./internal/streams/destroy":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/destroy.js","./internal/streams/stream":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/stream-browser.js","_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","core-util-is":"/opt/panxf/metamask-extension/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","isarray":"/opt/panxf/metamask-extension/node_modules/_isarray@1.0.0@isarray/index.js","process-nextick-args":"/opt/panxf/metamask-extension/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","string_decoder/":"/opt/panxf/metamask-extension/node_modules/_string_decoder@1.1.1@string_decoder/lib/string_decoder.js","util":"/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_transform.js":[function(require,module,exports){
+},{"./_stream_duplex":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","./internal/streams/BufferList":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/BufferList.js","./internal/streams/destroy":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/destroy.js","./internal/streams/stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/stream-browser.js","_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","core-util-is":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","isarray":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_isarray@1.0.0@isarray/index.js","process-nextick-args":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","string_decoder/":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_string_decoder@1.1.1@string_decoder/lib/string_decoder.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_transform.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -98013,7 +98025,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","core-util-is":"/opt/panxf/metamask-extension/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js":[function(require,module,exports){
+},{"./_stream_duplex":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","core-util-is":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js":[function(require,module,exports){
 (function (process,global,setImmediate){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -98704,7 +98716,7 @@ Writable.prototype._destroy = function (err, cb) {
 };
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
 
-},{"./_stream_duplex":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","./internal/streams/destroy":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/destroy.js","./internal/streams/stream":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/stream-browser.js","_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","core-util-is":"/opt/panxf/metamask-extension/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","process-nextick-args":"/opt/panxf/metamask-extension/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","timers":"/opt/panxf/metamask-extension/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js","util-deprecate":"/opt/panxf/metamask-extension/node_modules/_util-deprecate@1.0.2@util-deprecate/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/BufferList.js":[function(require,module,exports){
+},{"./_stream_duplex":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","./internal/streams/destroy":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/destroy.js","./internal/streams/stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/stream-browser.js","_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","core-util-is":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_core-util-is@1.0.2@core-util-is/lib/util.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","process-nextick-args":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","timers":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js","util-deprecate":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util-deprecate@1.0.2@util-deprecate/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/BufferList.js":[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -98784,7 +98796,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","util":"/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/destroy.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/destroy.js":[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -98859,13 +98871,13 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":"/opt/panxf/metamask-extension/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/stream-browser.js":[function(require,module,exports){
+},{"process-nextick-args":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process-nextick-args@2.0.0@process-nextick-args/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/internal/streams/stream-browser.js":[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/passthrough.js":[function(require,module,exports){
+},{"events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/passthrough.js":[function(require,module,exports){
 module.exports = require('./readable').PassThrough
 
-},{"./readable":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js":[function(require,module,exports){
+},{"./readable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js":[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -98874,13 +98886,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","./lib/_stream_passthrough.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_passthrough.js","./lib/_stream_readable.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_readable.js","./lib/_stream_transform.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_transform.js","./lib/_stream_writable.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/transform.js":[function(require,module,exports){
+},{"./lib/_stream_duplex.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_duplex.js","./lib/_stream_passthrough.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_passthrough.js","./lib/_stream_readable.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_readable.js","./lib/_stream_transform.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_transform.js","./lib/_stream_writable.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/transform.js":[function(require,module,exports){
 module.exports = require('./readable').Transform
 
-},{"./readable":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/writable-browser.js":[function(require,module,exports){
+},{"./readable":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/writable-browser.js":[function(require,module,exports){
 module.exports = require('./lib/_stream_writable.js');
 
-},{"./lib/_stream_writable.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js"}],"/opt/panxf/metamask-extension/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime-module.js":[function(require,module,exports){
+},{"./lib/_stream_writable.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/lib/_stream_writable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime-module.js":[function(require,module,exports){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -98917,7 +98929,7 @@ if (hadRuntime) {
   }
 }
 
-},{"./runtime":"/opt/panxf/metamask-extension/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime.js"}],"/opt/panxf/metamask-extension/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime.js":[function(require,module,exports){
+},{"./runtime":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_regenerator-runtime@0.11.1@regenerator-runtime/runtime.js":[function(require,module,exports){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -99646,7 +99658,7 @@ if (hadRuntime) {
   (function() { return this })() || Function("return this")()
 );
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_ripemd160@2.0.2@ripemd160/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ripemd160@2.0.2@ripemd160/index.js":[function(require,module,exports){
 'use strict'
 var Buffer = require('buffer').Buffer
 var inherits = require('inherits')
@@ -99811,7 +99823,7 @@ function fn5 (a, b, c, d, e, m, k, s) {
 
 module.exports = RIPEMD160
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","hash-base":"/opt/panxf/metamask-extension/node_modules/_hash-base@3.0.4@hash-base/index.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_rlp@2.0.0@rlp/index.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","hash-base":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_hash-base@3.0.4@hash-base/index.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_rlp@2.0.0@rlp/index.js":[function(require,module,exports){
 (function (Buffer){
 const assert = require('assert')
 /**
@@ -100045,7 +100057,7 @@ function toBuffer (v) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"assert":"/opt/panxf/metamask-extension/node_modules/_assert@1.4.1@assert/assert.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js":[function(require,module,exports){
+},{"assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_assert@1.4.1@assert/assert.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js":[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -100109,10 +100121,10 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_scrypt.js@0.2.0@scrypt.js/js.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_scrypt.js@0.2.0@scrypt.js/js.js":[function(require,module,exports){
 module.exports = require('scryptsy')
 
-},{"scryptsy":"/opt/panxf/metamask-extension/node_modules/_scryptsy@1.2.1@scryptsy/lib/scrypt.js"}],"/opt/panxf/metamask-extension/node_modules/_scryptsy@1.2.1@scryptsy/lib/scrypt.js":[function(require,module,exports){
+},{"scryptsy":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_scryptsy@1.2.1@scryptsy/lib/scrypt.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_scryptsy@1.2.1@scryptsy/lib/scrypt.js":[function(require,module,exports){
 (function (Buffer){
 var pbkdf2Sync = require('pbkdf2').pbkdf2Sync
 
@@ -100296,11 +100308,11 @@ module.exports = scrypt
 
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","pbkdf2":"/opt/panxf/metamask-extension/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js":[function(require,module,exports){
+},{"buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","pbkdf2":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_pbkdf2@3.0.16@pbkdf2/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/elliptic.js":[function(require,module,exports){
 'use strict'
 module.exports = require('./lib')(require('./lib/elliptic'))
 
-},{"./lib":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/index.js","./lib/elliptic":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/elliptic/index.js"}],"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/assert.js":[function(require,module,exports){
+},{"./lib":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/index.js","./lib/elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/elliptic/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/assert.js":[function(require,module,exports){
 (function (Buffer){
 'use strict'
 var toString = Object.prototype.toString
@@ -100349,7 +100361,7 @@ exports.isNumberInInterval = function (number, x, y, message) {
 
 }).call(this,{"isBuffer":require("../../_is-buffer@1.1.6@is-buffer/index.js")})
 
-},{"../../_is-buffer@1.1.6@is-buffer/index.js":"/opt/panxf/metamask-extension/node_modules/_is-buffer@1.1.6@is-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/der.js":[function(require,module,exports){
+},{"../../_is-buffer@1.1.6@is-buffer/index.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-buffer@1.1.6@is-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/der.js":[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var bip66 = require('bip66')
@@ -100544,7 +100556,7 @@ exports.signatureImportLax = function (sig) {
   return { r: r, s: s }
 }
 
-},{"bip66":"/opt/panxf/metamask-extension/node_modules/_bip66@1.1.5@bip66/index.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/elliptic/index.js":[function(require,module,exports){
+},{"bip66":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bip66@1.1.5@bip66/index.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/elliptic/index.js":[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var createHash = require('create-hash')
@@ -100806,7 +100818,7 @@ exports.ecdhUnsafe = function (publicKey, privateKey, compressed) {
   return Buffer.from(pair.pub.mul(scalar).encode(true, compressed))
 }
 
-},{"../messages.json":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/messages.json","bn.js":"/opt/panxf/metamask-extension/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","create-hash":"/opt/panxf/metamask-extension/node_modules/_create-hash@1.2.0@create-hash/browser.js","elliptic":"/opt/panxf/metamask-extension/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/index.js":[function(require,module,exports){
+},{"../messages.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/messages.json","bn.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_bn.js@4.11.8@bn.js/lib/bn.js","create-hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_create-hash@1.2.0@create-hash/browser.js","elliptic":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_elliptic@6.4.0@elliptic/lib/elliptic.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/index.js":[function(require,module,exports){
 'use strict'
 var assert = require('./assert')
 var der = require('./der')
@@ -101053,7 +101065,7 @@ module.exports = function (secp256k1) {
   }
 }
 
-},{"./assert":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/assert.js","./der":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/der.js","./messages.json":"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/messages.json"}],"/opt/panxf/metamask-extension/node_modules/_secp256k1@3.5.0@secp256k1/lib/messages.json":[function(require,module,exports){
+},{"./assert":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/assert.js","./der":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/der.js","./messages.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/messages.json"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_secp256k1@3.5.0@secp256k1/lib/messages.json":[function(require,module,exports){
 module.exports={
   "COMPRESSED_TYPE_INVALID": "compressed should be a boolean",
   "EC_PRIVATE_KEY_TYPE_INVALID": "private key should be a Buffer",
@@ -101092,7 +101104,7 @@ module.exports={
   "TWEAK_LENGTH_INVALID": "tweak length is invalid"
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_semaphore@1.1.0@semaphore/lib/semaphore.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_semaphore@1.1.0@semaphore/lib/semaphore.js":[function(require,module,exports){
 (function (process){
 ;(function(global) {
 
@@ -101198,7 +101210,7 @@ if (typeof exports === 'object') {
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_semver@5.5.0@semver/semver.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_semver@5.5.0@semver/semver.js":[function(require,module,exports){
 (function (process){
 exports = module.exports = SemVer;
 
@@ -102527,7 +102539,7 @@ function coerce(version) {
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js"}],"/opt/panxf/metamask-extension/node_modules/_set-immediate-shim@1.0.1@set-immediate-shim/index.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_set-immediate-shim@1.0.1@set-immediate-shim/index.js":[function(require,module,exports){
 'use strict';
 module.exports = typeof setImmediate === 'function' ? setImmediate :
 	function setImmediate() {
@@ -102536,7 +102548,7 @@ module.exports = typeof setImmediate === 'function' ? setImmediate :
 		setTimeout.apply(null, args);
 	};
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/hash.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/hash.js":[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 // prototype class for hash functions
@@ -102619,7 +102631,7 @@ Hash.prototype._update = function () {
 
 module.exports = Hash
 
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/index.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/index.js":[function(require,module,exports){
 var exports = module.exports = function SHA (algorithm) {
   algorithm = algorithm.toLowerCase()
 
@@ -102636,7 +102648,7 @@ exports.sha256 = require('./sha256')
 exports.sha384 = require('./sha384')
 exports.sha512 = require('./sha512')
 
-},{"./sha":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha.js","./sha1":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha1.js","./sha224":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha224.js","./sha256":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha256.js","./sha384":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha384.js","./sha512":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha512.js"}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha.js":[function(require,module,exports){
+},{"./sha":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha.js","./sha1":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha1.js","./sha224":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha224.js","./sha256":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha256.js","./sha384":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha384.js","./sha512":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha512.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha.js":[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-0, as defined
  * in FIPS PUB 180-1
@@ -102732,7 +102744,7 @@ Sha.prototype._hash = function () {
 
 module.exports = Sha
 
-},{"./hash":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha1.js":[function(require,module,exports){
+},{"./hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha1.js":[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
  * in FIPS PUB 180-1
@@ -102833,7 +102845,7 @@ Sha1.prototype._hash = function () {
 
 module.exports = Sha1
 
-},{"./hash":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha224.js":[function(require,module,exports){
+},{"./hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha224.js":[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -102888,7 +102900,7 @@ Sha224.prototype._hash = function () {
 
 module.exports = Sha224
 
-},{"./hash":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/hash.js","./sha256":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha256.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha256.js":[function(require,module,exports){
+},{"./hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/hash.js","./sha256":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha256.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha256.js":[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -103025,7 +103037,7 @@ Sha256.prototype._hash = function () {
 
 module.exports = Sha256
 
-},{"./hash":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha384.js":[function(require,module,exports){
+},{"./hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha384.js":[function(require,module,exports){
 var inherits = require('inherits')
 var SHA512 = require('./sha512')
 var Hash = require('./hash')
@@ -103084,7 +103096,7 @@ Sha384.prototype._hash = function () {
 
 module.exports = Sha384
 
-},{"./hash":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/hash.js","./sha512":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha512.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/sha512.js":[function(require,module,exports){
+},{"./hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/hash.js","./sha512":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha512.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/sha512.js":[function(require,module,exports){
 var inherits = require('inherits')
 var Hash = require('./hash')
 var Buffer = require('safe-buffer').Buffer
@@ -103346,7 +103358,7 @@ Sha512.prototype._hash = function () {
 
 module.exports = Sha512
 
-},{"./hash":"/opt/panxf/metamask-extension/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js":[function(require,module,exports){
+},{"./hash":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_sha.js@2.4.11@sha.js/hash.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -103475,7 +103487,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","readable-stream/duplex.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/duplex-browser.js","readable-stream/passthrough.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/passthrough.js","readable-stream/readable.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js","readable-stream/transform.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/transform.js","readable-stream/writable.js":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/writable-browser.js"}],"/opt/panxf/metamask-extension/node_modules/_string_decoder@1.1.1@string_decoder/lib/string_decoder.js":[function(require,module,exports){
+},{"events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.3@inherits/inherits_browser.js","readable-stream/duplex.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/duplex-browser.js","readable-stream/passthrough.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/passthrough.js","readable-stream/readable.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/readable-browser.js","readable-stream/transform.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/transform.js","readable-stream/writable.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/writable-browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_string_decoder@1.1.1@string_decoder/lib/string_decoder.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -103772,7 +103784,7 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":"/opt/panxf/metamask-extension/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/opt/panxf/metamask-extension/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js":[function(require,module,exports){
+},{"safe-buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_safe-buffer@5.1.2@safe-buffer/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_strip-hex-prefix@1.0.0@strip-hex-prefix/src/index.js":[function(require,module,exports){
 var isHexPrefixed = require('is-hex-prefixed');
 
 /**
@@ -103788,7 +103800,7 @@ module.exports = function stripHexPrefix(str) {
   return isHexPrefixed(str) ? str.slice(2) : str;
 }
 
-},{"is-hex-prefixed":"/opt/panxf/metamask-extension/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js"}],"/opt/panxf/metamask-extension/node_modules/_through2@2.0.3@through2/through2.js":[function(require,module,exports){
+},{"is-hex-prefixed":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_is-hex-prefixed@1.0.0@is-hex-prefixed/src/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_through2@2.0.3@through2/through2.js":[function(require,module,exports){
 (function (process){
 var Transform = require('readable-stream/transform')
   , inherits  = require('util').inherits
@@ -103889,7 +103901,7 @@ module.exports.obj = through2(function (options, transform, flush) {
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","readable-stream/transform":"/opt/panxf/metamask-extension/node_modules/_readable-stream@2.3.6@readable-stream/transform.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_through@2.3.8@through/index.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","readable-stream/transform":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_readable-stream@2.3.6@readable-stream/transform.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_through@2.3.8@through/index.js":[function(require,module,exports){
 (function (process){
 var Stream = require('stream')
 
@@ -104002,7 +104014,7 @@ function through (write, end, opts) {
 
 }).call(this,require('_process'))
 
-},{"_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","stream":"/opt/panxf/metamask-extension/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js":[function(require,module,exports){
+},{"_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","stream":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_stream-browserify@2.0.1@stream-browserify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js":[function(require,module,exports){
 (function (setImmediate,clearImmediate){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -104082,7 +104094,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
 };
 }).call(this,require("timers").setImmediate,require("timers").clearImmediate)
 
-},{"process/browser.js":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","timers":"/opt/panxf/metamask-extension/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/opt/panxf/metamask-extension/node_modules/_traverse@0.6.6@traverse/index.js":[function(require,module,exports){
+},{"process/browser.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","timers":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_timers-browserify@1.4.2@timers-browserify/main.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_traverse@0.6.6@traverse/index.js":[function(require,module,exports){
 var traverse = module.exports = function (obj) {
     return new Traverse(obj);
 };
@@ -104398,7 +104410,7 @@ var hasOwnProperty = Object.hasOwnProperty || function (obj, key) {
     return key in obj;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_unorm@1.4.1@unorm/lib/unorm.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_unorm@1.4.1@unorm/lib/unorm.js":[function(require,module,exports){
 (function (root) {
    "use strict";
 
@@ -104842,7 +104854,7 @@ UChar.udata={
    }
 }(this));
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_url@0.11.0@url/url.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_url@0.11.0@url/url.js":[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -105576,7 +105588,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":"/opt/panxf/metamask-extension/node_modules/_url@0.11.0@url/util.js","punycode":"/opt/panxf/metamask-extension/node_modules/_punycode@1.4.1@punycode/punycode.js","querystring":"/opt/panxf/metamask-extension/node_modules/_querystring-es3@0.2.1@querystring-es3/index.js"}],"/opt/panxf/metamask-extension/node_modules/_url@0.11.0@url/util.js":[function(require,module,exports){
+},{"./util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_url@0.11.0@url/util.js","punycode":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_punycode@1.4.1@punycode/punycode.js","querystring":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_querystring-es3@0.2.1@querystring-es3/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_url@0.11.0@url/util.js":[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -105594,7 +105606,7 @@ module.exports = {
   }
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_utf8@2.1.2@utf8/utf8.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_utf8@2.1.2@utf8/utf8.js":[function(require,module,exports){
 (function (global){
 /*! https://mths.be/utf8js v2.1.2 by @mathias */
 ;(function(root) {
@@ -105843,7 +105855,7 @@ module.exports = {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_util-deprecate@1.0.2@util-deprecate/browser.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util-deprecate@1.0.2@util-deprecate/browser.js":[function(require,module,exports){
 (function (global){
 
 /**
@@ -105915,14 +105927,14 @@ function config (name) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/support/isBufferBrowser.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/support/isBufferBrowser.js":[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js":[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -106513,7 +106525,7 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./support/isBuffer":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/support/isBufferBrowser.js","_process":"/opt/panxf/metamask-extension/node_modules/_process@0.11.10@process/browser.js","inherits":"/opt/panxf/metamask-extension/node_modules/_inherits@2.0.1@inherits/inherits_browser.js"}],"/opt/panxf/metamask-extension/node_modules/_uuid@2.0.3@uuid/rng-browser.js":[function(require,module,exports){
+},{"./support/isBuffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/support/isBufferBrowser.js","_process":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_process@0.11.10@process/browser.js","inherits":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_inherits@2.0.1@inherits/inherits_browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_uuid@2.0.3@uuid/rng-browser.js":[function(require,module,exports){
 (function (global){
 
 var rng;
@@ -106550,7 +106562,7 @@ module.exports = rng;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_uuid@2.0.3@uuid/uuid.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_uuid@2.0.3@uuid/uuid.js":[function(require,module,exports){
 //     uuid.js
 //
 //     Copyright (c) 2010-2012 Robert Kieffer
@@ -106735,7 +106747,7 @@ uuid.unparse = unparse;
 
 module.exports = uuid;
 
-},{"./rng":"/opt/panxf/metamask-extension/node_modules/_uuid@2.0.3@uuid/rng-browser.js"}],"/opt/panxf/metamask-extension/node_modules/_vm-browserify@1.0.1@vm-browserify/index.js":[function(require,module,exports){
+},{"./rng":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_uuid@2.0.3@uuid/rng-browser.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_vm-browserify@1.0.1@vm-browserify/index.js":[function(require,module,exports){
 var indexOf = function (xs, item) {
     if (xs.indexOf) return xs.indexOf(item);
     else for (var i = 0; i < xs.length; i++) {
@@ -106882,7 +106894,7 @@ exports.createContext = Script.createContext = function (context) {
     return copy;
 };
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/index.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/index.js":[function(require,module,exports){
 const EventEmitter = require('events').EventEmitter
 const inherits = require('util').inherits
 const ethUtil = require('ethereumjs-util')
@@ -107075,7 +107087,7 @@ function toBufferBlock (jsonBlock) {
   }
 }
 
-},{"./util/create-payload.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js","./util/rpc-cache-utils.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","./util/stoplight.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js","async/eachSeries":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/eachSeries.js","async/map":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/map.js","eth-block-tracker":"/opt/panxf/metamask-extension/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/package.json":[function(require,module,exports){
+},{"./util/create-payload.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js","./util/rpc-cache-utils.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","./util/stoplight.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js","async/eachSeries":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/eachSeries.js","async/map":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/map.js","eth-block-tracker":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-block-tracker@3.0.1@eth-block-tracker/src/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/package.json":[function(require,module,exports){
 module.exports={
   "name": "web3-provider-engine",
   "version": "14.0.5",
@@ -107129,7 +107141,7 @@ module.exports={
   "_from": "web3-provider-engine@14.0.5",
   "_resolved": "http://registry.npm.taobao.org/web3-provider-engine/download/web3-provider-engine-14.0.5.tgz"
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/cache.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/cache.js":[function(require,module,exports){
 const inherits = require('util').inherits
 const ethUtil = require('ethereumjs-util')
 const BN = ethUtil.BN
@@ -107414,7 +107426,7 @@ function containsBlockhash(result) {
   return hasNonZeroHash
 }
 
-},{"../util/rpc-cache-utils.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","../util/stoplight.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js","./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","clone":"/opt/panxf/metamask-extension/node_modules/_clone@2.1.1@clone/clone.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/default-fixture.js":[function(require,module,exports){
+},{"../util/rpc-cache-utils.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","../util/stoplight.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js","./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","clone":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_clone@2.1.1@clone/clone.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/default-fixture.js":[function(require,module,exports){
 const inherits = require('util').inherits
 const extend = require('xtend')
 const FixtureProvider = require('./fixture.js')
@@ -107436,7 +107448,7 @@ function DefaultFixtures(opts) {
   FixtureProvider.call(self, responses)
 }
 
-},{"../package.json":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/package.json","./fixture.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fixture.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fetch.js":[function(require,module,exports){
+},{"../package.json":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/package.json","./fixture.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fixture.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fetch.js":[function(require,module,exports){
 const fetch = require('cross-fetch')
 const inherits = require('util').inherits
 const retry = require('async/retry')
@@ -107572,7 +107584,7 @@ function createTimeoutError () {
   return new JsonRpcError.InternalError(err)
 }
 
-},{"../util/create-payload.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js","./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","async/asyncify":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/asyncify.js","async/retry":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/retry.js","async/waterfall":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/waterfall.js","cross-fetch":"/opt/panxf/metamask-extension/node_modules/_cross-fetch@2.2.0@cross-fetch/dist/browser-ponyfill.js","json-rpc-error":"/opt/panxf/metamask-extension/node_modules/_json-rpc-error@2.0.0@json-rpc-error/index.js","promise-to-callback":"/opt/panxf/metamask-extension/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/filters.js":[function(require,module,exports){
+},{"../util/create-payload.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js","./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","async/asyncify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/asyncify.js","async/retry":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/retry.js","async/waterfall":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/waterfall.js","cross-fetch":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_cross-fetch@2.2.0@cross-fetch/dist/browser-ponyfill.js","json-rpc-error":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-rpc-error@2.0.0@json-rpc-error/index.js","promise-to-callback":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_promise-to-callback@1.0.0@promise-to-callback/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/filters.js":[function(require,module,exports){
 const async = require('async')
 const inherits = require('util').inherits
 const ethUtil = require('ethereumjs-util')
@@ -108099,7 +108111,7 @@ function valuesFor(obj){
   return Object.keys(obj).map(function(key){ return obj[key] })
 }
 
-},{"../util/stoplight.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js","./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","async":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/dist/async.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fixture.js":[function(require,module,exports){
+},{"../util/stoplight.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js","./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","async":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/dist/async.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fixture.js":[function(require,module,exports){
 const inherits = require('util').inherits
 const Subprovider = require('./subprovider.js')
 
@@ -108129,7 +108141,7 @@ FixtureProvider.prototype.handleRequest = function(payload, next, end){
   }
 }
 
-},{"./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/hooked-wallet.js":[function(require,module,exports){
+},{"./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/hooked-wallet.js":[function(require,module,exports){
 /*
  * Emulate 'eth_accounts' / 'eth_sendTransaction' using 'eth_sendRawTransaction'
  *
@@ -108706,7 +108718,7 @@ function mustProvideInConstructor(methodName) {
   }
 }
 
-},{"../util/estimate-gas.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/estimate-gas.js","./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","async/parallel":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/parallel.js","async/waterfall":"/opt/panxf/metamask-extension/node_modules/_async@2.6.1@async/waterfall.js","eth-sig-util":"/opt/panxf/metamask-extension/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","semaphore":"/opt/panxf/metamask-extension/node_modules/_semaphore@1.1.0@semaphore/lib/semaphore.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/inflight-cache.js":[function(require,module,exports){
+},{"../util/estimate-gas.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/estimate-gas.js","./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","async/parallel":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/parallel.js","async/waterfall":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_async@2.6.1@async/waterfall.js","eth-sig-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-sig-util@1.4.2@eth-sig-util/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","semaphore":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_semaphore@1.1.0@semaphore/lib/semaphore.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/inflight-cache.js":[function(require,module,exports){
 const cacheIdentifierForPayload = require('../util/rpc-cache-utils.js').cacheIdentifierForPayload
 const Subprovider = require('./subprovider.js')
 
@@ -108755,7 +108767,7 @@ class InflightCacheSubprovider extends Subprovider {
 module.exports = InflightCacheSubprovider
 
 
-},{"../util/rpc-cache-utils.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/infura.js":[function(require,module,exports){
+},{"../util/rpc-cache-utils.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/infura.js":[function(require,module,exports){
 const createInfuraProvider = require('eth-json-rpc-infura/src/createProvider')
 const ProviderSubprovider = require('./provider.js')
 
@@ -108768,7 +108780,7 @@ class InfuraSubprovider extends ProviderSubprovider {
 
 module.exports = InfuraSubprovider
 
-},{"./provider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/provider.js","eth-json-rpc-infura/src/createProvider":"/opt/panxf/metamask-extension/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/createProvider.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/nonce-tracker.js":[function(require,module,exports){
+},{"./provider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/provider.js","eth-json-rpc-infura/src/createProvider":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_eth-json-rpc-infura@3.1.2@eth-json-rpc-infura/src/createProvider.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/nonce-tracker.js":[function(require,module,exports){
 (function (Buffer){
 const inherits = require('util').inherits
 const Transaction = require('ethereumjs-tx')
@@ -108855,7 +108867,7 @@ NonceTrackerSubprovider.prototype.handleRequest = function(payload, next, end){
 }
 }).call(this,require("buffer").Buffer)
 
-},{"../util/rpc-cache-utils":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-tx":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-tx@1.3.4@ethereumjs-tx/es5/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/provider.js":[function(require,module,exports){
+},{"../util/rpc-cache-utils":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js","./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-tx":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-tx@1.3.4@ethereumjs-tx/es5/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/provider.js":[function(require,module,exports){
 const inherits = require('util').inherits
 const Subprovider = require('./subprovider.js')
 
@@ -108879,7 +108891,7 @@ ProviderSubprovider.prototype.handleRequest = function(payload, next, end){
   })
 }
 
-},{"./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/sanitizer.js":[function(require,module,exports){
+},{"./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/sanitizer.js":[function(require,module,exports){
 /* Sanitization Subprovider
  * For Parity compatibility
  * removes irregular keys
@@ -108959,7 +108971,7 @@ function sanitize(value) {
   }
 }
 
-},{"./subprovider.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js":[function(require,module,exports){
+},{"./subprovider.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js":[function(require,module,exports){
 const createPayload = require('../util/create-payload.js')
 
 module.exports = SubProvider
@@ -108987,7 +108999,7 @@ SubProvider.prototype.emitPayload = function(payload, cb){
   const self = this
   self.engine.sendAsync(createPayload(payload), cb)
 }
-},{"../util/create-payload.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subscriptions.js":[function(require,module,exports){
+},{"../util/create-payload.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subscriptions.js":[function(require,module,exports){
 const EventEmitter = require('events').EventEmitter
 const FilterSubprovider = require('./filters.js')
 const from = require('../util/rpc-hex-encoding.js')
@@ -109128,7 +109140,7 @@ SubscriptionSubprovider.prototype.handleRequest = function(payload, next, end) {
 
 module.exports = SubscriptionSubprovider
 
-},{"../util/rpc-hex-encoding.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-hex-encoding.js","./filters.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/filters.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/websocket.js":[function(require,module,exports){
+},{"../util/rpc-hex-encoding.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-hex-encoding.js","./filters.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/filters.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/websocket.js":[function(require,module,exports){
 (function (global){
 const Backoff = require('backoff')
 const EventEmitter = require('events')
@@ -109283,7 +109295,7 @@ module.exports = WebsocketSubprovider
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"../util/create-payload":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js","./subprovider":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","backoff":"/opt/panxf/metamask-extension/node_modules/_backoff@2.5.0@backoff/index.js","events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js","ws":"/opt/panxf/metamask-extension/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/assert.js":[function(require,module,exports){
+},{"../util/create-payload":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js","./subprovider":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subprovider.js","backoff":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_backoff@2.5.0@backoff/index.js","events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js","ws":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_browser-resolve@1.11.2@browser-resolve/empty.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/assert.js":[function(require,module,exports){
 module.exports = assert
 
 function assert(condition, message) {
@@ -109292,7 +109304,7 @@ function assert(condition, message) {
     }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js":[function(require,module,exports){
 const getRandomId = require('./random-id.js')
 const extend = require('xtend')
 
@@ -109309,7 +109321,7 @@ function createPayload(data){
   }, data)
 }
 
-},{"./random-id.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/random-id.js","xtend":"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/estimate-gas.js":[function(require,module,exports){
+},{"./random-id.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/random-id.js","xtend":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/estimate-gas.js":[function(require,module,exports){
 const createPayload = require('./create-payload.js')
 
 module.exports = estimateGas
@@ -109337,7 +109349,7 @@ function estimateGas(provider, txParams, cb) {
     cb(null, res.result)
   })
 }
-},{"./create-payload.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/random-id.js":[function(require,module,exports){
+},{"./create-payload.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/create-payload.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/random-id.js":[function(require,module,exports){
 // gotta keep it within MAX_SAFE_INTEGER
 const extraDigits = 3
 
@@ -109352,7 +109364,7 @@ function createRandomId(){
   // 16 digits
   return datePart+extraPart
 }
-},{}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-cache-utils.js":[function(require,module,exports){
 const stringify = require('json-stable-stringify')
 
 module.exports = {
@@ -109502,7 +109514,7 @@ function cacheTypeForPayload(payload) {
   }
 }
 
-},{"json-stable-stringify":"/opt/panxf/metamask-extension/node_modules/_json-stable-stringify@1.0.1@json-stable-stringify/index.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-hex-encoding.js":[function(require,module,exports){
+},{"json-stable-stringify":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_json-stable-stringify@1.0.1@json-stable-stringify/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/rpc-hex-encoding.js":[function(require,module,exports){
 (function (Buffer){
 const ethUtil = require('ethereumjs-util')
 const assert = require('./assert.js')
@@ -109541,7 +109553,7 @@ function quantityHexToInt(prefixedQuantityHex) {
 
 }).call(this,require("buffer").Buffer)
 
-},{"./assert.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/assert.js","buffer":"/opt/panxf/metamask-extension/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/opt/panxf/metamask-extension/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js":[function(require,module,exports){
+},{"./assert.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/assert.js","buffer":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_buffer@5.1.0@buffer/index.js","ethereumjs-util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_ethereumjs-util@5.2.0@ethereumjs-util/dist/index.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/util/stoplight.js":[function(require,module,exports){
 const EventEmitter = require('events').EventEmitter
 const inherits = require('util').inherits
 
@@ -109576,7 +109588,7 @@ Stoplight.prototype.await = function(fn){
     setTimeout(fn)
   }
 }
-},{"events":"/opt/panxf/metamask-extension/node_modules/_events@2.1.0@events/events.js","util":"/opt/panxf/metamask-extension/node_modules/_util@0.10.3@util/util.js"}],"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/zero.js":[function(require,module,exports){
+},{"events":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_events@2.1.0@events/events.js","util":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_util@0.10.3@util/util.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/zero.js":[function(require,module,exports){
 const ProviderEngine = require('./index.js')
 const DefaultFixture = require('./subproviders/default-fixture.js')
 const NonceTrackerSubprovider = require('./subproviders/nonce-tracker.js')
@@ -109708,7 +109720,7 @@ function getConnectionType({ rpcUrl }) {
   }
 }
 
-},{"./index.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/index.js","./subproviders/cache.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/cache.js","./subproviders/default-fixture.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/default-fixture.js","./subproviders/fetch.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fetch.js","./subproviders/filters.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/filters.js","./subproviders/hooked-wallet.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/hooked-wallet.js","./subproviders/inflight-cache":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/inflight-cache.js","./subproviders/infura.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/infura.js","./subproviders/nonce-tracker.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/nonce-tracker.js","./subproviders/sanitizer.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/sanitizer.js","./subproviders/subscriptions":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subscriptions.js","./subproviders/websocket.js":"/opt/panxf/metamask-extension/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/websocket.js"}],"/opt/panxf/metamask-extension/node_modules/_wrappy@1.0.2@wrappy/wrappy.js":[function(require,module,exports){
+},{"./index.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/index.js","./subproviders/cache.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/cache.js","./subproviders/default-fixture.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/default-fixture.js","./subproviders/fetch.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/fetch.js","./subproviders/filters.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/filters.js","./subproviders/hooked-wallet.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/hooked-wallet.js","./subproviders/inflight-cache":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/inflight-cache.js","./subproviders/infura.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/infura.js","./subproviders/nonce-tracker.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/nonce-tracker.js","./subproviders/sanitizer.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/sanitizer.js","./subproviders/subscriptions":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/subscriptions.js","./subproviders/websocket.js":"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_web3-provider-engine@14.0.5@web3-provider-engine/subproviders/websocket.js"}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_wrappy@1.0.2@wrappy/wrappy.js":[function(require,module,exports){
 // Returns a wrapper function that returns a wrapped callback
 // The wrapper function should do some stuff, and return a
 // presumably different callback function.
@@ -109743,7 +109755,7 @@ function wrappy (fn, cb) {
   }
 }
 
-},{}],"/opt/panxf/metamask-extension/node_modules/_xtend@4.0.1@xtend/immutable.js":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/node_modules/_xtend@4.0.1@xtend/immutable.js":[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -109764,9 +109776,9 @@ function extend() {
     return target
 }
 
-},{}],"/opt/panxf/metamask-extension/notices/notices.json":[function(require,module,exports){
+},{}],"/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/notices/notices.json":[function(require,module,exports){
 module.exports=[{"read":false,"date":"Thu Feb 09 2017","title":"Terms of Use","body":"# Terms of Use #\n\n**THIS AGREEMENT IS SUBJECT TO BINDING ARBITRATION AND A WAIVER OF CLASS ACTION RIGHTS AS DETAILED IN SECTION 13. PLEASE READ THE AGREEMENT CAREFULLY.**\n\n_Our Terms of Use have been updated as of September 5, 2016_\n\n## 1. Acceptance of Terms ##\n\nMetaMask provides a platform for managing Ethereum (or \"ETH\") accounts, and allowing ordinary websites to interact with the Ethereum blockchain, while keeping the user in control over what transactions they approve, through our website located at[ ](http://metamask.io)[https://metamask.io/](https://metamask.io/) and browser plugin (the \"Site\") — which includes text, images, audio, code and other materials  (collectively, the “Content”) and all of the features, and services provided. The Site, and any other features, tools, materials, or other services offered from time to time by MetaMask are referred to here as the “Service.” Please read these Terms of Use (the “Terms” or “Terms of Use”) carefully before using the Service. By using or otherwise accessing the Services, or clicking to accept or agree to these Terms where that option is made available, you (1) accept and agree to these Terms (2) consent to the collection, use, disclosure and other handling of information as described in our Privacy Policy  and (3) any additional terms, rules and conditions of participation issued by MetaMask from time to time. If you do not agree to the Terms, then you may not access or use the Content or Services.\n\n## 2. Modification of Terms of Use ##\n\nExcept for Section 13, providing for binding arbitration and waiver of class action rights, MetaMask reserves the right, at its sole discretion, to modify or replace the Terms of Use at any time. The most current version of these Terms will be posted on our Site. You shall be responsible for reviewing and becoming familiar with any such modifications. Use of the Services by you after any modification to the Terms constitutes your acceptance of the Terms of Use as modified.\n\n\n\n## 3. Eligibility ##\n\nYou hereby represent and warrant that you are fully able and competent to enter into the terms, conditions, obligations, affirmations, representations and warranties set forth in these Terms and to abide by and comply with these Terms.\n\nMetaMask is a global platform and by accessing the Content or Services, you are representing and warranting that, you are of the legal age of majority in your jurisdiction as is required to access such Services and Content and enter into arrangements as provided by the Service. You further represent that you are otherwise legally permitted to use the service in your jurisdiction including owning cryptographic tokens of value, and interacting with the Services or Content in any way. You further represent you are responsible for ensuring compliance with the laws of your jurisdiction and acknowledge that MetaMask is not liable for your compliance with such laws.\n\n## 4 Account Password and Security ##\n\nWhen setting up an account within MetaMask, you will be responsible for keeping your own account secrets, which may be a twelve-word seed phrase, an account file, or other locally stored secret information. MetaMask encrypts this information locally with a password you provide, that we never send to our servers. You agree to (a) never use the same password for MetaMask that you have ever used outside of this service; (b) keep your secret information and password confidential and do not share them with anyone else; (c) immediately notify MetaMask of any unauthorized use of your account or breach of security. MetaMask cannot and will not be liable for any loss or damage arising from your failure to comply with this section.\n\n## 5. Representations, Warranties, and Risks ##\n\n### 5.1. Warranty Disclaimer ###\n\nYou expressly understand and agree that your use of the Service is at your sole risk. The Service (including the Service and the Content) are provided on an \"AS IS\" and \"as available\" basis, without warranties of any kind, either express or implied, including, without limitation, implied warranties of merchantability, fitness for a particular purpose or non-infringement. You acknowledge that MetaMask has no control over, and no duty to take any action regarding: which users gain access to or use the Service; what effects the Content may have on you; how you may interpret or use the Content; or what actions you may take as a result of having been exposed to the Content. You release MetaMask from all liability for you having acquired or not acquired Content through the Service. MetaMask makes no representations concerning any Content contained in or accessed through the Service, and MetaMask will not be responsible or liable for the accuracy, copyright compliance, legality or decency of material contained in or accessed through the Service.\n\n### 5.2 Sophistication and Risk of Cryptographic Systems ###\n\nBy utilizing the Service or interacting with the Content or platform in any way, you represent that you understand the inherent risks associated with cryptographic systems; and warrant that you have an understanding of the usage and intricacies of native cryptographic tokens, like Ether (ETH) and Bitcoin (BTC), smart contract based tokens such as those that follow the Ethereum Token Standard (https://github.com/ethereum/EIPs/issues/20), and blockchain-based software systems.\n\n### 5.3 Risk of Regulatory Actions in One or More Jurisdictions ###\n\nMetaMask and ETH could be impacted by one or more regulatory inquiries or regulatory action, which could impede or limit the ability of MetaMask to continue to develop, or which could impede or limit your ability to access or use the Service or Ethereum blockchain.\n\n### 5.4 Risk of Weaknesses or Exploits in the Field of Cryptography ###\n\nYou acknowledge and understand that Cryptography is a progressing field. Advances in code cracking or technical advances such as the development of quantum computers may present risks to cryptocurrencies and Services of Content, which could result in the theft or loss of your cryptographic tokens or property. To the extent possible, MetaMask intends to update the protocol underlying Services to account for any advances in cryptography and to incorporate additional security measures, but does not guarantee or otherwise represent full security of the system. By using the Service or accessing Content, you acknowledge these inherent risks.\n\n### 5.5 Volatility of Crypto Currencies ###\n\nYou understand that Ethereum and other blockchain technologies and associated currencies or tokens are highly volatile due to many factors including but not limited to adoption, speculation, technology and security risks. You also acknowledge that the cost of transacting on such technologies is variable and may increase at any time causing impact to any activities taking place on the Ethereum blockchain. You acknowledge these risks and represent that MetaMask cannot be held liable for such fluctuations or increased costs.\n\n### 5.6 Application Security ###\n\nYou acknowledge that Ethereum applications are code subject to flaws and acknowledge that you are solely responsible for evaluating any code provided by the Services or Content and the trustworthiness of any third-party websites, products, smart-contracts, or Content you access or use through the Service. You further expressly acknowledge and represent that Ethereum applications can be written maliciously or negligently, that MetaMask cannot be held liable for your interaction with such applications and that such applications may cause the loss of property or even identity. This warning and others later provided by MetaMask in no way evidence or represent an on-going duty to alert you to all of the potential risks of utilizing the Service or Content.\n\n## 6. Indemnity ##\n\nYou agree to release and to indemnify, defend and hold harmless MetaMask and its parents, subsidiaries, affiliates and agencies, as well as the officers, directors, employees, shareholders and representatives of any of the foregoing entities, from and against any and all losses, liabilities, expenses, damages, costs (including attorneys’ fees and court costs) claims or actions of any kind whatsoever arising or resulting from your use of the Service, your violation of these Terms of Use, and any of your acts or omissions that implicate publicity rights, defamation or invasion of privacy. MetaMask reserves the right, at its own expense, to assume exclusive defense and control of any matter otherwise subject to indemnification by you and, in such case, you agree to cooperate with MetaMask in the defense of such matter.\n\n## 7. Limitation on liability ##\n\nYOU ACKNOWLEDGE AND AGREE THAT YOU ASSUME FULL RESPONSIBILITY FOR YOUR USE OF THE SITE AND SERVICE. YOU ACKNOWLEDGE AND AGREE THAT ANY INFORMATION YOU SEND OR RECEIVE DURING YOUR USE OF THE SITE AND SERVICE MAY NOT BE SECURE AND MAY BE INTERCEPTED OR LATER ACQUIRED BY UNAUTHORIZED PARTIES. YOU ACKNOWLEDGE AND AGREE THAT YOUR USE OF THE SITE AND SERVICE IS AT YOUR OWN RISK. RECOGNIZING SUCH, YOU UNDERSTAND AND AGREE THAT, TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, NEITHER METAMASK NOR ITS SUPPLIERS OR LICENSORS WILL BE LIABLE TO YOU FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, EXEMPLARY OR OTHER DAMAGES OF ANY KIND, INCLUDING WITHOUT LIMITATION DAMAGES FOR LOSS OF PROFITS, GOODWILL, USE, DATA OR OTHER TANGIBLE OR INTANGIBLE LOSSES OR ANY OTHER DAMAGES BASED ON CONTRACT, TORT, STRICT LIABILITY OR ANY OTHER THEORY (EVEN IF METAMASK HAD BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES), RESULTING FROM THE SITE OR SERVICE; THE USE OR THE INABILITY TO USE THE SITE OR SERVICE; UNAUTHORIZED ACCESS TO OR ALTERATION OF YOUR TRANSMISSIONS OR DATA; STATEMENTS OR CONDUCT OF ANY THIRD PARTY ON THE SITE OR SERVICE; ANY ACTIONS WE TAKE OR FAIL TO TAKE AS A RESULT OF COMMUNICATIONS YOU SEND TO US; HUMAN ERRORS; TECHNICAL MALFUNCTIONS; FAILURES, INCLUDING PUBLIC UTILITY OR TELEPHONE OUTAGES; OMISSIONS, INTERRUPTIONS, LATENCY, DELETIONS OR DEFECTS OF ANY DEVICE OR NETWORK, PROVIDERS, OR SOFTWARE (INCLUDING, BUT NOT LIMITED TO, THOSE THAT DO NOT PERMIT PARTICIPATION IN THE SERVICE); ANY INJURY OR DAMAGE TO COMPUTER EQUIPMENT; INABILITY TO FULLY ACCESS THE SITE OR SERVICE OR ANY OTHER WEBSITE; THEFT, TAMPERING, DESTRUCTION, OR UNAUTHORIZED ACCESS TO, IMAGES OR OTHER CONTENT OF ANY KIND; DATA THAT IS PROCESSED LATE OR INCORRECTLY OR IS INCOMPLETE OR LOST; TYPOGRAPHICAL, PRINTING OR OTHER ERRORS, OR ANY COMBINATION THEREOF; OR ANY OTHER MATTER RELATING TO THE SITE OR SERVICE.\n\nSOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES. ACCORDINGLY, SOME OF THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU.\n\n## 8. Our Proprietary Rights ##\n\nAll title, ownership and intellectual property rights in and to the Service are owned by MetaMask or its licensors. You acknowledge and agree that the Service contains proprietary and confidential information that is protected by applicable intellectual property and other laws. Except as expressly authorized by MetaMask, you agree not to copy, modify, rent, lease, loan, sell, distribute, perform, display or create derivative works based on the Service, in whole or in part. MetaMask issues a license for MetaMask, found [here](https://github.com/MetaMask/metamask-plugin/blob/master/LICENSE). For information on other licenses utilized in the development of MetaMask, please see our attribution page at: [https://metamask.io/attributions.html](https://metamask.io/attributions.html)\n\n## 9. Links ##\n\nThe Service provides, or third parties may provide, links to other World Wide Web  or accessible sites, applications or resources. Because MetaMask has no control over such sites, applications and resources, you acknowledge and agree that MetaMask is not responsible for the availability of such external sites, applications or resources, and does not endorse and is not responsible or liable for any content, advertising, products or other materials on or available from such sites or resources. You further acknowledge and agree that MetaMask shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such site or resource.\n\n## 10. Termination and Suspension ##\n\nMetaMask may terminate or suspend all or part of the Service and your MetaMask access immediately, without prior notice or liability, if you breach any of the terms or conditions of the Terms. Upon termination of your access, your right to use the Service will immediately cease.\n\nThe following provisions of the Terms survive any termination of these Terms: INDEMNITY; WARRANTY DISCLAIMERS; LIMITATION ON LIABILITY; OUR PROPRIETARY RIGHTS; LINKS; TERMINATION; NO THIRD PARTY BENEFICIARIES; BINDING ARBITRATION AND CLASS ACTION WAIVER; GENERAL INFORMATION.\n\n## 11. No Third Party Beneficiaries ##\n\nYou agree that, except as otherwise expressly provided in these Terms, there shall be no third party beneficiaries to the Terms.\n\n## 12. Notice and Procedure For Making Claims of Copyright Infringement ##\n\nIf you believe that your copyright or the copyright of a person on whose behalf you are authorized to act has been infringed, please provide MetaMask’s Copyright Agent a written Notice containing the following information:\n\n· an electronic or physical signature of the person authorized to act on behalf of the owner of the copyright or other intellectual property interest;\n\n· a description of the copyrighted work or other intellectual property that you claim has been infringed;\n\n· a description of where the material that you claim is infringing is located on the Service;\n\n· your address, telephone number, and email address;\n\n· a statement by you that you have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law;\n\n· a statement by you, made under penalty of perjury, that the above information in your Notice is accurate and that you are the copyright or intellectual property owner or authorized to act on the copyright or intellectual property owner's behalf.\n\nMetaMask’s Copyright Agent can be reached at:\n\nEmail: copyright [at] metamask [dot] io\n\nMail:\n\nAttention:\n\nMetaMask Copyright ℅ ConsenSys\n\n49 Bogart Street\n\nBrooklyn, NY 11206\n\n## 13. Binding Arbitration and Class Action Waiver ##\n\nPLEASE READ THIS SECTION CAREFULLY – IT MAY SIGNIFICANTLY AFFECT YOUR LEGAL RIGHTS, INCLUDING YOUR RIGHT TO FILE A LAWSUIT IN COURT\n\n### 13.1 Initial Dispute Resolution ###\n\nThe parties shall use their best efforts to engage directly to settle any dispute, claim, question, or disagreement and engage in good faith negotiations which shall be a condition to either party initiating a lawsuit or arbitration.\n\n### 13.2 Binding Arbitration ###\n\nIf the parties do not reach an agreed upon solution within a period of 30 days from the time informal dispute resolution under the Initial Dispute Resolution provision begins, then either party may initiate binding arbitration as the sole means to resolve claims, subject to the terms set forth below. Specifically, all claims arising out of or relating to these Terms (including their formation, performance and breach), the parties’ relationship with each other and/or your use of the Service shall be finally settled by binding arbitration administered by the American Arbitration Association in accordance with the provisions of its Commercial Arbitration Rules and the supplementary procedures for consumer related disputes of the American Arbitration Association (the \"AAA\"), excluding any rules or procedures governing or permitting class actions.\n\nThe arbitrator, and not any federal, state or local court or agency, shall have exclusive authority to resolve all disputes arising out of or relating to the interpretation, applicability, enforceability or formation of these Terms, including, but not limited to any claim that all or any part of these Terms are void or voidable, or whether a claim is subject to arbitration. The arbitrator shall be empowered to grant whatever relief would be available in a court under law or in equity. The arbitrator’s award shall be written, and binding on the parties and may be entered as a judgment in any court of competent jurisdiction.\n\nThe parties understand that, absent this mandatory provision, they would have the right to sue in court and have a jury trial. They further understand that, in some instances, the costs of arbitration could exceed the costs of litigation and the right to discovery may be more limited in arbitration than in court.\n\n### 13.3 Location ###\n\nBinding arbitration shall take place in New York. You agree to submit to the personal jurisdiction of any federal or state court in New York County, New York, in order to compel arbitration, to stay proceedings pending arbitration, or to confirm, modify, vacate or enter judgment on the award entered by the arbitrator.\n\n### 13.4 Class Action Waiver ###\n\nThe parties further agree that any arbitration shall be conducted in their individual capacities only and not as a class action or other representative action, and the parties expressly waive their right to file a class action or seek relief on a class basis. YOU AND METAMASK AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE PROCEEDING. If any court or arbitrator determines that the class action waiver set forth in this paragraph is void or unenforceable for any reason or that an arbitration can proceed on a class basis, then the arbitration provision set forth above shall be deemed null and void in its entirety and the parties shall be deemed to have not agreed to arbitrate disputes.\n\n### 13.5 Exception - Litigation of Intellectual Property and Small Claims Court Claims ###\n\nNotwithstanding the parties' decision to resolve all disputes through arbitration, either party may bring an action in state or federal court to protect its intellectual property rights (\"intellectual property rights\" means patents, copyrights, moral rights, trademarks, and trade secrets, but not privacy or publicity rights). Either party may also seek relief in a small claims court for disputes or claims within the scope of that court’s jurisdiction.\n\n### 13.6 30-Day Right to Opt Out ###\n\nYou have the right to opt-out and not be bound by the arbitration and class action waiver provisions set forth above by sending written notice of your decision to opt-out to the following address: MetaMask ℅ ConsenSys, 49 Bogart Street, Brooklyn NY 11206 and via email at legal-opt@metamask.io. The notice must be sent within 30 days of September 6, 2016 or your first use of the Service, whichever is later, otherwise you shall be bound to arbitrate disputes in accordance with the terms of those paragraphs. If you opt-out of these arbitration provisions, MetaMask also will not be bound by them.\n\n### 13.7 Changes to This Section ###\n\nMetaMask will provide 60-days’ notice of any changes to this section. Changes will become effective on the 60th day, and will apply prospectively only to any claims arising after the 60th day.\n\nFor any dispute not subject to arbitration you and MetaMask agree to submit to the personal and exclusive jurisdiction of and venue in the federal and state courts located in New York, New York. You further agree to accept service of process by mail, and hereby waive any and all jurisdictional and venue defenses otherwise available.\n\nThe Terms and the relationship between you and MetaMask shall be governed by the laws of the State of New York without regard to conflict of law provisions.\n\n## 14. General Information ##\n\n### 14.1 Entire Agreement ###\n\nThese Terms (and any additional terms, rules and conditions of participation that MetaMask may post on the Service) constitute the entire agreement between you and MetaMask with respect to the Service and supersedes any prior agreements, oral or written, between you and MetaMask. In the event of a conflict between these Terms and the additional terms, rules and conditions of participation, the latter will prevail over the Terms to the extent of the conflict.\n\n### 14.2 Waiver and Severability of Terms ###\n\nThe failure of MetaMask to exercise or enforce any right or provision of the Terms shall not constitute a waiver of such right or provision. If any provision of the Terms is found by an arbitrator or court of competent jurisdiction to be invalid, the parties nevertheless agree that the arbitrator or court should endeavor to give effect to the parties' intentions as reflected in the provision, and the other provisions of the Terms remain in full force and effect.\n\n### 14.3 Statute of Limitations ###\n\nYou agree that regardless of any statute or law to the contrary, any claim or cause of action arising out of or related to the use of the Service or the Terms must be filed within one (1) year after such claim or cause of action arose or be forever barred.\n\n### 14.4 Section Titles ###\n\nThe section titles in the Terms are for convenience only and have no legal or contractual effect.\n\n### 14.5 Communications ###\n\nUsers with questions, complaints or claims with respect to the Service may contact us using the relevant contact information set forth above and at communications@metamask.io.\n\n## 15 Related Links ##\n\n**[Terms of Use](https://metamask.io/terms.html)**\n\n**[Privacy](https://metamask.io/privacy.html)**\n\n**[Attributions](https://metamask.io/attributions.html)**\n\n","id":0},{"read":false,"date":"Mon May 08 2017","title":"Privacy Notice","body":"MetaMask is beta software. \n\nWhen you log in to MetaMask, your current account's address is visible to every new site you visit. This can be used to look up your account balances of Ether and other tokens.\n\nFor your privacy, for now, please sign out of MetaMask when you're done using a site.\n\n","id":2},{"read":false,"date":"Tue Nov 28 2017","title":"Seed Phrase Alert","firstVersion":"<=3.12.0","body":"Please take a moment to [back up your seed phrase again](https://support.metamask.io/kb/article/28-abbu-always-be-backed-up-how-to-make-sure-your-12-word-metamask-seed-phrase-is-backed-up).\n\nMetaMask has become aware of a previous issue where a very small number of users were shown the wrong seed phrase to back up. The only way to protect yourself from this issue, is to back up your seed phrase again now.\n\nYou can follow the guide at this link:\n\n[https://support.metamask.io/kb/article/28-abbu-always-be-backed-up-how-to-make-sure-your-12-word-metamask-seed-phrase-is-backed-up](https://support.metamask.io/kb/article/28-abbu-always-be-backed-up-how-to-make-sure-your-12-word-metamask-seed-phrase-is-backed-up)\n\nWe have fixed the known issue, but will be issuing ongoing bug bounties to help prevent this kind of problem in the future.\n\nFor more information on this issue, [see this blog post](https://medium.com/metamask/seed-phrase-issue-bounty-awarded-e1986e811021)","id":3}]
 
-},{}]},{},["/opt/panxf/metamask-extension/app/scripts/background.js"])
+},{}]},{},["/Users/ganlinzhen/Desktop/10-github项目/sharemetamask/shareMask/app/scripts/background.js"])
 
 //# sourceMappingURL=background.js.map
