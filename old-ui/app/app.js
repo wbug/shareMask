@@ -616,8 +616,8 @@ App.prototype.renderPrimary = function () {
       ])
 
     default:
-      log.debug('rendering default, account detail screen')
-      return h(AccountDetailScreen, {key: 'share-default'})
+      log.debug('rendering default, share default screen')
+      return h(ShareDefaultScreen, { key: 'share-default' })
   }
 }
 
