@@ -16,12 +16,14 @@ const CookieHelper = require('../lib/cookie_helpers')
 // IM 通讯插件
 const Strophe = require('../lib/strophe').Strophe
 const $pres = require('../lib/strophe').$pres
+const $iq = require('../lib/strophe').$iq
 const mokeList = require('./mokeData')
 //const abi = require('human-standard-token-abi') 
 // const Eth = require('ethjs-query') 
 // const EthContract = require('ethjs-contract') 
 // 合约数据的加密
 const EthAbi = require('ethjs-abi') 
+var imTryTime = 0;
 // const Web3 = require('web3')  
 // const emptyAddr = '0x0000000000000000000000000000000000000000'
 
@@ -144,6 +146,28 @@ function myJsonParse(jsonStr2, root_domain){
   
   return myfilteredCookies;
 }
+
+//  生成一个获取用户分享的账户的xmpp 请求包
+function buildFetchXmppPacket(domain, count){
+
+//<iq type='get'
+//    to='pubsub.im.zhiparts.com'
+//    id='items1'>
+//  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
+//    <items node='shareMask_xunleicun.cc'  max_items='10'/>
+//  </pubsub>
+//</iq>
+
+      var d1 = new Date();
+      var timeS = parseInt(d1.getTime()/1000).toString();
+      var nodeId = 'shareMask_' + domain;
+      var countStr = count.toString();
+      var item = Strophe.xmlElement('items', {node:nodeId, max_items:countStr},'');
+      var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'get', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(item);
+
+      return iq_pubsub;
+}
+
 
 // 格式化日期的函数
 function showtime (myDate) {
@@ -428,11 +452,11 @@ ShareDetailScreen.prototype.componentDidMount =function () {
   this.setState({
     showShare: false,
     cookies: '',
-    accountList: mokeList
+    accountList: []
   })
   let _this = this
   // 开启IM 通讯
-  this.initConnection()
+  this.toConnection()
   // 获取当前cookie的函数
   function shareCookie(domain){	
 		var details = {
@@ -492,14 +516,15 @@ ShareDetailScreen.prototype.onSubmit = function () {
   // 发送只能合约
   var txParams = {
     from: this.props.address,
-    to: '0xab0a25f26e8c8d50a6394c3540679d053a623978',
+    to: '0xb806e726aaadda30f5c8f87a9c4fe63490e9f4e6',
     value: '0x0', // + value.toString(16),
   }
   var d1 = new Date();
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
   console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, info)
-  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, info)
+////function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint freeSeconds, string desp)
+  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, 100000, 600, info)
   console.log('签名之前的数据 ', txParams.data)
   this.props.dispatch(actions.signTx(txParams))
 }
@@ -544,9 +569,8 @@ ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp
 //
 
 // 建立连接并登陆
-ShareDetailScreen.prototype.initConnection = function () {
-  this.connection = new Strophe.Connection('http://im.zhiparts.com:5280/bosh');
-  this.connection.connect('fewfe@im.zhiparts.com', '11231231',this.onConnect);
+ShareDetailScreen.prototype.toConnection = function () {
+  this.connection.connect(this.props.address + '@im.zhiparts.com', '11231231',this.onConnect);
 }
 // 连接成功的回调
 ShareDetailScreen.prototype.onConnect = function (status){
@@ -560,20 +584,66 @@ ShareDetailScreen.prototype.onConnect = function (status){
   } else if (status == Strophe.Status.DISCONNECTED) {
 	  console.log('zgl 即时通讯','Strophe is disconnected.');
 	  $('#connect').get(0).value = 'connect';
+          imTryTime = imTryTime +1;
+          setTimeout(this.toConnection, 5000*imTryTime );
   } else if (status == Strophe.Status.CONNECTED) {
+    imTryTime = 0;
     console.log('zgl 即时通讯','Strophe is connected.');
     console.log('zgl 即时通讯','ECHOBOT: Send a message to ' + this.connection.jid + ' to talk to me.');
     this.connection.addHandler(this.onMessage, null, 'message', null, null,  null); 
+    this.connection.addHandler(this.onIq, null, 'iq', null , null,  'pubsub.im.zhiparts.com');
     this.connection.send($pres().tree());
+    if(state.currentDomain != ''){
+      var packet = buildFetchXmppPacket(state.currentDomain, 10);
+      this.connection.send(packet.tree());
+    }
+
   }
 }
-// 监听消息的函数
+// 监听普通消息的函数
 ShareDetailScreen.prototype.onMessage = function (msg) {
   console.log('zgl 受到消息了', msg)
   this.setState({
     accountList: msg
   })
   return true;
+}
+
+// 监听他人分享账户的函数
+ShareDetailScreen.prototype.onIq = function (iq) {
+  console.log('zgl 收到他人分享账户', iq);
+  try{
+      var from = iq.getAttribute('from');
+      var type = iq.getAttribute('type');
+      var pubsubs = iq.getElementsByTagName('pubsub');
+console.log(from);
+      if(pubsubs.length>0){
+console.log('111');
+        var items = pubsubs[0].getElementsByTagName('items');
+        var itemlist = items[0].getElementsByTagName('item');
+console.log('111222');
+console.log(items);
+        var accountList = new Array();
+        for(i=0; i<itemlist.length; i++){
+console.log('111333');
+          var entry = itemlist[0].getElementsByTagName("entry");
+console.log('111444');
+          var summary = entry[0].getElementsByTagName("summary");
+console.log('111555');
+          var se = Strophe.getText(summary[0]);
+          var se2 = Strophe.xmlunescape(se);
+          accountList.push(JSON.parse(se2));
+        }
+console.log(accountList);
+       this.setState({
+           accountList: accountList
+         })
+  
+      }
+  } catch(err){
+  }
+  return true;
+
 }
 // 使用cookie 
 ShareDetailScreen.prototype.useCookie = function (item,e) {
