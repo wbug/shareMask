@@ -636,13 +636,13 @@ ShareDetailScreen.prototype.onSubmit = function () {
   var d1 = new Date();
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
-  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, state.shareMark)
+  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, shareMark)
   //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint freeSeconds, string desp)
-  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, state.shareMark)
+  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, shareMark)
   console.log('签名之前的数据 ', txParams.data)
   this.props.dispatch(actions.signTx(txParams))
 }
-// 发送的数据txParams中的data属性加密方法
+// 分享时的data加密
 ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, freeTime,  desp) {
 
   var abit = 	{
@@ -689,10 +689,23 @@ ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp
 
 // 使用cookie 
 ShareDetailScreen.prototype.useCookie = function (item,e) {
+  // 发送只能合约
+  let value = util.normalizeEthStringToWei(item[6])
+  let txParams = {
+    from: this.props.address,
+    to: item[0],
+    value: '0x' + value.toString(16),
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  let endTime = beginTime + 3600*1
+  console.log(txParams)
+  txParams.data = this.encodeMothed2(item[0],beginTime,endTime)
+  this.props.dispatch(actions.signTx(txParams))
+  // 使用cookie的函数
   var domain = item[1];
   var cookie = item[2];
   var ext = chrome.extension.getBackgroundPage();
-  console.log(item, domain, cookie)
   var cookieJsonArray = myJsonParse(cookie, domain);
   for(var i = 0; i<cookieJsonArray.length; i++){					
     var setDetails = cookieJsonArray[i];
@@ -705,9 +718,36 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.reload(tabs[0].id, function(){})
     });
-  }	
+  }
 }
+// 使用时的data加密
+ShareDetailScreen.prototype.encodeMothed2 = function (shareId, timeS_begin, timeS_end) {
 
+  var abit = 	{
+    "constant": false,
+    "inputs": [
+      {
+        "name": "shareId",
+        "type": "uint256"
+      },
+      {
+        "name": "timeStamp",
+        "type": "uint256"
+      },
+      {
+        "name": "endTimeStamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "use",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  };
+  var setInputBytecode = EthAbi.encodeMethod(abit, [shareId, timeS_begin, timeS_end]);
+  return setInputBytecode;
+};
 // 打开关闭分享区域
 ShareDetailScreen.prototype.changeShareShow = function () {
   this.setState({
