@@ -11,6 +11,7 @@ const isHex = require('./util').isHex
 const EthBalance = require('./components/eth-balance')
 const EnsInput = require('./components/ens-input')
 const ethUtil = require('ethereumjs-util')
+const Conbo = require('./components/conbo')
 // cookie 插件
 const CookieHelper = require('../lib/cookie_helpers')
 // IM 通讯插件
@@ -18,14 +19,9 @@ const Strophe = require('../lib/strophe').Strophe
 const $pres = require('../lib/strophe').$pres
 const $iq = require('../lib/strophe').$iq
 const mokeList = require('./mokeData')
-//const abi = require('human-standard-token-abi') 
-// const Eth = require('ethjs-query') 
-// const EthContract = require('ethjs-contract') 
 // 合约数据的加密
 const EthAbi = require('ethjs-abi') 
 var imTryTime = 0;
-// const Web3 = require('web3')  
-// const emptyAddr = '0x0000000000000000000000000000000000000000'
 
 module.exports = connect(mapStateToProps)(ShareDetailScreen)
 
@@ -149,25 +145,22 @@ function myJsonParse(jsonStr2, root_domain){
 
 //  生成一个获取用户分享的账户的xmpp 请求包
 function buildFetchXmppPacket(domain, count){
+  //<iq type='get'
+  //    to='pubsub.im.zhiparts.com'
+  //    id='items1'>
+  //  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
+  //    <items node='shareMask_xunleicun.cc'  max_items='10'/>
+  //  </pubsub>
+  //</iq>
+  var d1 = new Date();
+  var timeS = parseInt(d1.getTime()/1000).toString();
+  var nodeId = 'shareMask_' + domain;
+  var countStr = count.toString();
+  var item = Strophe.xmlElement('items', {node:nodeId, max_items:countStr},'');
+  var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'get', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(item);
 
-//<iq type='get'
-//    to='pubsub.im.zhiparts.com'
-//    id='items1'>
-//  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
-//    <items node='shareMask_xunleicun.cc'  max_items='10'/>
-//  </pubsub>
-//</iq>
-
-      var d1 = new Date();
-      var timeS = parseInt(d1.getTime()/1000).toString();
-      var nodeId = 'shareMask_' + domain;
-      var countStr = count.toString();
-      var item = Strophe.xmlElement('items', {node:nodeId, max_items:countStr},'');
-      var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'get', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(item);
-
-      return iq_pubsub;
+  return iq_pubsub;
 }
-
 
 // 格式化日期的函数
 function showtime (myDate) {
@@ -178,7 +171,7 @@ function showtime (myDate) {
   var day = myDate.getDate(); 
   
   var timeValue = now.getFullYear() == year ? " " : year ;
-  timeValue += (now.getMonth() == month && now.getDate() == day) ? "今天" : (month + "月" + day + "日");
+  timeValue += (now.getMonth() == month && now.getDate() == day) ? "今天" : (month + 1 + "月" + day + "日");
   
   
   
@@ -191,6 +184,7 @@ function showtime (myDate) {
   timeValue += ((seconds < 10) ? ":0" : ":") + seconds;
   return timeValue;
 }
+
 inherits(ShareDetailScreen, PersistentForm)
 function ShareDetailScreen () {
   PersistentForm.call(this)
@@ -222,8 +216,24 @@ ShareDetailScreen.prototype.render = function () {
   if (this.state && this.state.showShare) {
     showShare = this.state.showShare
   }
+  // 表单信息
+  // 费用
+  let cost = ''
+  if (this.state && this.state.cost) {
+    cost = this.state.cost
+  }
+  // 免费时长
+  let freeTime = ''
+  if (this.state && this.state.freeTime) {
+    freeTime = this.state.freeTime
+  }
+  // 备注
+  let shareMark = ''
+  if (this.state && this.state.shareMark) {
+    shareMark = this.state.shareMark
+  }
   return (
-    h('.send-screen.flex-column.flex-grow', [
+    h('.account-detail-section full-flex-height', [
 
       //
       // 头部 简介信息
@@ -325,6 +335,8 @@ ShareDetailScreen.prototype.render = function () {
       // 标题区域
       h('h3.flex-center.text-transform-uppercase', {
         style: {
+          width: '100%',
+          color: '#F7861C',
           background: '#EBEBEB',
           color: '#AEAEAE',
           marginTop: '15px',
@@ -347,6 +359,8 @@ ShareDetailScreen.prototype.render = function () {
         }, [
           h('span',{
             style:{
+              cursor: 'pointer',
+              color: '#F7861C',
               display:'inline-block',
               verticalAlign: 'middle'
             }
@@ -371,30 +385,91 @@ ShareDetailScreen.prototype.render = function () {
         ]),
       ]),
       // 错误信息
-      props.error && h('span.error.flex-center', props.error),
+      props.error && h('span.error.flex-center',{ style: { width: '100%' } }, '!!!' + props.error),
       // 是否显示分享 区域，默认隐藏
-      showShare ? h('section.flex-row.flex-center', [
-
-        h('input.large-input', {
-          name: 'amount',
-          placeholder: '分享备注',
-          type: 'text',
-          style: {
+      showShare ? h('section', {
+        style: {
+          width: '100%'
+        }
+      },[
+        h('section.flex-row.flex-center', [
+          h('label.large-input', {
+            style: {
+              fontSize: '13px',
+              width: '20%',
+              textAlign: 'left'
+            }
+          }, '使用费用:'),
+          h('select.large-input', {
+            name: 'amount',
+            placeholder: '使用费用',
+            type: 'text',
+            value: cost,
+            onChange: this.handleCost.bind(this),
+            style: {
+              width: '25%',
+            }
+          }, [
+            h('option', { value: -1 }, '请选择费用'),
+            h('option', { value: 0 }, '免费使用'),
+            h('option', { value: 1 }, '1 个币'),
+            h('option', { value: 2 }, '2 个币'),
+            h('option', { value: 3 }, '3 个币'),
+          ]),
+          h('label.large-input', {
+            style: {
+              fontSize: '13px',
+              width: '20%',
+              textAlign: 'center'
+            }
+          }, '免费时间:'),
+          h('select.large-input', {
+            name: 'amount',
+            placeholder: '免费时间',
+            type: 'text',
+            value: freeTime,
+            onChange: this.handleFreeTime.bind(this),
+            style: {
+              width: '25%',
+            }
+          }, [
+            h('option', { value: -1 }, '请选择时间'),
+            h('option', { value: 0 }, '不限时长'),
+            h('option', { value: 1 }, '1 个小时'),
+            h('option', { value: 2 }, '2 个小时'),
+            h('option', { value: 3 }, '3 个小时'),
+          ]),
+        ]),
+        h('section.flex-row.flex-center', [
+          // h('input.large-input', {
+          //   name: 'amount',
+          //   placeholder: '分享备注',
+          //   type: 'text',
+          //   value: shareMark,
+          //   onChange: this.handleShareMark.bind(this),
+          //   style: {
+          //     width: '70%',
+          //   }
+          // }),
+          h(Conbo, {
+            ref: 'shareMark',
+            list: [1,2,3],
             width: '80%',
-          }
-        }),
-
-        h('button.primary', {
-          onClick: this.onSubmit.bind(this),
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '14px',
-          },
-        }, '分享'),
-
+          }),
+          h('button.primary', {
+            onClick: this.onSubmit.bind(this),
+            style: {
+              width: '20%',
+              textTransform: 'uppercase',
+              fontSize: '14px',
+            },
+          }, '分享'),
+        ])
       ]) : null,
       h('h3.flex-center.text-transform-uppercase', {
         style: {
+          width: '100%',
+          color: '#F7861C',
           background: '#EBEBEB',
           color: '#AEAEAE',
           marginTop: '10px',
@@ -404,7 +479,9 @@ ShareDetailScreen.prototype.render = function () {
       ]),
       // 列表内容
       h('ul',{
-        style: {}
+        style: {
+          width: '100%',
+        }
       }, [
         accountList.length ? accountList.map((item, index) => {
           return h('li',{
@@ -418,13 +495,17 @@ ShareDetailScreen.prototype.render = function () {
             },
             key: index
           }, [
-            // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.留言，6.分享到的账户地址，7.时间戳2
-            h('div', {
-
-            },['时间:',showtime(item[3]*1000)]),
-            h('div', {
-              
-            },[ '留言:', item[4] ]),
+            // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 免费时长
+            h('div', {},[
+              '时间：',showtime(item[3]*1000),
+            ]),
+            h('div', {},[ 
+              '费用：', item[6],'免费时长：', item[7]
+            ]),
+            h('div', {},[ 
+              '留言：', 
+              item[5] 
+            ]),
             h('button.primary', {
               onClick: this.useCookie.bind(this, item),
               style: {
@@ -445,17 +526,22 @@ ShareDetailScreen.prototype.render = function () {
     ])
   )
 }
-// 生命周期中获取域名
+// 生命周期函数
 ShareDetailScreen.prototype.componentDidMount =function () {
   // 初始化 state数据
   console.log('初始化列表', mokeList)
   this.setState({
-    showShare: false,
+    showShare: false, // 是否显示分享账号的内容
     cookies: '',
-    accountList: []
+    accountList: [],
+    currentDomain: '',
+    shareMark: '', // 备注
+    cost: -1, // 费用
+    freeTime: -1 // 免费时长
   })
   let _this = this
   // 开启IM 通讯
+  this.connection = new Strophe.Connection('http://im.zhiparts.com:5280/bosh')
   this.toConnection()
   // 获取当前cookie的函数
   function shareCookie(domain){	
@@ -473,7 +559,7 @@ ShareDetailScreen.prototype.componentDidMount =function () {
       let cookies = myJsonStringify(filteredCookies, domain);
       _this.setState({
         cookies: cookies
-      }, function(){ console.log('获取cookies成功', this.state.cookies) })
+      })
     })
   }
   // 获取当前的域名 并 显示
@@ -484,6 +570,24 @@ ShareDetailScreen.prototype.componentDidMount =function () {
       'currentDomain': domain
     })
   });
+}
+// 表单绑定函数---费用
+ShareDetailScreen.prototype.handleCost = function (event) {
+  this.setState({
+    cost: event.target.value
+  })
+}
+// 表单绑定函数----免费时长
+ShareDetailScreen.prototype.handleFreeTime = function (event) {
+  this.setState({
+    freeTime: event.target.value
+  })
+}
+// 表单绑定函数----备注
+ShareDetailScreen.prototype.handleShareMark = function (event) {
+  this.setState({
+    shareMark: event.target.value
+  })
 }
 
 ShareDetailScreen.prototype.navigateToAccounts = function (event) {
@@ -499,20 +603,30 @@ ShareDetailScreen.prototype.back = function () {
 ShareDetailScreen.prototype.onSubmit = function () {
   console.log(this.state)
   const state = this.state
-  const info = document.querySelector('input[name="amount"]').value
-  
-  // 校验cookie是否已经获取到了
+  console.log(state)
+  // 分享校验项
   let message
-  // console.log(!state.domain, !state.cookies)
-  // if (!state.currentDomain) {
-  //   message = '本系统暂不支持，该网站的账号分享'
-  //   return this.props.dispatch(actions.displayWarning(message))
-  // }
-  // if (!state.cookies) {
-  //   message = '获取账号失败，当前账号不能分享'
-  //   return this.props.dispatch(actions.displayWarning(message))
-  // }
-
+  if (!state.currentDomain) {
+    message = '本系统暂不支持，该网站的账号分享'
+    return this.props.dispatch(actions.displayWarning(message))
+  }
+  if (!state.cookies) {
+    message = '获取账号失败，当前账号不能分享'
+    return this.props.dispatch(actions.displayWarning(message))
+  }
+  if (state.cost < 0) {
+    message = '请填写使用费用'
+    return this.props.dispatch(actions.displayWarning(message))
+  }
+  if (state.freeTime < 0) {
+    message = '请填写免费时间'
+    return this.props.dispatch(actions.displayWarning(message))
+  }
+  let shareMark = this.refs.shareMark.state.value
+  if (!shareMark) {
+    message = '请填写分享备注'
+    return this.props.dispatch(actions.displayWarning(message))
+  }
   // 发送只能合约
   var txParams = {
     from: this.props.address,
@@ -522,58 +636,97 @@ ShareDetailScreen.prototype.onSubmit = function () {
   var d1 = new Date();
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
-  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, info)
-////function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint freeSeconds, string desp)
-  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, 100000, 600, info)
+  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, state.shareMark)
+  //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint freeSeconds, string desp)
+  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, state.shareMark)
   console.log('签名之前的数据 ', txParams.data)
   this.props.dispatch(actions.signTx(txParams))
 }
 // 发送的数据txParams中的data属性加密方法
-ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, desp) {
+ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, freeTime,  desp) {
 
-  //if (typeof global.ethereumProvider === 'undefined') return
-
-  //  this.eth = new Eth(global.ethereumProvider)
-  //  this.contract = new EthContract(this.eth)
-  //  this.TokenContract = this.contract(abi)
-
-  var abit = {
-    "constant": false,
-    "inputs": [{
-      "name": "domain",
-      "type": "string"
-    }, {
-      "name": "cookie",
-      "type": "string"
-    }, {
-      "name": "timeStamp",
-      "type": "uint256"
-    }, {
-      "name": "expireTimeStamp",
-      "type": "uint256"
-    }, {
-      "name": "desp",
-      "type": "string"
-    }],
-    "name": "share",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  };
-  var setInputBytecode = EthAbi.encodeMethod(abit, [domain, cookies, timesStamp, expireTimeStamp, desp]);
+  var abit = 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "domain",
+				"type": "string"
+			},
+			{
+				"name": "cookie",
+				"type": "string"
+			},
+			{
+				"name": "timeStamp",
+				"type": "uint256"
+			},
+			{
+				"name": "expireTimeStamp",
+				"type": "uint256"
+			},
+			{
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"name": "freeSeconds",
+				"type": "uint256"
+			},
+			{
+				"name": "desp",
+				"type": "string"
+			}
+		],
+		"name": "share",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	};
+  var setInputBytecode = EthAbi.encodeMethod(abit, [domain, cookies, timesStamp, expireTimeStamp, cost, freeTime, desp]);
   return setInputBytecode;
 };
+
+// 使用cookie 
+ShareDetailScreen.prototype.useCookie = function (item,e) {
+  var domain = item[1];
+  var cookie = item[2];
+  var ext = chrome.extension.getBackgroundPage();
+  console.log(item, domain, cookie)
+  var cookieJsonArray = myJsonParse(cookie, domain);
+  for(var i = 0; i<cookieJsonArray.length; i++){					
+    var setDetails = cookieJsonArray[i];
+    var thisdomain = setDetails['domain'];
+    if(thisdomain.indexOf(this.state.currentDomain) < 0 ){//不是当前域的
+      continue;
+    }
+    var cookie = CookieHelper.cookieForCreationFromFullCookie(setDetails);
+    chrome.cookies.set(cookie);
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.reload(tabs[0].id, function(){})
+    });
+  }	
+}
+
+// 打开关闭分享区域
+ShareDetailScreen.prototype.changeShareShow = function () {
+  this.setState({
+    showShare: !this.state.showShare
+  })
+  return true;
+}
+
 //
 // IM 初始化建立连接的函数
 //
 
 // 建立连接并登陆
 ShareDetailScreen.prototype.toConnection = function () {
-  this.connection.connect(this.props.address + '@im.zhiparts.com', '11231231',this.onConnect);
+  this.connection.connect(this.props.address + '@im.zhiparts.com', '11231231',onConnect.bind(this));
 }
 // 连接成功的回调
-ShareDetailScreen.prototype.onConnect = function (status){
+function onConnect(status){
+  console.log('zgl 即时通讯的状态', Strophe.Status, status)
   if (status == Strophe.Status.CONNECTING) {
 	  console.log('zgl 即时通讯','Strophe is connecting.');
   } else if (status == Strophe.Status.CONNFAIL) {
@@ -584,17 +737,16 @@ ShareDetailScreen.prototype.onConnect = function (status){
   } else if (status == Strophe.Status.DISCONNECTED) {
 	  console.log('zgl 即时通讯','Strophe is disconnected.');
 	  $('#connect').get(0).value = 'connect';
-          imTryTime = imTryTime +1;
-          setTimeout(this.toConnection, 5000*imTryTime );
+    imTryTime = imTryTime +1;
+    setTimeout(this.toConnection, 5000*imTryTime );
   } else if (status == Strophe.Status.CONNECTED) {
     imTryTime = 0;
-    console.log('zgl 即时通讯','Strophe is connected.');
-    console.log('zgl 即时通讯','ECHOBOT: Send a message to ' + this.connection.jid + ' to talk to me.');
-    this.connection.addHandler(this.onMessage, null, 'message', null, null,  null); 
-    this.connection.addHandler(this.onIq, null, 'iq', null , null,  'pubsub.im.zhiparts.com');
-    this.connection.send($pres().tree());
-    if(state.currentDomain != ''){
-      var packet = buildFetchXmppPacket(state.currentDomain, 10);
+    console.log('zgl 即时通讯','Strophe is connected.', 'jid', this.connection.jid)
+    this.connection.addHandler(this.onMessage.bind(this), null, 'message', null, null,  null); 
+    this.connection.addHandler(this.onIq.bind(this), null, 'iq', null , null,  'pubsub.im.zhiparts.com');
+    // this.connection.send($pres().tree());
+    if(this.state.currentDomain != ''){
+      var packet = buildFetchXmppPacket(this.state.currentDomain, 10);
       this.connection.send(packet.tree());
     }
 
@@ -616,28 +768,28 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       var from = iq.getAttribute('from');
       var type = iq.getAttribute('type');
       var pubsubs = iq.getElementsByTagName('pubsub');
-console.log(from);
+      console.log(from);
       if(pubsubs.length>0){
-console.log('111');
+        console.log('111');
         var items = pubsubs[0].getElementsByTagName('items');
         var itemlist = items[0].getElementsByTagName('item');
-console.log('111222');
-console.log(items);
+        console.log('111222');
+        console.log(items, itemlist.length);
         var accountList = new Array();
-        for(i=0; i<itemlist.length; i++){
-console.log('111333');
-          var entry = itemlist[0].getElementsByTagName("entry");
-console.log('111444');
+        for(var i=0; i<itemlist.length; i++){
+          console.log('111333');
+          var entry = itemlist[i].getElementsByTagName("entry");
+          console.log('111444');
           var summary = entry[0].getElementsByTagName("summary");
-console.log('111555');
+          console.log('111555');
           var se = Strophe.getText(summary[0]);
           var se2 = Strophe.xmlunescape(se);
           accountList.push(JSON.parse(se2));
         }
-console.log(accountList);
-       this.setState({
-           accountList: accountList
-         })
+        console.log(accountList);
+        this.setState({
+          accountList: accountList
+        })
   
       }
   } catch(err){
@@ -645,35 +797,4 @@ console.log(accountList);
   return true;
 
 }
-// 使用cookie 
-ShareDetailScreen.prototype.useCookie = function (item,e) {
-  var domain = item[1];
-  var cookie = item[2];
-  var ext = chrome.extension.getBackgroundPage();
-  console.log(item, domain, cookie)
-  var cookieJsonArray = myJsonParse(cookie, domain);
-  for(var i = 0; i<cookieJsonArray.length; i++){					
-    var setDetails = cookieJsonArray[i];
-    var thisdomain = setDetails['domain'];
-    if(thisdomain.indexOf(this.state.currentDomain) < 0 ){//不是当前域的
-      continue;
-    }
-    var cookie = CookieHelper.cookieForCreationFromFullCookie(setDetails);
-    //console.log(cookie);//					
-    chrome.cookies.set(cookie);
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      // var interval = 7200*1000;
-      // ext.timers.set(tabs[0], interval);
-      console.log('zgl 当前tab id', tabs[0].id)
-      chrome.tabs.reload(tabs[0].id, function(){})
-    });
-  }	
-}
 
-// 打开关闭分享区域
-ShareDetailScreen.prototype.changeShareShow = function () {
-  this.setState({
-    showShare: !this.state.showShare
-  })
-  return true;
-}

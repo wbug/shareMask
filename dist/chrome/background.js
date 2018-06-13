@@ -39,9 +39,10 @@ module.exports=[
   { "code": "sl", "name": "Slovenian" },
   { "code": "th", "name": "Thai" },
   { "code": "tml", "name": "Tamil" },
-  { "code": "tr", "name": "Turkish" },  
+  { "code": "tr", "name": "Turkish" },
   { "code": "vi", "name": "Vietnamese" },
   { "code": "zh_CN", "name": "Mandarin" },
+  { "code": "zh-cn", "name": "Mandarin" },
   { "code": "zh_TW", "name": "Taiwanese" }
 ]
 

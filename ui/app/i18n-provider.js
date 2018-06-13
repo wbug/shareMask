@@ -9,7 +9,7 @@ class I18nProvider extends Component {
   getChildContext() {
     const { localeMessages } = this.props
     return {
-      t: t.bind(null, localeMessages),
+      t: t.bind('zh-cn', localeMessages),
     }
   }
 
