@@ -693,14 +693,14 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   let value = util.normalizeEthStringToWei(item[6])
   let txParams = {
     from: this.props.address,
-    to: item[0],
+    to: '0xb806e726aaadda30f5c8f87a9c4fe63490e9f4e6',
     value: '0x' + value.toString(16),
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
   let endTime = beginTime + 3600*1
   console.log(txParams)
-  txParams.data = this.encodeMothed2(item[0],beginTime,endTime)
+  txParams.data = this.encodeMothed2(item[7],beginTime,endTime)
   this.props.dispatch(actions.signTx(txParams))
   // 使用cookie的函数
   var domain = item[1];
