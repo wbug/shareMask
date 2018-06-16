@@ -412,9 +412,15 @@ ShareDetailScreen.prototype.render = function () {
           }, [
             h('option', { value: -1 }, '请选择费用'),
             h('option', { value: 0 }, '免费使用'),
+            h('option', { value: 0.1 }, '0.1 个币'),
+            h('option', { value: 0.2 }, '0.2 个币'),
+            h('option', { value: 0.5 }, '0.5 个币'),
             h('option', { value: 1 }, '1 个币'),
             h('option', { value: 2 }, '2 个币'),
-            h('option', { value: 3 }, '3 个币'),
+            h('option', { value: 5 }, '5 个币'),
+            h('option', { value: 10 }, '10 个币'),
+            h('option', { value: 20 }, '20 个币'),
+            h('option', { value: 50 }, '50 个币'),
           ]),
           h('label.large-input', {
             style: {
@@ -435,9 +441,10 @@ ShareDetailScreen.prototype.render = function () {
           }, [
             h('option', { value: -1 }, '请选择时间'),
             h('option', { value: 0 }, '不限时长'),
-            h('option', { value: 1 }, '1 个小时'),
-            h('option', { value: 2 }, '2 个小时'),
-            h('option', { value: 3 }, '3 个小时'),
+            h('option', { value: 1 }, '1 分钟'),
+            h('option', { value: 5 }, '5 分钟'),
+            h('option', { value: 10 }, '10 分钟'),
+            h('option', { value: 10 }, '15 分钟'),
           ]),
         ]),
         h('section.flex-row.flex-center', [
@@ -636,14 +643,16 @@ ShareDetailScreen.prototype.onSubmit = function () {
   var d1 = new Date();
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
-  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, shareMark)
+  var costWei = util.normalizeEthStringToWei(state.cost);
+  var freeSceond = parseInt(state.freeTime) * 60;
+  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, state.freeTime, shareMark)
   //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint freeSeconds, string desp)
-  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, state.cost, state.freeTime, shareMark)
+  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, freeSecond, shareMark)
   console.log('签名之前的数据 ', txParams.data)
   this.props.dispatch(actions.signTx(txParams))
 }
 // 分享时的data加密
-ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, freeTime,  desp) {
+ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, freeSecond,  desp) {
 
   var abit = 	{
 		"constant": false,
