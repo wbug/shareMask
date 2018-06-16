@@ -440,7 +440,7 @@ ShareDetailScreen.prototype.render = function () {
             }
           }, [
             h('option', { value: -1 }, '请选择时间'),
-            h('option', { value: 0 }, '不限时长'),
+            h('option', { value: 0 }, '0 分钟'),
             h('option', { value: 1 }, '1 分钟'),
             h('option', { value: 5 }, '5 分钟'),
             h('option', { value: 10 }, '10 分钟'),
@@ -644,8 +644,8 @@ ShareDetailScreen.prototype.onSubmit = function () {
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
   var costWei = util.normalizeEthStringToWei(state.cost);
-  var freeSceond = parseInt(state.freeTime) * 60;
-  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, state.freeTime, shareMark)
+  var freeSecond = parseInt(state.freeTime) * 60;
+  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, freeSecond, shareMark)
   //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint freeSeconds, string desp)
   txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, freeSecond, shareMark)
   console.log('签名之前的数据 ', txParams.data)
@@ -692,7 +692,7 @@ ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp
 		"stateMutability": "nonpayable",
 		"type": "function"
 	};
-  var setInputBytecode = EthAbi.encodeMethod(abit, [domain, cookies, timesStamp, expireTimeStamp, cost, freeTime, desp]);
+  var setInputBytecode = EthAbi.encodeMethod(abit, [domain, cookies, timesStamp, expireTimeStamp, cost, freeSecond, desp]);
   return setInputBytecode;
 };
 
