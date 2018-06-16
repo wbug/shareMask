@@ -507,7 +507,7 @@ ShareDetailScreen.prototype.render = function () {
               '时间：',showtime(item[3]*1000),
             ]),
             h('div', {},[ 
-              '费用：', item[6],'免费时长：', item[7]
+              '费用：', item[6]/1000000000000000000, '免费时长：', item[7]
             ]),
             h('div', {},[ 
               '留言：', 
@@ -699,7 +699,7 @@ ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp
 // 使用cookie 
 ShareDetailScreen.prototype.useCookie = function (item,e) {
   // 发送只能合约
-  let value = util.normalizeEthStringToWei(item[6])
+  let value = parseInt(item[6]);
   let txParams = {
     from: this.props.address,
     to: '0xb806e726aaadda30f5c8f87a9c4fe63490e9f4e6',
