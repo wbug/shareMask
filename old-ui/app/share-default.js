@@ -222,10 +222,10 @@ ShareDetailScreen.prototype.render = function () {
   if (this.state && this.state.cost) {
     cost = this.state.cost
   }
-  // 免费时长
-  let freeTime = ''
-  if (this.state && this.state.freeTime) {
-    freeTime = this.state.freeTime
+  // 使用时长
+  let useTime = ''
+  if (this.state && this.state.useTime) {
+    useTime = this.state.useTime
   }
   // 备注
   let shareMark = ''
@@ -411,7 +411,7 @@ ShareDetailScreen.prototype.render = function () {
             }
           }, [
             h('option', { value: -1 }, '请选择费用'),
-            h('option', { value: 0 }, '免费使用'),
+            h('option', { value: 0 }, '使用使用'),
             h('option', { value: 0.1 }, '0.1 个币'),
             h('option', { value: 0.2 }, '0.2 个币'),
             h('option', { value: 0.5 }, '0.5 个币'),
@@ -428,23 +428,25 @@ ShareDetailScreen.prototype.render = function () {
               width: '20%',
               textAlign: 'center'
             }
-          }, '免费时间:'),
+          }, '使用时间:'),
           h('select.large-input', {
             name: 'amount',
-            placeholder: '免费时间',
+            placeholder: '使用时间',
             type: 'text',
-            value: freeTime,
-            onChange: this.handleFreeTime.bind(this),
+            value: useTime,
+            onChange: this.handleUseTime.bind(this),
             style: {
               width: '25%',
             }
           }, [
             h('option', { value: -1 }, '请选择时间'),
-            h('option', { value: 0 }, '0 分钟'),
-            h('option', { value: 1 }, '1 分钟'),
-            h('option', { value: 5 }, '5 分钟'),
-            h('option', { value: 10 }, '10 分钟'),
-            h('option', { value: 10 }, '15 分钟'),
+            h('option', { value: 0.5 }, '30 分钟'),
+            h('option', { value: 1 }, '1 小时'),
+            h('option', { value: 2 }, '2 小时'),
+            h('option', { value: 3 }, '3 小时'),
+            h('option', { value: 6 }, '6 小时'),
+            h('option', { value: 12 }, '12 小时'),
+            h('option', { value: 24 }, '24 小时'),
           ]),
         ]),
         h('section.flex-row.flex-center', [
@@ -502,12 +504,12 @@ ShareDetailScreen.prototype.render = function () {
             },
             key: index
           }, [
-            // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 免费时长
+            // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
             h('div', {},[
               '时间：',showtime(item[3]*1000),
             ]),
             h('div', {},[ 
-              '费用：', item[6]/1000000000000000000, '免费时长：', item[7]
+              '费用：', item[6]/1000000000000000000, '使用时长：', item[7]
             ]),
             h('div', {},[ 
               '留言：', 
@@ -544,7 +546,7 @@ ShareDetailScreen.prototype.componentDidMount =function () {
     currentDomain: '',
     shareMark: '', // 备注
     cost: -1, // 费用
-    freeTime: -1 // 免费时长
+    useTime: -1 // 使用时长
   })
   let _this = this
   // 开启IM 通讯
@@ -584,10 +586,10 @@ ShareDetailScreen.prototype.handleCost = function (event) {
     cost: event.target.value
   })
 }
-// 表单绑定函数----免费时长
-ShareDetailScreen.prototype.handleFreeTime = function (event) {
+// 表单绑定函数----使用时长
+ShareDetailScreen.prototype.handleUseTime = function (event) {
   this.setState({
-    freeTime: event.target.value
+    useTime: event.target.value
   })
 }
 // 表单绑定函数----备注
@@ -625,8 +627,8 @@ ShareDetailScreen.prototype.onSubmit = function () {
     message = '请填写使用费用'
     return this.props.dispatch(actions.displayWarning(message))
   }
-  if (state.freeTime < 0) {
-    message = '请填写免费时间'
+  if (state.useTime < 0) {
+    message = '请填写使用时间'
     return this.props.dispatch(actions.displayWarning(message))
   }
   let shareMark = this.refs.shareMark.state.value
@@ -644,15 +646,15 @@ ShareDetailScreen.prototype.onSubmit = function () {
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
   var costWei = util.normalizeEthStringToWei(state.cost);
-  var freeSecond = parseInt(state.freeTime) * 60;
-  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, freeSecond, shareMark)
-  //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint freeSeconds, string desp)
-  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, freeSecond, shareMark)
+  var useSecond = parseInt(state.useTime) *3600;
+  console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
+  //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint useSeconds, string desp)
+  txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
   console.log('签名之前的数据 ', txParams.data)
   this.props.dispatch(actions.signTx(txParams))
 }
 // 分享时的data加密
-ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, freeSecond,  desp) {
+ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, useSecond,  desp) {
 
   var abit = 	{
 		"constant": false,
@@ -678,7 +680,7 @@ ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp
 				"type": "uint256"
 			},
 			{
-				"name": "freeSeconds",
+				"name": "useSeconds",
 				"type": "uint256"
 			},
 			{
@@ -692,7 +694,7 @@ ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp
 		"stateMutability": "nonpayable",
 		"type": "function"
 	};
-  var setInputBytecode = EthAbi.encodeMethod(abit, [domain, cookies, timesStamp, expireTimeStamp, cost, freeSecond, desp]);
+  var setInputBytecode = EthAbi.encodeMethod(abit, [domain, cookies, timesStamp, expireTimeStamp, cost, useSecond, desp]);
   return setInputBytecode;
 };
 
