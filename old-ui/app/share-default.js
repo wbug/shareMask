@@ -468,7 +468,7 @@ ShareDetailScreen.prototype.render = function () {
           // }),
           h(Conbo, {
             ref: 'shareMark',
-            list: ['没时间打理，如不能用，请不要打差评 ', '此账户多人分享，如不能用，请不要打差评', '接力模式，下个人使用前，你可以一直使用'],
+            list: ['没时间打理，如不能用，请担退币', '此账户多人分享，如不能用，请提退币', '好人模式，下个人使用前，你可一直使用'],
             width: '80%',
           }),
           h('button.primary', {
