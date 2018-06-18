@@ -185,6 +185,12 @@ function showtime (myDate) {
   return timeValue;
 }
 
+function showUseTime(seconds){
+   var res = (seconds%3600)/60;
+   var hour = (seconds- seconds%3600)/3600;
+   return hour + "小时" + res + "分钟";
+}
+
 inherits(ShareDetailScreen, PersistentForm)
 function ShareDetailScreen () {
   PersistentForm.call(this)
@@ -428,10 +434,10 @@ ShareDetailScreen.prototype.render = function () {
               width: '20%',
               textAlign: 'center'
             }
-          }, '使用时间:'),
+          }, '使用时长:'),
           h('select.large-input', {
             name: 'amount',
-            placeholder: '使用时间',
+            placeholder: '使用时长',
             type: 'text',
             value: useTime,
             onChange: this.handleUseTime.bind(this),
@@ -462,7 +468,7 @@ ShareDetailScreen.prototype.render = function () {
           // }),
           h(Conbo, {
             ref: 'shareMark',
-            list: [1,2,3],
+            list: ['没时间打理，如不能用，请不要打差评 ', '此账户多人分享，如不能用，请不要打差评', '接力模式，下个人使用前，你可以一直使用'],
             width: '80%',
           }),
           h('button.primary', {
@@ -506,14 +512,14 @@ ShareDetailScreen.prototype.render = function () {
           }, [
             // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
             h('div', {},[
-              '时间：',showtime(item[3]*1000),
+              '时间：',showtime(item.sendTime*1000),
             ]),
             h('div', {},[ 
-              '费用：', item[6]/1000000000000000000, '使用时长：', item[7]
+              '费用：', item.price/1000000000000000000, '使用时长：', showUseTime(item.useSeconds)
             ]),
             h('div', {},[ 
               '留言：', 
-              item[5] 
+              item.desp 
             ]),
             h('button.primary', {
               onClick: this.useCookie.bind(this, item),
@@ -628,7 +634,7 @@ ShareDetailScreen.prototype.onSubmit = function () {
     return this.props.dispatch(actions.displayWarning(message))
   }
   if (state.useTime < 0) {
-    message = '请填写使用时间'
+    message = '请填写使用时长'
     return this.props.dispatch(actions.displayWarning(message))
   }
   let shareMark = this.refs.shareMark.state.value
@@ -639,7 +645,7 @@ ShareDetailScreen.prototype.onSubmit = function () {
   // 发送只能合约
   var txParams = {
     from: this.props.address,
-    to: '0xb806e726aaadda30f5c8f87a9c4fe63490e9f4e6',
+    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
     value: '0x0', // + value.toString(16),
   }
   var d1 = new Date();
@@ -701,21 +707,21 @@ ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp
 // 使用cookie 
 ShareDetailScreen.prototype.useCookie = function (item,e) {
   // 发送只能合约
-  let value = parseInt(item[6]);
+  let value = parseInt(item.price);
   let txParams = {
     from: this.props.address,
-    to: '0xb806e726aaadda30f5c8f87a9c4fe63490e9f4e6',
+    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
     value: '0x' + value.toString(16),
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
   let endTime = beginTime + 3600*1
   console.log(txParams)
-  txParams.data = this.encodeMothed2(item[7],beginTime,endTime)
+  txParams.data = this.encodeMothed2(item.id,beginTime,endTime)
   this.props.dispatch(actions.signTx(txParams))
   // 使用cookie的函数
-  var domain = item[1];
-  var cookie = item[2];
+  var domain = item.domain;
+  var cookie = item.cookie;
   var ext = chrome.extension.getBackgroundPage();
   var cookieJsonArray = myJsonParse(cookie, domain);
   for(var i = 0; i<cookieJsonArray.length; i++){					
