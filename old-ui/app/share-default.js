@@ -162,6 +162,28 @@ function buildFetchXmppPacket(domain, count){
   return iq_pubsub;
 }
 
+//  生成一个获取用户分享的账户的xmpp 请求包
+function buildSubscribeXmppPacket(domain, sjid){
+
+//<iq type='set'
+//    from='francisco@denmark.lit/barracks'
+//    to='pubsub.shakespeare.lit'
+//    id='sub1'>
+//  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
+//    <subscribe
+//        node='princely_musings'
+//        jid='francisco@denmark.lit'/>
+//  </pubsub>
+//</iq>
+      var d1 = new Date();
+      var timeS = parseInt(d1.getTime()/1000).toString();
+      var nodeId = 'shareMask_' + domain;
+      //var sjid = connection.jid;
+      var subscribe = Strophe.xmlElement('subscribe', {node:nodeId, jid:sjid},'');
+      var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(subscribe);
+
+      return iq_pubsub;
+}
 // 格式化日期的函数
 function showtime (myDate) {
   var now = new Date();
@@ -805,13 +827,47 @@ function onConnect(status){
     if(this.state.currentDomain != ''){
       var packet = buildFetchXmppPacket(this.state.currentDomain, 10);
       this.connection.send(packet.tree());
+      var subPacket = buildSubscribeXmppPacket(this.state.currentDomain, this.props.address + '@im.zhiparts.com');
+      this.connection.send(subPacket.tree());
     }
 
   }
 }
+
+
+
+function onAddorDelete(items){
+      var itemlist = items[0].getElementsByTagName('item');
+      for(i=0; i<itemlist.length; i++){
+        var entry = itemlist[i].getElementsByTagName("entry");
+        var summary = entry[0].getElementsByTagName("summary");
+        var se = Strophe.getText(summary[0]);
+        var se2 = Strophe.xmlunescape(se);
+        //se2 is add share
+      }
+
+      var retractlist = items[0].getElementsByTagName('retract');
+      for(i=0; i<retractlist.length; i++){
+        var id = retractlist[i].getAttribute("id");
+        //id is the delete share
+      }
+
+}
+
+
 // 监听普通消息的函数
 ShareDetailScreen.prototype.onMessage = function (msg) {
   console.log('zgl 受到消息了', msg)
+
+  var from = msg.getAttribute('from');
+  var type = msg.getAttribute('type');
+  var events = msg.getElementsByTagName('event');
+
+  if (from == "pubsub.im.zhiparts.com" && events.length > 0) {
+        var items = events[0].getElementsByTagName('items');
+        onAddorDelete(items);
+   }
+
   this.setState({
     accountList: msg
   })
