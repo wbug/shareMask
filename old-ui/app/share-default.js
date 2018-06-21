@@ -1062,6 +1062,60 @@ ShareDetailScreen.prototype.encodeMothed2 = function (shareId, timeS_begin, time
   return setInputBytecode;
 };
 
+
+// 使用者在使用结束前提出退钱 ; 使用者修改自己的退钱明细
+ShareDetailScreen.prototype.refund = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothed2(item.id, beginTime, 100, "aaaaaa");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+}
+
+// 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
+ShareDetailScreen.prototype.refundBySharer = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothed2(item.id, beginTime, 0, "aaaaaa");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+}
+
+// 分享者在使用结束后提钱	（可以给使用者留点）
+ShareDetailScreen.prototype.withdraw = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothed2(item.id, beginTime, 100, "aaaaaa");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+}
+
+// 分享者同意使用者退钱, 这个时候输入的money与desp 无用
+ShareDetailScreen.prototype.agree = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothed2(item.id, beginTime, 0, "");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+
+}
+
 // 我的分享的账号的状态
 ShareDetailScreen.prototype.getShareStatus = function (status) {
   let txt = ''
