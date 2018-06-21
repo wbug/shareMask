@@ -699,7 +699,7 @@ ShareDetailScreen.prototype.componentDidMount =function () {
     })
   }
 }
-// 组件卸载前的操作
+// 生命周期组件卸载前的操作
 ShareDetailScreen.prototype.componentWillUnmount=function() {
   clearInterval(this.myInterval)
 }
