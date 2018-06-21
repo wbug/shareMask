@@ -1071,7 +1071,7 @@ ShareDetailScreen.prototype.refund = function (item,e) {
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothed2(item.id, beginTime, 100, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
   console.log(txParams)
   this.props.dispatch(actions.signTx(txParams))
 }
@@ -1084,7 +1084,7 @@ ShareDetailScreen.prototype.refundBySharer = function (item,e) {
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothed2(item.id, beginTime, 0, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "aaaaaa");
   console.log(txParams)
   this.props.dispatch(actions.signTx(txParams))
 }
@@ -1097,7 +1097,7 @@ ShareDetailScreen.prototype.withdraw = function (item,e) {
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothed2(item.id, beginTime, 100, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
   console.log(txParams)
   this.props.dispatch(actions.signTx(txParams))
 }
@@ -1110,11 +1110,46 @@ ShareDetailScreen.prototype.agree = function (item,e) {
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothed2(item.id, beginTime, 0, "");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "");
   console.log(txParams)
   this.props.dispatch(actions.signTx(txParams))
 
 }
+
+// 使用时的data加密
+ShareDetailScreen.prototype.encodeMothedReassign = function (shareId, timeStamp , money, desp) {
+
+  var abit = {
+      "constant": false,
+      "inputs": [
+        {
+                "name": "shareId",
+                "type": "uint256"
+        },
+        {
+                "name": "timeStamp",
+                "type": "uint256"
+        },
+        {
+                "name": "money",
+                "type": "uint256"
+        },
+        {
+                "name": "desp",
+                "type": "string"
+        }
+      ],
+      "name": "postReassign",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+  };
+  var setInputBytecode = EthAbi.encodeMethod(abit, [shareId, timeStamp, money, desp]);
+  return setInputBytecode;
+};
+
+
 
 // 我的分享的账号的状态
 ShareDetailScreen.prototype.getShareStatus = function (status) {
