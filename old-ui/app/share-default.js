@@ -146,7 +146,7 @@ function myJsonParse(jsonStr2, root_domain){
 }
 
 //  生成一个获取用户分享的账户的xmpp 请求包
-function buildFetchXmppPacket(domain, count){
+function buildFetchXmppPacket(nodeId, count){
   //<iq type='get'
   //    to='pubsub.im.zhiparts.com'
   //    id='items1'>
@@ -156,7 +156,6 @@ function buildFetchXmppPacket(domain, count){
   //</iq>
   var d1 = new Date();
   var timeS = parseInt(d1.getTime()/1000).toString();
-  var nodeId = 'shareMask_' + domain;
   var countStr = count.toString();
   var item = Strophe.xmlElement('items', {node:nodeId, max_items:countStr},'');
   var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'get', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(item);
@@ -165,7 +164,7 @@ function buildFetchXmppPacket(domain, count){
 }
 
 //  生成一个获取用户分享的账户的xmpp 请求包
-function buildSubscribeXmppPacket(domain, sjid){
+function buildSubscribeXmppPacket(nodeId, sjid){
 
 //<iq type='set'
 //    from='francisco@denmark.lit/barracks'
@@ -179,7 +178,6 @@ function buildSubscribeXmppPacket(domain, sjid){
 //</iq>
       var d1 = new Date();
       var timeS = parseInt(d1.getTime()/1000).toString();
-      var nodeId = 'shareMask_' + domain;
       //var sjid = connection.jid;
       var subscribe = Strophe.xmlElement('subscribe', {node:nodeId, jid:sjid},'');
       var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(subscribe);
@@ -826,10 +824,14 @@ function onConnect(status){
     this.connection.addHandler(this.onIq.bind(this), null, 'iq', null , null,  'pubsub.im.zhiparts.com');
     // this.connection.send($pres().tree());
     if(this.state.currentDomain != ''){
-      var packet = buildFetchXmppPacket(this.state.currentDomain, 10);
+      var packet = buildFetchXmppPacket('shareMask_' + this.state.currentDomain, 10);
       this.connection.send(packet.tree());
-      var subPacket = buildSubscribeXmppPacket(this.state.currentDomain, this.props.address + '@im.zhiparts.com');
+      var packetSharer = buildFetchXmppPacket('shareMask_sharer_'+ this.props.address, 10);
+      this.connection.send(packetSharer.tree());
+      var subPacket = buildSubscribeXmppPacket('shareMask_' + this.state.currentDomain, this.props.address + '@im.zhiparts.com');
       this.connection.send(subPacket.tree());
+      var subPacketSharer = buildSubscribeXmppPacket('shareMask_sharer_'+ this.props.address, this.props.address + '@im.zhiparts.com');
+      this.connection.send(subPacketSharer.tree());
     }
 
   }
@@ -845,7 +847,17 @@ ShareDetailScreen.prototype.onMessage = function (msg) {
 
   if (from == "pubsub.im.zhiparts.com" && events.length > 0) {
     var items = events[0].getElementsByTagName('items');
-    this.onAddorDelete.bind(this, items);
+
+    var NodeId = items[0].getAttribute('node');
+    var domainNodeId = 'shareMask_' + this.state.currentDomain;
+    var myShareNodeId = 'shareMask_sharer_' + this.props.address;
+    if(NodeId == domainNodeId){
+      this.onAddorDelete.bind(this, items);
+    }
+    if(NodeId == myShareNodeId){
+      this.onAddorDeleteMy.bind(this, items);
+    }
+
   }
   return true;
 }
@@ -884,6 +896,39 @@ ShareDetailScreen.prototype.onAddorDelete = function(items){
   })
 }
 
+// 监听 添加 删除 账号列表中某一项的函数
+ShareDetailScreen.prototype.onAddorDeleteMy = function(items){
+  // add 
+  let addArr = []
+  var itemlist = items[0].getElementsByTagName('item');
+  for(i=0; i<itemlist.length; i++){
+    var entry = itemlist[i].getElementsByTagName("entry");
+    var summary = entry[0].getElementsByTagName("summary");
+    var se = Strophe.getText(summary[0]);
+    var se2 = Strophe.xmlunescape(se);
+    //se2 is add share
+    addArr.push(JSON.parse(se2))
+  }
+  this.setState({
+    accountList: this.state.accountList.concat(addArr)
+  })
+  // delete
+  let delArr = []
+  let accountList = Object.assign([], this.state.accountList)
+  var retractlist = items[0].getElementsByTagName('retract');
+  for(i=0; i<retractlist.length; i++){
+    var id = retractlist[i].getAttribute("id");
+    //id is the delete share
+    for (let i = 0; i < accountList.length; i++) {
+      if (id  == accountList[i].id) {
+        accountList.splice(i, 1)
+      }
+    }
+  }
+  this.setState({
+    accountListShare: accountList
+  })
+}
 // 监听他人分享账户的函数
 ShareDetailScreen.prototype.onIq = function (iq) {
   console.log('zgl 收到他人分享账户', iq);
@@ -896,6 +941,10 @@ ShareDetailScreen.prototype.onIq = function (iq) {
         console.log('111');
         var items = pubsubs[0].getElementsByTagName('items');
         var itemlist = items[0].getElementsByTagName('item');
+
+        var NodeId = items[0].getAttribute('node');
+        var domainNodeId = 'shareMask_' + this.state.currentDomain;
+        var myShareNodeId = 'shareMask_sharer_' + this.props.address;
         console.log('111222');
         console.log(items, itemlist.length);
         var accountList = new Array();
@@ -910,9 +959,18 @@ ShareDetailScreen.prototype.onIq = function (iq) {
           accountList.push(JSON.parse(se2));
         }
         console.log(accountList);
-        this.setState({
-          accountList: accountList
-        })
+        if(NodeId == domainNodeId){
+          this.setState({
+            accountList: accountList
+          })
+        }
+
+        if(NodeId == myShareNodeId){
+          this.setState({
+            accountListShare: accountList
+          })
+        }
+
   
       }
   } catch(err){
