@@ -844,7 +844,7 @@ function onConnect(status){
     console.log('zgl 即时通讯','Strophe is connected.', 'jid', this.connection.jid)
     this.connection.addHandler(this.onMessage.bind(this), null, 'message', null, null,  null); 
     this.connection.addHandler(this.onIq.bind(this), null, 'iq', null , null,  'pubsub.im.zhiparts.com');
-    // this.connection.send($pres().tree());
+    this.connection.send($pres().tree());//this must be open, or can't receive message
     if(this.state.currentDomain != ''){
       var packet = buildFetchXmppPacket('shareMask_' + this.state.currentDomain, 10);
       this.connection.send(packet.tree());
@@ -863,24 +863,29 @@ function onConnect(status){
 ShareDetailScreen.prototype.onMessage = function (msg) {
   console.log('zgl 受到消息了', msg)
 
-  var from = msg.getAttribute('from');
-  var type = msg.getAttribute('type');
-  var events = msg.getElementsByTagName('event');
-
-  if (from == "pubsub.im.zhiparts.com" && events.length > 0) {
-    var items = events[0].getElementsByTagName('items');
-
-    var NodeId = items[0].getAttribute('node');
-    var domainNodeId = 'shareMask_' + this.state.currentDomain;
-    var myShareNodeId = 'shareMask_sharer_' + this.props.address;
-    if(NodeId == domainNodeId){
-      this.onAddorDelete.bind(this, items, 1);
+  try{
+    var from = msg.getAttribute('from');
+    var type = msg.getAttribute('type');
+    var events = msg.getElementsByTagName('event');
+  
+    if (from == "pubsub.im.zhiparts.com" && events.length > 0) {
+      var items = events[0].getElementsByTagName('items');
+  
+      var NodeId = items[0].getAttribute('node');
+      var domainNodeId = 'shareMask_' + this.state.currentDomain;
+      var myShareNodeId = 'shareMask_sharer_' + this.props.address;
+      if(NodeId == domainNodeId){
+        this.onAddorDelete.bind(this, items, 1);
+      }
+      if(NodeId == myShareNodeId){
+        this.onAddorDeleteMy.bind(this, items, 2);
+      }
+  
     }
-    if(NodeId == myShareNodeId){
-      this.onAddorDeleteMy.bind(this, items, 2);
-    }
-
+  } catch(err){
+    console.log(err)
   }
+
   return true;
 }
 
