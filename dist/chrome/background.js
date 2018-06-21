@@ -69922,7 +69922,8 @@ const createAsyncMiddleware = require('json-rpc-engine/src/createAsyncMiddleware
 const JsonRpcError = require('json-rpc-error')
 const fetch = require('cross-fetch')
 
-const POST_METHODS = ['eth_call', 'eth_estimateGas', 'eth_sendRawTransaction']
+// const POST_METHODS = ['eth_call', 'eth_estimateGas', 'eth_sendRawTransaction']
+const POST_METHODS = ['eth_call', 'eth_estimateGas', 'eth_sendRawTransaction', 'eth_getBlockByNumber', 'net_version', 'eth_getBalance','eth_getTransactionCount','eth_getCode', 'eth_getLogs', 'eth_getTransactionByHash']
 const RETRIABLE_ERRORS = [
   // ignore server overload errors
   'Gateway timeout',
@@ -70024,7 +70025,8 @@ function fetchConfigFromReq({ network, req }) {
   const { method, params } = cleanReq
 
   const fetchParams = {}
-  let fetchUrl = `https://api.infura.io/v1/jsonrpc/${network}`
+  // let fetchUrl = `https://api.infura.io/v1/jsonrpc/${network}`
+  let fetchUrl = `http://www.zhiparts.com/ethereum/`
   const isPostMethod = POST_METHODS.includes(method)
   if (isPostMethod) {
     fetchParams.method = 'POST'

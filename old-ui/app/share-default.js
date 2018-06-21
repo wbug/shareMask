@@ -145,6 +145,41 @@ function myJsonParse(jsonStr2, root_domain){
   return myfilteredCookies;
 }
 
+// 倒计时函数
+function countDown (start, len) {
+  let canUse = len
+  let now = new Date().getTime()
+  let usedTime = (now -start) / 1000
+  if (usedTime >= canUse) return '0分钟'
+  let lastTime = canUse - usedTime
+  let hour,minit,second
+  hour = Math.floor(lastTime/3600)
+  minit = Math.floor((lastTime%3600)/60)
+  second = Math.floor((lastTime%3600)%60)
+  return hour + '时' + minit + '分' + second + '秒'
+}
+
+// 操作localstorage
+function editUsedAccountList (type, arg1, arg2, arg3) {
+  let arr = JSON.parse(window.localStorage.getItem('usedAccountList')) || []
+  if (type === 'get') {
+    // arg1: domain
+    let list = []
+    for (let i = 0;i < arr.length; i++) {
+      if (arg1 == arr[i].domain) {
+        list.push(arr[i])
+      }
+    }
+    return list
+  } else if (type == 'add') {
+    // arg1 item
+    arg1.startTime = new Date().getTime()
+    arg1.status = 0
+    arr.push(arg1)
+    window.localStorage.setItem('usedAccountList', JSON.stringify(arr))
+  }
+}
+
 //  生成一个获取用户分享的账户的xmpp 请求包
 function buildFetchXmppPacket(nodeId, count){
   //<iq type='get'
@@ -165,24 +200,12 @@ function buildFetchXmppPacket(nodeId, count){
 
 //  生成一个获取用户分享的账户的xmpp 请求包
 function buildSubscribeXmppPacket(nodeId, sjid){
-
-//<iq type='set'
-//    from='francisco@denmark.lit/barracks'
-//    to='pubsub.shakespeare.lit'
-//    id='sub1'>
-//  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
-//    <subscribe
-//        node='princely_musings'
-//        jid='francisco@denmark.lit'/>
-//  </pubsub>
-//</iq>
-      var d1 = new Date();
-      var timeS = parseInt(d1.getTime()/1000).toString();
-      //var sjid = connection.jid;
-      var subscribe = Strophe.xmlElement('subscribe', {node:nodeId, jid:sjid},'');
-      var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(subscribe);
-
-      return iq_pubsub;
+  var d1 = new Date();
+  var timeS = parseInt(d1.getTime()/1000).toString();
+  //var sjid = connection.jid;
+  var subscribe = Strophe.xmlElement('subscribe', {node:nodeId, jid:sjid},'');
+  var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(subscribe);
+  return iq_pubsub;
 }
 // 格式化日期的函数
 function showtime (myDate) {
@@ -208,9 +231,9 @@ function showtime (myDate) {
 }
 
 function showUseTime(seconds){
-   var res = (seconds%3600)/60;
-   var hour = (seconds- seconds%3600)/3600;
-   return hour + "小时" + res + "分钟";
+  var res = (seconds%3600)/60;
+  var hour = (seconds- seconds%3600)/3600;
+  return hour + "小时" + res + "分钟";
 }
 
 inherits(ShareDetailScreen, PersistentForm)
@@ -243,6 +266,10 @@ ShareDetailScreen.prototype.render = function () {
   let usedAccountList = []
   if (this.state && this.state.usedAccountList) {
     usedAccountList = this.state.usedAccountList
+  }
+  let shareAccountList = []
+  if (this.state && this.state.shareAccountList) {
+    shareAccountList = this.state.shareAccountList
   }
   let showShare = false
   if (this.state && this.state.showShare) {
@@ -510,23 +537,28 @@ ShareDetailScreen.prototype.render = function () {
         ]),
         // 我的分享列表
         h('ul',{ style: { width: '100%', } }, [
-          accountList.length ? accountList.map((item, index) => {
+          shareAccountList.length ? shareAccountList.map((item, index) => {
             return h('li',{
               style:{
                 borderBottom: '1px solid #ccc',
                 position: 'relative',
-                paddingTop: '10px',
-                paddingBottom: '10px',
-                paddingLeft: '10px',
-                paddingRight: '80px',
+                padding: '10px',
               },
               key: index
             }, [
               // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
-              h('div', {},[
+              h('div',  {style: { color: 'blue' }},[
                 '当前的状态：', '使用中',
-              ]),
+                // 停止使用按钮
+                h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
+                item.status == 0 ? h('span', { style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                '停止使用') : '',
+                // 评价按钮
+                item.status == 0 ? h('span', { style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                '评价') : '',
+                ]),
               h('div', {},[
+                '分享的网站：',item.domain,
                 '时间：',showtime(item.sendTime*1000),
               ]),
               h('div', {},[ 
@@ -536,20 +568,6 @@ ShareDetailScreen.prototype.render = function () {
                 '留言：', 
                 item.desp 
               ]),
-              h('button.primary', {
-                onClick: this.useCookie.bind(this, item),
-                style: {
-                  padding: 0,
-                  textTransform: 'uppercase',
-                  width: '60px',
-                  height: '30px',
-                  lineHeight: '30px',
-                  position: 'absolute',
-                  right: '10px',
-                  top: '20px',
-                  fontSize: '14px',
-                },
-              }, '取消分享'),
             ])
           }) : null
         ]),
@@ -648,7 +666,8 @@ ShareDetailScreen.prototype.componentDidMount =function () {
   this.setState({
     showShare: false, // 是否显示分享账号的内容
     cookies: '',
-    accountList: [],
+    accountList: [], // 别人分享的列表
+    shareAccountList: [], // 自己分享的账号列表
     usedAccountList:[], // 使用过的账号列表
     currentDomain: '',
     shareMark: '', // 备注
@@ -701,6 +720,9 @@ ShareDetailScreen.prototype.componentDidMount =function () {
 ShareDetailScreen.prototype.componentWillUnmount=function() {
   clearInterval(this.myInterval)
 }
+/**
+ * 页面主要操作
+*/
 // 分享账号操作
 ShareDetailScreen.prototype.onSubmit = function () {
   console.log(this.state)
@@ -837,7 +859,7 @@ function onConnect(status){
   }
 }
 
-// 监听普通消息的函数
+// 监听普通消息的函数 --1.两个列表消息的增删2.
 ShareDetailScreen.prototype.onMessage = function (msg) {
   console.log('zgl 受到消息了', msg)
 
@@ -852,18 +874,18 @@ ShareDetailScreen.prototype.onMessage = function (msg) {
     var domainNodeId = 'shareMask_' + this.state.currentDomain;
     var myShareNodeId = 'shareMask_sharer_' + this.props.address;
     if(NodeId == domainNodeId){
-      this.onAddorDelete.bind(this, items);
+      this.onAddorDelete.bind(this, items, 1);
     }
     if(NodeId == myShareNodeId){
-      this.onAddorDeleteMy.bind(this, items);
+      this.onAddorDeleteMy.bind(this, items, 2);
     }
 
   }
   return true;
 }
 
-// 监听 添加 删除 账号列表中某一项的函数
-ShareDetailScreen.prototype.onAddorDelete = function(items){
+// 处理 添加 删除 账号列表中某一项的函数
+ShareDetailScreen.prototype.onAddorDelete = function(items, type){
   // add 
   let addArr = []
   var itemlist = items[0].getElementsByTagName('item');
@@ -875,12 +897,24 @@ ShareDetailScreen.prototype.onAddorDelete = function(items){
     //se2 is add share
     addArr.push(JSON.parse(se2))
   }
-  this.setState({
-    accountList: this.state.accountList.concat(addArr)
-  })
+  if(type === 1) {
+    this.setState({
+      accountList: this.state.accountList.concat(addArr)
+    })
+  } else if (type == 2) {
+    this.setState({
+      shareAccountList: this.state.shareAccountList.concat(addArr)
+    })
+  }
+  
   // delete
   let delArr = []
-  let accountList = Object.assign([], this.state.accountList)
+  let accountList
+  if (type == 1) {
+    accountList = Object.assign([], this.state.accountList)
+  } else if (type == 2) {
+    accountList = Object.assign([], this.state.shareAccountList)
+  }
   var retractlist = items[0].getElementsByTagName('retract');
   for(i=0; i<retractlist.length; i++){
     var id = retractlist[i].getAttribute("id");
@@ -891,101 +925,63 @@ ShareDetailScreen.prototype.onAddorDelete = function(items){
       }
     }
   }
-  this.setState({
-    accountList: accountList
-  })
+  if (type == 1) {
+    this.setState({
+      accountList: accountList
+    })
+  } else if (type == 2) {
+    this.setState({
+      shareAccountList: accountList
+    })
+  }
 }
 
-// 监听 添加 删除 账号列表中某一项的函数
-ShareDetailScreen.prototype.onAddorDeleteMy = function(items){
-  // add 
-  let addArr = []
-  var itemlist = items[0].getElementsByTagName('item');
-  for(i=0; i<itemlist.length; i++){
-    var entry = itemlist[i].getElementsByTagName("entry");
-    var summary = entry[0].getElementsByTagName("summary");
-    var se = Strophe.getText(summary[0]);
-    var se2 = Strophe.xmlunescape(se);
-    //se2 is add share
-    addArr.push(JSON.parse(se2))
-  }
-  this.setState({
-    accountList: this.state.accountList.concat(addArr)
-  })
-  // delete
-  let delArr = []
-  let accountList = Object.assign([], this.state.accountList)
-  var retractlist = items[0].getElementsByTagName('retract');
-  for(i=0; i<retractlist.length; i++){
-    var id = retractlist[i].getAttribute("id");
-    //id is the delete share
-    for (let i = 0; i < accountList.length; i++) {
-      if (id  == accountList[i].id) {
-        accountList.splice(i, 1)
-      }
-    }
-  }
-  this.setState({
-    accountListShare: accountList
-  })
-}
-// 监听他人分享账户的函数
+// 监听获取初始化的两个账号列表
 ShareDetailScreen.prototype.onIq = function (iq) {
   console.log('zgl 收到他人分享账户', iq);
   try{
-      var from = iq.getAttribute('from');
-      var type = iq.getAttribute('type');
-      var pubsubs = iq.getElementsByTagName('pubsub');
-      console.log(from);
-      if(pubsubs.length>0){
-        console.log('111');
-        var items = pubsubs[0].getElementsByTagName('items');
-        var itemlist = items[0].getElementsByTagName('item');
+    var from = iq.getAttribute('from');
+    var type = iq.getAttribute('type');
+    var pubsubs = iq.getElementsByTagName('pubsub');
+    console.log(pubsubs);
+    if(pubsubs.length>0){
+      var items = pubsubs[0].getElementsByTagName('items');
+      var itemlist = items[0].getElementsByTagName('item');
 
-        var NodeId = items[0].getAttribute('node');
-        var domainNodeId = 'shareMask_' + this.state.currentDomain;
-        var myShareNodeId = 'shareMask_sharer_' + this.props.address;
-        console.log('111222');
-        console.log(items, itemlist.length);
-        var accountList = new Array();
-        for(var i=0; i<itemlist.length; i++){
-          console.log('111333');
-          var entry = itemlist[i].getElementsByTagName("entry");
-          console.log('111444');
-          var summary = entry[0].getElementsByTagName("summary");
-          console.log('111555');
-          var se = Strophe.getText(summary[0]);
-          var se2 = Strophe.xmlunescape(se);
-          accountList.push(JSON.parse(se2));
-        }
-        console.log(accountList);
-        if(NodeId == domainNodeId){
-          this.setState({
-            accountList: accountList
-          })
-        }
-
-        if(NodeId == myShareNodeId){
-          this.setState({
-            accountListShare: accountList
-          })
-        }
-
-  
+      var NodeId = items[0].getAttribute('node');
+      var domainNodeId = 'shareMask_' + this.state.currentDomain;
+      var myShareNodeId = 'shareMask_sharer_' + this.props.address;
+      console.log(items, itemlist.length);
+      var accountList = new Array();
+      for(var i=0; i<itemlist.length; i++){
+        var entry = itemlist[i].getElementsByTagName("entry");
+        var summary = entry[0].getElementsByTagName("summary");
+        var se = Strophe.getText(summary[0]);
+        var se2 = Strophe.xmlunescape(se);
+        accountList.push(JSON.parse(se2));
       }
+      if(NodeId == domainNodeId){
+        console.log('zgl 获取到了可用账号列表', accountList)
+        this.setState({
+          accountList: accountList
+        })
+      }
+      if(NodeId == myShareNodeId){
+        console.log('zgl 获取到了我分享的账号列表', accountList)
+        this.setState({
+          shareAccountList: accountList
+        })
+      }
+    }
   } catch(err){
+    console.log(err)
   }
   return true;
-
 }
 
-// 打开关闭分享区域
-ShareDetailScreen.prototype.changeShareShow = function () {
-  this.setState({
-    showShare: !this.state.showShare
-  })
-  return true;
-}
+/**
+ * 基本不会变的函数与工具函数
+**/
 
 // 分享时的data加密
 ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, useSecond,  desp) {
@@ -1103,7 +1099,6 @@ ShareDetailScreen.prototype.getUseStatus = function (status) {
   }
   return txt
 }
-
 // 表单绑定函数---费用
 ShareDetailScreen.prototype.handleCost = function (event) {
   this.setState({
@@ -1122,38 +1117,12 @@ ShareDetailScreen.prototype.handleShareMark = function (event) {
     shareMark: event.target.value
   })
 }
-// 操作localstorage
-function editUsedAccountList (type, arg1, arg2, arg3) {
-  let arr = JSON.parse(window.localStorage.getItem('usedAccountList')) || []
-  if (type === 'get') {
-    // arg1: domain
-    let list = []
-    for (let i = 0;i < arr.length; i++) {
-      if (arg1 == arr[i].domain) {
-        list.push(arr[i])
-      }
-    }
-    return list
-  } else if (type == 'add') {
-    // arg1 item
-    arg1.startTime = new Date().getTime()
-    arg1.status = 0
-    arr.push(arg1)
-    window.localStorage.setItem('usedAccountList', JSON.stringify(arr))
-  }
+// 打开关闭分享区域
+ShareDetailScreen.prototype.changeShareShow = function () {
+  this.setState({
+    showShare: !this.state.showShare
+  })
+  return true;
 }
 
-// 倒计时函数
-function countDown (start, len) {
-  let canUse = len
-  let now = new Date().getTime()
-  let usedTime = (now -start) / 1000
-  if (usedTime >= canUse) return '0分钟'
-  let lastTime = canUse - usedTime
-  let hour,minit,second
-  hour = Math.floor(lastTime/3600)
-  minit = Math.floor((lastTime%3600)/60)
-  second = Math.floor((lastTime%3600)%60)
-  return hour + '时' + minit + '分' + second + '秒'
-}
 
