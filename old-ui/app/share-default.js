@@ -511,7 +511,7 @@ ShareDetailScreen.prototype.render = function () {
         }, [
           h(Conbo, {
             ref: 'shareMark',
-            list: ['没时间打理，如不能用，请担退币', '此账户多人分享，如不能用，请提退币', '好人模式，下个人使用前，你可一直使用'],
+            list: ['没时间打理，如不能用，请提退币', '多人共享中，如你使用时被踢，请提退币', '好人模式，下个人使用前，你可一直使用'],
             width: '80%',
           }),
           h('button.primary', {
@@ -854,6 +854,12 @@ function onConnect(status){
       this.connection.send(subPacket.tree());
       var subPacketSharer = buildSubscribeXmppPacket('shareMask_sharer_'+ this.props.address, this.props.address + '@im.zhiparts.com');
       this.connection.send(subPacketSharer.tree());
+      if(true){ //如果我有在使用账号
+        var packetUser = buildFetchXmppPacket('shareMask_user_'+ this.props.address, 10);
+        this.connection.send(packetUser.tree());
+        var subPacketUser = buildSubscribeXmppPacket('shareMask_user_'+ this.props.address, this.props.address + '@im.zhiparts.com');
+        this.connection.send(subPacketUser.tree());
+      }
     }
 
   }
@@ -874,11 +880,15 @@ ShareDetailScreen.prototype.onMessage = function (msg) {
       var NodeId = items[0].getAttribute('node');
       var domainNodeId = 'shareMask_' + this.state.currentDomain;
       var myShareNodeId = 'shareMask_sharer_' + this.props.address;
+      var myUseNodeId = 'shareMask_user_' + this.props.address;
       if(NodeId == domainNodeId){
         this.onAddorDelete.bind(this, items, 1);
       }
       if(NodeId == myShareNodeId){
-        this.onAddorDeleteMy.bind(this, items, 2);
+        this.onAddorDeleteShare.bind(this, items, 2);
+      }
+      if(NodeId == myUseNodeId){
+        this.onAddorDeleteUse.bind(this, items, 2);
       }
   
     }
@@ -956,6 +966,7 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       var NodeId = items[0].getAttribute('node');
       var domainNodeId = 'shareMask_' + this.state.currentDomain;
       var myShareNodeId = 'shareMask_sharer_' + this.props.address;
+      var myUseNodeId = 'shareMask_user_' + this.props.address;
       console.log(items, itemlist.length);
       var accountList = new Array();
       for(var i=0; i<itemlist.length; i++){
@@ -977,6 +988,15 @@ ShareDetailScreen.prototype.onIq = function (iq) {
           shareAccountList: accountList
         })
       }
+
+
+      if(NodeId == myUseNodeId){
+        console.log('zgl 获取到了我退款的账号列表', accountList)
+        this.setState({
+          useAccountList: accountList
+        })
+      }
+ 
     }
   } catch(err){
     console.log(err)
