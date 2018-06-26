@@ -48,194 +48,6 @@ function mapStateToProps (state) {
   return result
 }
 
-// 解析域名的函数
-function getRootDomain(weburl){ 
-  if(weburl.indexOf("http")!=0){
-    return "";
-  }
-  var reg = /^http(s)?:\/\/(.*?)\//; 
-  var domain = reg.exec(weburl)[2];
-  var domainArr = domain.split(".");
-  if(domain.indexOf("com.cn")>0){
-    domain =  domainArr[domainArr.length-3] + "." + domainArr[domainArr.length-2] + "." + domainArr[domainArr.length-1];
-  }else{
-    domain =  domainArr[domainArr.length-2] + "." + domainArr[domainArr.length-1];
-  }
-  return domain;
-}
-
-// 加密cookie 的函数
-function myJsonStringify(filteredCookies, root_domain){
-
-  var myfilteredCookies = [];
-  for(var i=0; i<filteredCookies.length; i++) {
-    var currentC = filteredCookies[i];
-    var hostOnly = currentC['hostOnly'] ?  '1' : '0';
-    var httpOnly = currentC['httpOnly'] ?  '1' : '0';
-    var secure = currentC['secure'] ?  '1' : '0';
-    var session = currentC['session'] ?  '1' : '0';
-    var path = currentC['path']=="/" ?  '1' : '0';
-    var storeId = currentC['storeId']=="0" ?  '1' : '0';
-    var domain = currentC['domain']== root_domain ? '1' : ( currentC['domain']== ("." + root_domain) ? '2' : (currentC['domain']== ("www." + root_domain) ? '3' : currentC['domain']));
-    
-    delete currentC.expirationDate;
-    delete currentC.hostOnly;
-    delete currentC.httpOnly;		
-    delete currentC.secure;
-    delete currentC.session; 
-    delete currentC.domain; 
-    if(path == '1') {	delete currentC.path;}
-    if(storeId ==  '1') { delete currentC.storeId;}
-    if(domain.length == 1) { delete currentC.domain;}
-    
-    var combo = hostOnly + httpOnly + secure + session + path + storeId + domain;
-    
-    currentC["a"] = combo;
-    var name = currentC["name"];
-    var value = currentC["value"];
-    delete currentC.name;
-    delete currentC.value; 
-    currentC["b"] = name;
-    currentC["c"] = value;
-    myfilteredCookies.push(currentC);
-
-  }
-  
-  return JSON.stringify(myfilteredCookies);
-}
-
-// 解密cookie 的函数
-function myJsonParse(jsonStr2, root_domain){
-		
-  var  filteredCookies = JSON.parse(jsonStr2);
-  
-  var myfilteredCookies = [];
-  for(var i=0; i<filteredCookies.length; i++) {
-    var currentC = filteredCookies[i];
-    var combo = currentC["a"];
-    var name = currentC["b"];
-    var value = currentC["c"];
-    delete currentC.a;
-    delete currentC.b;
-    delete currentC.c;
-    
-    currentC["name"] = name;
-    currentC["value"] = value;
-    
-    var hostOnly = combo.substring(0,1)=='1' ?  true : false;
-    var httpOnly = combo.substring(1,2)=='1' ?  true : false;
-    var secure = combo.substring(2,3)=='1' ?  true : false;
-    var session = combo.substring(3,4)=='1' ?  true : false;
-    currentC["hostOnly"] = hostOnly;
-    currentC["httpOnly"] = httpOnly;
-    currentC["secure"] = secure;
-    currentC["session"] = session;
-    
-    if(combo.substring(4,5)=='1') {currentC["path"] = "/"};
-    if(combo.substring(5,6)=='1') {currentC["storeId"] = "0"};
-    
-    var domain = combo.substring(6,combo.length);
-    domain = domain == '1' ? root_domain : domain;
-    domain = domain == '2' ? "." + root_domain : domain;
-    domain = domain == '3' ? "www." + root_domain : domain;
-    currentC["domain"] = domain;
-    myfilteredCookies.push(currentC);
-  }
-  
-  return myfilteredCookies;
-}
-
-// 倒计时函数
-function countDown (start, len) {
-  let canUse = len
-  let now = new Date().getTime()
-  let usedTime = (now -start) / 1000
-  if (usedTime >= canUse) return '0分钟'
-  let lastTime = canUse - usedTime
-  let hour,minit,second
-  hour = Math.floor(lastTime/3600)
-  minit = Math.floor((lastTime%3600)/60)
-  second = Math.floor((lastTime%3600)%60)
-  return hour + '时' + minit + '分' + second + '秒'
-}
-
-// 操作localstorage
-function editUsedAccountList (type, arg1, arg2, arg3) {
-  let arr = JSON.parse(window.localStorage.getItem('usedAccountList')) || []
-  if (type === 'get') {
-    // arg1: domain
-    let list = []
-    for (let i = 0;i < arr.length; i++) {
-      if (arg1 == arr[i].domain) {
-        list.push(arr[i])
-      }
-    }
-    return list
-  } else if (type == 'add') {
-    // arg1 item
-    arg1.startTime = new Date().getTime()
-    arg1.status = 0
-    arr.push(arg1)
-    window.localStorage.setItem('usedAccountList', JSON.stringify(arr))
-  }
-}
-
-//  生成一个获取用户分享的账户的xmpp 请求包
-function buildFetchXmppPacket(nodeId, count){
-  //<iq type='get'
-  //    to='pubsub.im.zhiparts.com'
-  //    id='items1'>
-  //  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
-  //    <items node='shareMask_xunleicun.cc'  max_items='10'/>
-  //  </pubsub>
-  //</iq>
-  var d1 = new Date();
-  var timeS = parseInt(d1.getTime()/1000).toString();
-  var countStr = count.toString();
-  var item = Strophe.xmlElement('items', {node:nodeId, max_items:countStr},'');
-  var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'get', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(item);
-
-  return iq_pubsub;
-}
-
-//  生成一个获取用户分享的账户的xmpp 请求包
-function buildSubscribeXmppPacket(nodeId, sjid){
-  var d1 = new Date();
-  var timeS = parseInt(d1.getTime()/1000).toString();
-  //var sjid = connection.jid;
-  var subscribe = Strophe.xmlElement('subscribe', {node:nodeId, jid:sjid},'');
-  var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(subscribe);
-  return iq_pubsub;
-}
-// 格式化日期的函数
-function showtime (myDate) {
-  var now = new Date();
-  myDate = new Date(myDate)
-  var year = myDate.getFullYear();
-  var month = myDate.getMonth();
-  var day = myDate.getDate(); 
-  
-  var timeValue = now.getFullYear() == year ? " " : year ;
-  timeValue += (now.getMonth() == month && now.getDate() == day) ? "今天" : (month + 1 + "月" + day + "日");
-  
-  
-  
-  var hours = myDate.getHours();
-  var minutes = myDate.getMinutes();
-  var seconds = myDate.getSeconds();
-  timeValue += "" +((hours >= 12) ? "下午 " : "上午 " );
-  timeValue += ((hours >12) ? hours -12 :hours);
-  timeValue += ((minutes < 10) ? ":0" : ":") + minutes;
-  timeValue += ((seconds < 10) ? ":0" : ":") + seconds;
-  return timeValue;
-}
-
-function showUseTime(seconds){
-  var res = (seconds%3600)/60;
-  var hour = (seconds- seconds%3600)/3600;
-  return hour + "小时" + res + "分钟";
-}
-
 inherits(ShareDetailScreen, PersistentForm)
 function ShareDetailScreen () {
   PersistentForm.call(this)
@@ -548,14 +360,20 @@ ShareDetailScreen.prototype.render = function () {
             }, [
               // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
               h('div',  {style: { color: 'blue' }},[
-                '当前的状态：', '使用中',
-                // 停止使用按钮
+                '当前的状态：', shareListShowStatus(item.status),
                 h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
-                item.status == 0 ? h('span', { style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-                '停止使用') : '',
-                // 评价按钮
-                item.status == 0 ? h('span', { style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-                '评价') : '',
+                // 取消按钮
+                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                '删除') : '',
+                // 取消按钮
+                item.status == 2 ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                '取消') : '', // 弹框- 说明
+                // 收钱
+                item.status == 3 ? h('span', { onClick: this.withdraw.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                '提现') : '',
+                // 同意退款
+                item.status == 5 ? h('span', { onClick: this.agree.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                '同意') : '',
                 ]),
               h('div', {},[
                 '分享的网站：',item.domain,
@@ -588,14 +406,17 @@ ShareDetailScreen.prototype.render = function () {
           }, [
             // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
             h('div', {style: { color: 'blue' }},[
-              '账号状态：', this.getUseStatus(item.status),
-              // 停止使用按钮
+              '账号状态：', // this.getUseStatus(item.status),
               h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
-              item.status == 0 ? h('span', { style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-              '停止使用') : '',
-              // 评价按钮
-              item.status == 0 ? h('span', { style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-              '评价') : '',
+              // 取消按钮
+              item.status == 2 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '申请退款') : '', // 弹框 金额 + 说明
+              // 取消按钮
+              (item.status == 3 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '删除') : '',
+              // 同意退款
+              item.status == 5 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '修改退款') : '', // 弹框 金额 + 说明
             ]),
             h('div', {},[
               '开始时间:',showtime(item.startTime),
@@ -680,8 +501,7 @@ ShareDetailScreen.prototype.componentDidMount =function () {
     // 设置cookie
     getCookie(domain)
     _this.setState({
-      'currentDomain': domain,
-      'usedAccountList': editUsedAccountList('get', domain)
+      'currentDomain': domain
     },)
   });
   let _this = this
@@ -754,7 +574,7 @@ ShareDetailScreen.prototype.onSubmit = function () {
   // 发送只能合约
   var txParams = {
     from: this.props.address,
-    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
+    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
     value: '0x0', // + value.toString(16),
   }
   var d1 = new Date();
@@ -779,16 +599,11 @@ ShareDetailScreen.prototype.onSubmit = function () {
 
 // 使用账号的操作
 ShareDetailScreen.prototype.useCookie = function (item,e) {
-  // 存入使用列表 然后 获取
-  editUsedAccountList('add', item)
-  this.setState({
-    'usedAccountList': editUsedAccountList('get', item.domain)
-  })
   // 发送只能合约
   let value = parseInt(item.price);
   let txParams = {
     from: this.props.address,
-    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
+    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
     value: '0x' + value.toString(16),
   }
   var d1 = new Date();
@@ -816,6 +631,69 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   }
 }
 
+// 使用者在使用结束前提出退钱 ; 使用者修改自己的退钱明细
+ShareDetailScreen.prototype.refund = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+}
+
+// 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
+ShareDetailScreen.prototype.refundBySharer = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "aaaaaa");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+}
+
+// 分享者在使用结束后提钱	（可以给使用者留点）
+ShareDetailScreen.prototype.withdraw = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+}
+
+// 分享者同意使用者退钱, 这个时候输入的money与desp 无用
+ShareDetailScreen.prototype.agree = function (item,e) {
+  let txParams = {
+    from: this.props.address,
+    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+  }
+  var d1 = new Date();
+  let beginTime = parseInt(d1.getTime()/1000);
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "");
+  console.log(txParams)
+  this.props.dispatch(actions.signTx(txParams))
+
+}
+
+// 删除列表项目
+ShareDetailScreen.prototype.retractItem = function (nodeId, itemId) {
+  log('retractItem:' + nodeId + "  " + itemId);
+  var item = Strophe.xmlElement('item', {id: itemId},'');
+  var retract = Strophe.xmlElement('retract', {node:nodeId},'');
+  var iqId = 'iq_retract_item_' + itemId;
+  var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:iqId}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(retract).cnode(item);
+  this.connection.send(iq_pubsub.tree());
+}
+
 //
 // IM 初始化建立连接的函数
 //
@@ -828,20 +706,18 @@ ShareDetailScreen.prototype.toConnection = function () {
 function onConnect(status){
   console.log('zgl 即时通讯的状态', Strophe.Status, status)
   if (status == Strophe.Status.CONNECTING) {
-	  console.log('zgl 即时通讯','Strophe is connecting.');
+	  console.log('zgl 通讯状态','Strophe is connecting.');
   } else if (status == Strophe.Status.CONNFAIL) {
-	  console.log('zgl 即时通讯','Strophe failed to connect.');
-	  $('#connect').get(0).value = 'connect';
+    console.log('zgl 通讯状态','Strophe failed to connect.');
   } else if (status == Strophe.Status.DISCONNECTING) {
-	  console.log('zgl 即时通讯','Strophe is disconnecting.');
+	  console.log('zgl 通讯状态','Strophe is disconnecting.');
   } else if (status == Strophe.Status.DISCONNECTED) {
-	  console.log('zgl 即时通讯','Strophe is disconnected.');
-	  $('#connect').get(0).value = 'connect';
+	  console.log('zgl 通讯状态','Strophe is disconnected.');
     imTryTime = imTryTime +1;
-    setTimeout(this.toConnection, 5000*imTryTime );
+    setTimeout(this.toConnection.bind(this), 100);
   } else if (status == Strophe.Status.CONNECTED) {
     imTryTime = 0;
-    console.log('zgl 即时通讯','Strophe is connected.', 'jid', this.connection.jid)
+    console.log('zgl 通讯状态','Strophe is connected.', 'jid', this.connection.jid)
     this.connection.addHandler(this.onMessage.bind(this), null, 'message', null, null,  null); 
     this.connection.addHandler(this.onIq.bind(this), null, 'iq', null , null,  'pubsub.im.zhiparts.com');
     this.connection.send($pres().tree());//this must be open, or can't receive message
@@ -854,6 +730,7 @@ function onConnect(status){
       this.connection.send(subPacket.tree());
       var subPacketSharer = buildSubscribeXmppPacket('shareMask_sharer_'+ this.props.address, this.props.address + '@im.zhiparts.com');
       this.connection.send(subPacketSharer.tree());
+      // wait
       if(true){ //如果我有在使用账号
         var packetUser = buildFetchXmppPacket('shareMask_user_'+ this.props.address, 10);
         this.connection.send(packetUser.tree());
@@ -865,95 +742,8 @@ function onConnect(status){
   }
 }
 
-// 监听普通消息的函数 --1.两个列表消息的增删2.
-ShareDetailScreen.prototype.onMessage = function (msg) {
-  console.log('zgl 受到消息了', msg)
-
-  try{
-    var from = msg.getAttribute('from');
-    var type = msg.getAttribute('type');
-    var events = msg.getElementsByTagName('event');
-  
-    if (from == "pubsub.im.zhiparts.com" && events.length > 0) {
-      var items = events[0].getElementsByTagName('items');
-  
-      var NodeId = items[0].getAttribute('node');
-      var domainNodeId = 'shareMask_' + this.state.currentDomain;
-      var myShareNodeId = 'shareMask_sharer_' + this.props.address;
-      var myUseNodeId = 'shareMask_user_' + this.props.address;
-      if(NodeId == domainNodeId){
-        this.onAddorDelete.bind(this, items, 1);
-      }
-      if(NodeId == myShareNodeId){
-        this.onAddorDeleteShare.bind(this, items, 2);
-      }
-      if(NodeId == myUseNodeId){
-        this.onAddorDeleteUse.bind(this, items, 2);
-      }
-  
-    }
-  } catch(err){
-    console.log(err)
-  }
-
-  return true;
-}
-
-// 处理 添加 删除 账号列表中某一项的函数
-ShareDetailScreen.prototype.onAddorDelete = function(items, type){
-  // add 
-  let addArr = []
-  var itemlist = items[0].getElementsByTagName('item');
-  for(i=0; i<itemlist.length; i++){
-    var entry = itemlist[i].getElementsByTagName("entry");
-    var summary = entry[0].getElementsByTagName("summary");
-    var se = Strophe.getText(summary[0]);
-    var se2 = Strophe.xmlunescape(se);
-    //se2 is add share
-    addArr.push(JSON.parse(se2))
-  }
-  if(type === 1) {
-    this.setState({
-      accountList: this.state.accountList.concat(addArr)
-    })
-  } else if (type == 2) {
-    this.setState({
-      shareAccountList: this.state.shareAccountList.concat(addArr)
-    })
-  }
-  
-  // delete
-  let delArr = []
-  let accountList
-  if (type == 1) {
-    accountList = Object.assign([], this.state.accountList)
-  } else if (type == 2) {
-    accountList = Object.assign([], this.state.shareAccountList)
-  }
-  var retractlist = items[0].getElementsByTagName('retract');
-  for(i=0; i<retractlist.length; i++){
-    var id = retractlist[i].getAttribute("id");
-    //id is the delete share
-    for (let i = 0; i < accountList.length; i++) {
-      if (id  == accountList[i].id) {
-        accountList.splice(i, 1)
-      }
-    }
-  }
-  if (type == 1) {
-    this.setState({
-      accountList: accountList
-    })
-  } else if (type == 2) {
-    this.setState({
-      shareAccountList: accountList
-    })
-  }
-}
-
-// 监听获取初始化的两个账号列表
+// 监听获取初始化的3个账号列表
 ShareDetailScreen.prototype.onIq = function (iq) {
-  console.log('zgl 收到他人分享账户', iq);
   try{
     var from = iq.getAttribute('from');
     var type = iq.getAttribute('type');
@@ -985,18 +775,17 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       if(NodeId == myShareNodeId){
         console.log('zgl 获取到了我分享的账号列表', accountList)
         this.setState({
-          shareAccountList: accountList
+          shareAccountList: accountListFilter( accountList )
         })
       }
-
 
       if(NodeId == myUseNodeId){
-        console.log('zgl 获取到了我退款的账号列表', accountList)
-        this.setState({
-          useAccountList: accountList
-        })
+        console.log('zgl 获取到了我使用的账号列表', accountList)
+        onUseAccountList.bind(this)(items);
+        // this.setState({
+        //   useAccountList: accountListFilter( accountList )
+        // })
       }
- 
     }
   } catch(err){
     console.log(err)
@@ -1004,9 +793,311 @@ ShareDetailScreen.prototype.onIq = function (iq) {
   return true;
 }
 
+// 监听普通消息的函数 --1.3个列表消息的增删改
+ShareDetailScreen.prototype.onMessage = function (msg) {
+  console.log('zgl 收到消息了', msg)
+  try{
+    var from = msg.getAttribute('from');
+    var type = msg.getAttribute('type');
+    var events = msg.getElementsByTagName('event');
+  
+    if (from == "pubsub.im.zhiparts.com" && events.length > 0) {
+      var items = events[0].getElementsByTagName('items');
+  
+      var NodeId = items[0].getAttribute('node');
+      var domainNodeId = 'shareMask_' + this.state.currentDomain;
+      var myShareNodeId = 'shareMask_sharer_' + this.props.address;
+      var myUseNodeId = 'shareMask_user_' + this.props.address;
+      if(NodeId == domainNodeId){
+        console.log('zgl 收到了可用列表的消息')
+        onAccountList.bind(this)(items);
+      }
+      if(NodeId == myShareNodeId){
+        console.log('zgl 收到了分享列表的消息')
+        onShareAccountList.bind(this)(items);
+      }
+      if(NodeId == myUseNodeId){
+        console.log('zlg 收到了使用列表的消息')
+        onUseAccountList.bind(this)(items);
+      }
+    }
+  } catch(err){
+    console.error(err)
+  }
+
+  return true;
+}
+
 /**
  * 基本不会变的函数与工具函数
 **/
+
+// 可用列表的处理: 添加 删除
+function onAccountList (items){
+  var itemlist = items[0].getElementsByTagName('item');
+  var retractlist = items[0].getElementsByTagName('retract');
+  // add 
+  if (itemlist && itemlist.length > 0) {
+    let addArr = []
+    for(let i=0; i<itemlist.length; i++){
+      var entry = itemlist[i].getElementsByTagName("entry");
+      var summary = entry[0].getElementsByTagName("summary");
+      var se = Strophe.getText(summary[0]);
+      var se2 = Strophe.xmlunescape(se);
+      //se2 is add share
+      addArr.push(JSON.parse(se2))
+    }
+    // 如果id已经存在则不再增加
+    let oldList = Object.assign([], this.state.accountList)
+    for (let m=0; m < oldList.length; m++) {
+      let oldId = oldList[m].id
+      for (let n=0; n < addArr.length; n++) {
+        if (oldId == addArr[n].id) {
+          addArr.splice(n, 1)
+          break
+        }
+      }
+    }
+    this.setState({
+      accountList: addArr.concat(this.state.accountList)
+    })
+  }
+  // delete
+  if (retractlist && retractlist.length > 0) {
+    let delArr = []
+    let accountList = Object.assign([], this.state.accountList)
+    for(let i=0; i<retractlist.length; i++){
+      var id = retractlist[i].getAttribute("id");
+      //id is the delete share
+      for (let j = 0; j < accountList.length; j++) {
+        if (id  == accountList[j].id) {
+          accountList.splice(j, 1)
+          break
+        }
+      }
+    }
+    this.setState({
+      accountList: accountList
+    })
+  }  
+}
+
+// 分享列表的处理: 添加 删除
+function onShareAccountList (items, type){
+  var itemlist = items[0].getElementsByTagName('item');
+  var retractlist = items[0].getElementsByTagName('retract');
+  // add 
+  if (itemlist && itemlist.length > 0) {
+    let addArr = []
+    for(let i=0; i<itemlist.length; i++){
+      var entry = itemlist[i].getElementsByTagName("entry");
+      var summary = entry[0].getElementsByTagName("summary");
+      var se = Strophe.getText(summary[0]);
+      var se2 = Strophe.xmlunescape(se);
+      //se2 is add share
+      addArr.push(JSON.parse(se2))
+    }
+    // 如果id已经存在则替换，不存在则增加
+    let oldList = Object.assign([], this.state.shareAccountList)
+    for (let m=0; m < oldList.length; m++) {
+      let oldId = oldList[m].id
+      for (let n=0; n < addArr.length; n++) {
+        if (oldId == addArr[n].id) {
+          oldList.splice(m, 1, addArr[n])
+          addArr.splice(n, 1)
+          break
+        }
+      }
+    }
+    console.log('修改了我分享的列表', addArr, oldList)
+    this.setState({
+      shareAccountList: accountListFilter( addArr.concat(oldList) )
+    })
+  }
+  // delete
+  if (retractlist && retractlist.length > 0) {
+    let delArr = []
+    let accountList = Object.assign([], this.state.shareAccountList)
+    for(let i=0; i<retractlist.length; i++){
+      var id = retractlist[i].getAttribute("id");
+      //id is the delete share
+      for (let j = 0; j < accountList.length; j++) {
+        if (id  == accountList[j].id) {
+          accountList.splice(j, 1)
+          break
+        }
+      }
+    }
+    console.log('删除了我分享的列表')
+    this.setState({
+      shareAccountList: accountListFilter( shareAccountList )
+    })
+  } 
+}
+
+// 使用列表的处理: 添加 覆盖
+function onUseAccountList (items, type){
+  var itemlist = items[0].getElementsByTagName('item');
+  var retractlist = items[0].getElementsByTagName('retract');
+  // add 与 更新
+  if (itemlist && itemlist.length > 0) {
+    let addArr = []
+    for(let i=0; i<itemlist.length; i++){
+      var entry = itemlist[i].getElementsByTagName("entry");
+      var summary = entry[0].getElementsByTagName("summary");
+      var se = Strophe.getText(summary[0]);
+      var se2 = Strophe.xmlunescape(se);
+      //se2 is add share
+      addArr.push(JSON.parse(se2))
+    }
+    // 如果id已经存在则替换，不存在则增加
+    let oldList = Object.assign([], this.state.useAccountList)
+    for (let m=0; m < oldList.length; m++) {
+      let oldId = oldList[m].id
+      for (let n=0; n < addArr.length; n++) {
+        if (oldId == addArr[n].id) {
+          oldList.splice(m, 1, addArr[n])
+          addArr.splice(n, 1)
+          break
+        }
+      }
+    }
+    console.log('修改了我使用的列表', addArr, oldList)
+    // editUsedAccountList('set', accountListFilter( addArr.concat(oldList) ))
+    this.setState({
+      useAccountList: accountListFilter( addArr.concat(oldList) )
+    })
+  }
+  // delete
+  if (retractlist && retractlist.length > 0) {
+    let delArr = []
+    let accountList = Object.assign([], this.state.useAccountList)
+    for(let i=0; i<retractlist.length; i++){
+      var id = retractlist[i].getAttribute("id");
+      //id is the delete share
+      for (let j = 0; j < accountList.length; j++) {
+        if (id  == accountList[j].id) {
+          accountList.splice(j, 1)
+          break
+        }
+      }
+    }
+    console.log('删除了我使用的列表')
+    editUsedAccountList('set',accountListFilter( useAccountList ))
+    this.setState({
+      useAccountList: accountListFilter( useAccountList )
+    })
+  } 
+}
+
+// accountList set 之前都要走的 过滤的filter函数
+function accountListFilter (list) {
+  let arr = deepClone(list)
+  for (let i = 0;i < arr.length; i++) {
+    arr[i].status = getItemStatus(arr[i])
+  }
+  console.log(arr)
+  return arr
+}
+
+// deepclone 函数
+function deepClone (obj) {
+  var _tmp,result;
+  _tmp = JSON.stringify(obj);
+  result = JSON.parse(_tmp);
+  return result;
+}
+
+// 的账号的状态
+// 四种情况：未使用、使用中、申请退款、结束
+// 1.未被使用2.使用中未超时3.使用中已超时4.结束5.用户申请退款6.要求用户付款
+function getItemStatus (item) {
+  let now = new Date().getTime()
+  if (!item.use || !item.use.user) {
+    return 1// '账号未被使用'
+  } 
+  let usedTime = now - item.use.useTime
+  // 使用中分两种情况
+  if (!item.reassign) {
+    if (usedTime > item.useSeconds*1000) {
+      return 3// '使用中(已超时)'
+    } else {
+      return 2// '使用中(未超时)'
+    }
+  // 申请退款与结束
+  } else {
+    if (item.reassign.agreeSharer == 1 && item.reassign.agreeUser == 1) {
+      return 4// '使用结束'
+    } else if(item.reassign.agreeSharer == 0) {
+      return 5// '用户要求退款'
+    }
+  }
+}
+
+// 分享列表 账号状态的对应文字
+function shareListShowStatus(status) {
+  let txt = ''
+  switch (status) {
+    case 1:
+      txt = '账号未被使用'
+      break
+    case 2, 3:
+      txt = '账号正在使用中'
+      break
+    case 4:
+      txt = '使用结束'
+      break
+    case 5:
+      txt = '用户请求退款'
+      break
+  }
+  return txt
+}
+
+// 使用列表 账号状态对应的文字
+function useListShowStatus(status) {
+  let txt = ''
+  switch (status) {
+    case 1:
+      txt = '账号未被使用'
+      break
+    case 2, 3:
+      txt = '账号正在使用中'
+      break
+    case 4:
+      txt = '使用结束'
+      break
+    case 5:
+      txt = '用户请求退款'
+      break
+  }
+}
+
+// 表单绑定函数---费用
+ShareDetailScreen.prototype.handleCost = function (event) {
+  this.setState({
+    cost: event.target.value
+  })
+}
+// 表单绑定函数----使用时长
+ShareDetailScreen.prototype.handleUseTime = function (event) {
+  this.setState({
+    useTime: event.target.value
+  })
+}
+// 表单绑定函数----备注
+ShareDetailScreen.prototype.handleShareMark = function (event) {
+  this.setState({
+    shareMark: event.target.value
+  })
+}
+// 打开关闭分享区域
+ShareDetailScreen.prototype.changeShareShow = function () {
+  this.setState({
+    showShare: !this.state.showShare
+  })
+  return true;
+}
 
 // 分享时的data加密
 ShareDetailScreen.prototype.encodeMothed = function (domain, cookies, timesStamp, expireTimeStamp, cost, useSecond,  desp) {
@@ -1082,60 +1173,6 @@ ShareDetailScreen.prototype.encodeMothed2 = function (shareId, timeS_begin, time
   return setInputBytecode;
 };
 
-
-// 使用者在使用结束前提出退钱 ; 使用者修改自己的退钱明细
-ShareDetailScreen.prototype.refund = function (item,e) {
-  let txParams = {
-    from: this.props.address,
-    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
-  }
-  var d1 = new Date();
-  let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
-  console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
-}
-
-// 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
-ShareDetailScreen.prototype.refundBySharer = function (item,e) {
-  let txParams = {
-    from: this.props.address,
-    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
-  }
-  var d1 = new Date();
-  let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "aaaaaa");
-  console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
-}
-
-// 分享者在使用结束后提钱	（可以给使用者留点）
-ShareDetailScreen.prototype.withdraw = function (item,e) {
-  let txParams = {
-    from: this.props.address,
-    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
-  }
-  var d1 = new Date();
-  let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
-  console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
-}
-
-// 分享者同意使用者退钱, 这个时候输入的money与desp 无用
-ShareDetailScreen.prototype.agree = function (item,e) {
-  let txParams = {
-    from: this.props.address,
-    to: '0xab3a67b393be9f247e1be6d45bd2b2d56bc64af0',
-  }
-  var d1 = new Date();
-  let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "");
-  console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
-
-}
-
 // 使用时的data加密
 ShareDetailScreen.prototype.encodeMothedReassign = function (shareId, timeStamp , money, desp) {
 
@@ -1169,74 +1206,169 @@ ShareDetailScreen.prototype.encodeMothedReassign = function (shareId, timeStamp 
   return setInputBytecode;
 };
 
-
-
-// 我的分享的账号的状态
-ShareDetailScreen.prototype.getShareStatus = function (status) {
-  let txt = ''
-  switch (status) {
-    case 0:
-      txt = '分享过程中...'
-      break
-    case 1:
-      txt = '分享成功，还没人使用'
-      break
-    case 2:
-      txt = '用户正在使用中'
-      break
-    case 3:
-      txt = '用户使用完成'
-      break
-    case 4:
-      txt = '用户取消使用'
-      break
-    case 4:
-      txt = 'Ending'
-      break
+// 解析域名的函数
+function getRootDomain(weburl){ 
+  if(weburl.indexOf("http")!=0){
+    return "";
   }
-  return txt
-}
-
-// 使用中的账号状态
-ShareDetailScreen.prototype.getUseStatus = function (status) {
-  let txt = ''
-  switch (status) {
-    case 0:
-      txt = '使用中'
-      break
-    case 1:
-      txt = '使用完成'
-      break
-    case 2:
-      txt = '取消使用'
-      break
+  var reg = /^http(s)?:\/\/(.*?)\//; 
+  var domain = reg.exec(weburl)[2];
+  var domainArr = domain.split(".");
+  if(domain.indexOf("com.cn")>0){
+    domain =  domainArr[domainArr.length-3] + "." + domainArr[domainArr.length-2] + "." + domainArr[domainArr.length-1];
+  }else{
+    domain =  domainArr[domainArr.length-2] + "." + domainArr[domainArr.length-1];
   }
-  return txt
-}
-// 表单绑定函数---费用
-ShareDetailScreen.prototype.handleCost = function (event) {
-  this.setState({
-    cost: event.target.value
-  })
-}
-// 表单绑定函数----使用时长
-ShareDetailScreen.prototype.handleUseTime = function (event) {
-  this.setState({
-    useTime: event.target.value
-  })
-}
-// 表单绑定函数----备注
-ShareDetailScreen.prototype.handleShareMark = function (event) {
-  this.setState({
-    shareMark: event.target.value
-  })
-}
-// 打开关闭分享区域
-ShareDetailScreen.prototype.changeShareShow = function () {
-  this.setState({
-    showShare: !this.state.showShare
-  })
-  return true;
+  return domain;
 }
 
+// 加密cookie 的函数
+function myJsonStringify(filteredCookies, root_domain){
 
+  var myfilteredCookies = [];
+  for(var i=0; i<filteredCookies.length; i++) {
+    var currentC = filteredCookies[i];
+    var hostOnly = currentC['hostOnly'] ?  '1' : '0';
+    var httpOnly = currentC['httpOnly'] ?  '1' : '0';
+    var secure = currentC['secure'] ?  '1' : '0';
+    var session = currentC['session'] ?  '1' : '0';
+    var path = currentC['path']=="/" ?  '1' : '0';
+    var storeId = currentC['storeId']=="0" ?  '1' : '0';
+    var domain = currentC['domain']== root_domain ? '1' : ( currentC['domain']== ("." + root_domain) ? '2' : (currentC['domain']== ("www." + root_domain) ? '3' : currentC['domain']));
+    
+    delete currentC.expirationDate;
+    delete currentC.hostOnly;
+    delete currentC.httpOnly;		
+    delete currentC.secure;
+    delete currentC.session; 
+    delete currentC.domain; 
+    if(path == '1') {	delete currentC.path;}
+    if(storeId ==  '1') { delete currentC.storeId;}
+    if(domain.length == 1) { delete currentC.domain;}
+    
+    var combo = hostOnly + httpOnly + secure + session + path + storeId + domain;
+    
+    currentC["a"] = combo;
+    var name = currentC["name"];
+    var value = currentC["value"];
+    delete currentC.name;
+    delete currentC.value; 
+    currentC["b"] = name;
+    currentC["c"] = value;
+    myfilteredCookies.push(currentC);
+
+  }
+  
+  return JSON.stringify(myfilteredCookies);
+}
+
+// 解密cookie 的函数
+function myJsonParse(jsonStr2, root_domain){
+		
+  var  filteredCookies = JSON.parse(jsonStr2);
+  
+  var myfilteredCookies = [];
+  for(var i=0; i<filteredCookies.length; i++) {
+    var currentC = filteredCookies[i];
+    var combo = currentC["a"];
+    var name = currentC["b"];
+    var value = currentC["c"];
+    delete currentC.a;
+    delete currentC.b;
+    delete currentC.c;
+    
+    currentC["name"] = name;
+    currentC["value"] = value;
+    
+    var hostOnly = combo.substring(0,1)=='1' ?  true : false;
+    var httpOnly = combo.substring(1,2)=='1' ?  true : false;
+    var secure = combo.substring(2,3)=='1' ?  true : false;
+    var session = combo.substring(3,4)=='1' ?  true : false;
+    currentC["hostOnly"] = hostOnly;
+    currentC["httpOnly"] = httpOnly;
+    currentC["secure"] = secure;
+    currentC["session"] = session;
+    
+    if(combo.substring(4,5)=='1') {currentC["path"] = "/"};
+    if(combo.substring(5,6)=='1') {currentC["storeId"] = "0"};
+    
+    var domain = combo.substring(6,combo.length);
+    domain = domain == '1' ? root_domain : domain;
+    domain = domain == '2' ? "." + root_domain : domain;
+    domain = domain == '3' ? "www." + root_domain : domain;
+    currentC["domain"] = domain;
+    myfilteredCookies.push(currentC);
+  }
+  
+  return myfilteredCookies;
+}
+
+// 倒计时函数
+function countDown (start, len) {
+  let canUse = len
+  let now = new Date().getTime()
+  let usedTime = (now -start) / 1000
+  if (usedTime >= canUse) return '0分钟'
+  let lastTime = canUse - usedTime
+  let hour,minit,second
+  hour = Math.floor(lastTime/3600)
+  minit = Math.floor((lastTime%3600)/60)
+  second = Math.floor((lastTime%3600)%60)
+  return hour + '时' + minit + '分' + second + '秒'
+}
+
+//  生成一个获取用户分享的账户的xmpp 请求包
+function buildFetchXmppPacket(nodeId, count){
+  //<iq type='get'
+  //    to='pubsub.im.zhiparts.com'
+  //    id='items1'>
+  //  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
+  //    <items node='shareMask_xunleicun.cc'  max_items='10'/>
+  //  </pubsub>
+  //</iq>
+  var d1 = new Date();
+  var timeS = parseInt(d1.getTime()/1000).toString();
+  var countStr = count.toString();
+  var item = Strophe.xmlElement('items', {node:nodeId, max_items:countStr},'');
+  var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'get', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(item);
+
+  return iq_pubsub;
+}
+
+//  生成一个获取用户分享的账户的xmpp 请求包
+function buildSubscribeXmppPacket(nodeId, sjid){
+  var d1 = new Date();
+  var timeS = parseInt(d1.getTime()/1000).toString();
+  //var sjid = connection.jid;
+  var subscribe = Strophe.xmlElement('subscribe', {node:nodeId, jid:sjid},'');
+  var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:timeS}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(subscribe);
+  return iq_pubsub;
+}
+// 格式化日期的函数
+function showtime (myDate) {
+  var now = new Date();
+  myDate = new Date(myDate)
+  var year = myDate.getFullYear();
+  var month = myDate.getMonth();
+  var day = myDate.getDate(); 
+  
+  var timeValue = now.getFullYear() == year ? " " : year ;
+  timeValue += (now.getMonth() == month && now.getDate() == day) ? "今天" : (month + 1 + "月" + day + "日");
+  
+  
+  
+  var hours = myDate.getHours();
+  var minutes = myDate.getMinutes();
+  var seconds = myDate.getSeconds();
+  timeValue += "" +((hours >= 12) ? "下午 " : "上午 " );
+  timeValue += ((hours >12) ? hours -12 :hours);
+  timeValue += ((minutes < 10) ? ":0" : ":") + minutes;
+  timeValue += ((seconds < 10) ? ":0" : ":") + seconds;
+  return timeValue;
+}
+
+function showUseTime(seconds){
+  var res = (seconds%3600)/60;
+  var hour = (seconds- seconds%3600)/3600;
+  return hour + "小时" + res + "分钟";
+}
