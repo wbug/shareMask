@@ -363,7 +363,7 @@ ShareDetailScreen.prototype.render = function () {
                 '当前的状态：', shareListShowStatus(item.status),
                 h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
                 // 取消按钮
-                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.refund.bind(this, 2, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 2, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
                 '删除') : '',
                 // 取消按钮
                 item.status == 2 ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
@@ -961,7 +961,7 @@ function onShareAccountList (items){
     }
     console.log('删除了我分享的列表')
     this.setState({
-      shareAccountList: accountListFilter( shareAccountList )
+      shareAccountList: accountListFilter( accountList )
     })
   } 
 }
@@ -1026,19 +1026,19 @@ function onUseAccountList (items){
   // delete
   if (retractlist && retractlist.length > 0) {
     let delArr = []
-    let accountList = Object.assign([], this.state.usedAccountList)
+    let usedAccountList = Object.assign([], this.state.usedAccountList)
     for(let i=0; i<retractlist.length; i++){
       var id = retractlist[i].getAttribute("id");
       //id is the delete share
-      for (let j = 0; j < accountList.length; j++) {
-        if (id  == accountList[j].id) {
-          accountList.splice(j, 1)
+      for (let j = 0; j < usedAccountList.length; j++) {
+        if (id  == usedAccountList[j].id) {
+          usedAccountList.splice(j, 1)
           break
         }
       }
     }
     console.log('删除了我使用的列表')
-    editUsedAccountList('set',accountListFilter( usedAccountList ))
+    //editUsedAccountList('set',accountListFilter( usedAccountList ))
     this.setState({
       usedAccountList: accountListFilter( usedAccountList )
     })
