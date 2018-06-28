@@ -420,7 +420,7 @@ ShareDetailScreen.prototype.render = function () {
             ]),
             h('div', {},[
               '开始时间:',showtime(item.use.useTime*1000),
-              '|剩余时间:',countDown(item.use.useTime*1000, item.useSeconds*1000)
+              '|计时:',countDown(item.use.useTime*1000, item.useSeconds*1000)
             ]),
             h('div', {},[
               '分享时间：',showtime(item.sendTime*1000),
@@ -581,7 +581,7 @@ ShareDetailScreen.prototype.onSubmit = function () {
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
   var costWei = util.normalizeEthStringToWei(state.cost);
-  var useSecond = parseInt(state.useTime) *3600;
+  var useSecond = parseInt(state.useTime * 3600);
   console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
   // 账号信息用来存入localstorage
   let accountDetail = {
@@ -599,6 +599,10 @@ ShareDetailScreen.prototype.onSubmit = function () {
 
 // 使用账号的操作
 ShareDetailScreen.prototype.useCookie = function (item,e) {
+  if(this.state.usedAccountList.length >0){
+    alert("有正中实用中的账户\r\n请先取消");
+    return;
+  };
   // 发送只能合约
   let value = parseInt(item.price);
   let txParams = {
@@ -633,13 +637,16 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
 
 // 使用者在使用结束前提出退钱 ; 使用者修改自己的退钱明细
 ShareDetailScreen.prototype.refund = function (item,e) {
+//zgl
+  var deposite = parseInt(item.use.deposite)
+  var desp = "你的账户不能用.";
   let txParams = {
     from: this.props.address,
     to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
   this.props.dispatch(actions.signTx(txParams))
 }
@@ -782,16 +789,23 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       }
       if(NodeId == domainNodeId){
         console.log('zgl 获取到了可用账号列表', accountList)
-        onlyOnAccountList.bind(this)(accountList)
+        this.setState({
+          accountList: accountList
+        })
       }
       if(NodeId == myShareNodeId){
         console.log('zgl 获取到了我分享的账号列表', accountList)
-        onlyOnShareAccountList.bind(this)(accountList)
+        this.setState({
+          shareAccountList: accountList
+        })
+ 
       }
 
       if(NodeId == myUseNodeId){
         console.log('zgl 获取到了我使用的账号列表', accountList)
-        onlyOnUseAccountList.bind(this)(accountList)
+        this.setState({
+          usedAccountList: accountList
+        })
       }
     }
   } catch(err){
@@ -856,10 +870,11 @@ function onAccountList (items){
     }
     // 如果id已经存在则不再增加
     let oldList = Object.assign([], this.state.accountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
+    for (let n=0; n < addArr.length; n++) {
+      for (let m=0; m < oldList.length; m++) {
+        let oldId = oldList[m].id
         if (oldId == addArr[n].id) {
+          oldList[m] = addArr[n];
           addArr.splice(n, 1)
           break
         }
@@ -892,26 +907,26 @@ function onAccountList (items){
   }  
 }
 
-// 可用列表的处理: 单独的添加 覆盖 删除
-function onlyOnAccountList (itemlist){
-  if (itemlist && itemlist.length > 0) {
-    let addArr = itemlist
-    // 如果id已经存在则不再增加
-    let oldList = Object.assign([], this.state.accountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
-        if (oldId == addArr[n].id) {
-          addArr.splice(n, 1)
-          break
-        }
-      }
-    }
-    this.setState({
-      accountList: addArr.concat(this.state.accountList)
-    })
-  }
-}
+//// 可用列表的处理: 单独的添加 覆盖 删除
+//function onlyOnAccountList (itemlist){
+//  if (itemlist && itemlist.length > 0) {
+//    let addArr = itemlist
+//    // 如果id已经存在则不再增加
+//    let oldList = Object.assign([], this.state.accountList)
+//    for (let m=0; m < oldList.length; m++) {
+//      let oldId = oldList[m].id
+//      for (let n=0; n < addArr.length; n++) {
+//        if (oldId == addArr[n].id) {
+//          addArr.splice(n, 1)
+//          break
+//        }
+//      }
+//    }
+//    this.setState({
+//      accountList: addArr.concat(this.state.accountList)
+//    })
+//  }
+//}
 
 // 分享列表的处理: 添加 覆盖 删除
 function onShareAccountList (items){
@@ -966,29 +981,29 @@ function onShareAccountList (items){
   } 
 }
 
-// 分享列表的处理: 单独的添加 覆盖
-function onlyOnShareAccountList (itemlist){
-  // add 
-  if (itemlist && itemlist.length > 0) {
-    let addArr = itemlist
-    // 如果id已经存在则替换，不存在则增加
-    let oldList = Object.assign([], this.state.shareAccountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
-        if (oldId == addArr[n].id) {
-          oldList.splice(m, 1, addArr[n])
-          addArr.splice(n, 1)
-          break
-        }
-      }
-    }
-    console.log('修改了我分享的列表', addArr, oldList)
-    this.setState({
-      shareAccountList: accountListFilter( addArr.concat(oldList) )
-    })
-  }
-}
+//// 分享列表的处理: 单独的添加 覆盖
+//function onlyOnShareAccountList (itemlist){
+//  // add 
+//  if (itemlist && itemlist.length > 0) {
+//    let addArr = itemlist
+//    // 如果id已经存在则替换，不存在则增加
+//    let oldList = Object.assign([], this.state.shareAccountList)
+//    for (let m=0; m < oldList.length; m++) {
+//      let oldId = oldList[m].id
+//      for (let n=0; n < addArr.length; n++) {
+//        if (oldId == addArr[n].id) {
+//          oldList.splice(m, 1, addArr[n])
+//          addArr.splice(n, 1)
+//          break
+//        }
+//      }
+//    }
+//    console.log('修改了我分享的列表', addArr, oldList)
+//    this.setState({
+//      shareAccountList: accountListFilter( addArr.concat(oldList) )
+//    })
+//  }
+//}
 
 // 使用列表的处理: 添加 覆盖 删除
 function onUseAccountList (items){
@@ -1045,30 +1060,30 @@ function onUseAccountList (items){
   } 
 }
 
-// 使用列表的处理: 单独添加 覆盖
-function onlyOnUseAccountList (itemlist){
-  // add 与 更新
-  if (itemlist && itemlist.length > 0) {
-    let addArr = itemlist
-    // 如果id已经存在则替换，不存在则增加
-    let oldList = Object.assign([], this.state.usedAccountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
-        if (oldId == addArr[n].id) {
-          oldList.splice(m, 1, addArr[n])
-          addArr.splice(n, 1)
-          break
-        }
-      }
-    }
-    console.log('修改了我使用的列表', addArr, oldList)
-    // editUsedAccountList('set', accountListFilter( addArr.concat(oldList) ))
-    this.setState({
-      usedAccountList: accountListFilter( addArr.concat(oldList) )
-    })
-  }
-}
+//// 使用列表的处理: 单独添加 覆盖
+//function onlyOnUseAccountList (itemlist){
+//  // add 与 更新
+//  if (itemlist && itemlist.length > 0) {
+//    let addArr = itemlist
+//    // 如果id已经存在则替换，不存在则增加
+//    let oldList = Object.assign([], this.state.usedAccountList)
+//    for (let m=0; m < oldList.length; m++) {
+//      let oldId = oldList[m].id
+//      for (let n=0; n < addArr.length; n++) {
+//        if (oldId == addArr[n].id) {
+//          oldList.splice(m, 1, addArr[n])
+//          addArr.splice(n, 1)
+//          break
+//        }
+//      }
+//    }
+//    console.log('修改了我使用的列表', addArr, oldList)
+//    // editUsedAccountList('set', accountListFilter( addArr.concat(oldList) ))
+//    this.setState({
+//      usedAccountList: accountListFilter( addArr.concat(oldList) )
+//    })
+//  }
+//}
 
 // accountList set 之前都要走的 过滤的filter函数
 function accountListFilter (list) {
@@ -1389,7 +1404,8 @@ function countDown (start, len) {
   let now = new Date().getTime()
   let usedTime = (now -start) / 1000
   if (usedTime >= canUse) return '0分钟'
-  let lastTime = canUse - usedTime
+//  var lastTime = canUse - usedTime;
+var lastTime = usedTime;
   let hour,minit,second
   hour = Math.floor(lastTime/3600)
   minit = Math.floor((lastTime%3600)/60)
