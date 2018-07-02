@@ -204,14 +204,13 @@ ShareDetailScreen.prototype.render = function () {
           width: '100%',
           color: '#F7861C',
           background: '#EBEBEB',
-          color: '#AEAEAE',
           marginTop: '15px',
           marginBottom: '10px',
           lineHeight: '32px',
           position: 'relative',
         },
       }, [
-        !currentDomain || '当前网址为：', currentDomain || '当前网址无效',
+        !currentDomain || '位置:', currentDomain || '当前网址无效',
         h('div', {
           onClick: this.changeShareShow.bind(this),
           style: {
@@ -278,7 +277,6 @@ ShareDetailScreen.prototype.render = function () {
             }
           }, [
             h('option', { value: -1 }, '请选择费用'),
-            h('option', { value: 0 }, '使用使用'),
             h('option', { value: 0.1 }, '0.1 个币'),
             h('option', { value: 0.2 }, '0.2 个币'),
             h('option', { value: 0.5 }, '0.5 个币'),
@@ -363,7 +361,7 @@ ShareDetailScreen.prototype.render = function () {
                 '当前的状态：', shareListShowStatus(item.status),
                 h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
                 // 取消按钮
-                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 2, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
                 '删除') : '',
                 // 取消按钮
                 item.status == 2 ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
@@ -412,8 +410,8 @@ ShareDetailScreen.prototype.render = function () {
               item.status == 2 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '申请退款') : '', // 弹框 金额 + 说明
               // 取消按钮
-              (item.status == 3 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 3, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-              '删除') : '',
+              (item.status == 3 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '删除并退出账户') : '',
               // 同意退款
               item.status == 5 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '修改退款') : '', // 弹框 金额 + 说明
@@ -574,7 +572,7 @@ ShareDetailScreen.prototype.onSubmit = function () {
   // 发送只能合约
   var txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
     value: '0x0', // + value.toString(16),
   }
   var d1 = new Date();
@@ -607,7 +605,7 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   let value = parseInt(item.price);
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
     value: '0x' + value.toString(16),
   }
   var d1 = new Date();
@@ -642,7 +640,7 @@ ShareDetailScreen.prototype.refund = function (item,e) {
   var desp = "你的账户不能用.";
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
@@ -653,26 +651,32 @@ ShareDetailScreen.prototype.refund = function (item,e) {
 
 // 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
 ShareDetailScreen.prototype.refundBySharer = function (item,e) {
+//zgl
+  var desp = "我拉账户自己要用了.";
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, desp);
   console.log(txParams)
   this.props.dispatch(actions.signTx(txParams))
 }
 
 // 分享者在使用结束后提钱	（可以给使用者留点）
 ShareDetailScreen.prototype.withdraw = function (item,e) {
+//zgl
+  var deposite = parseInt(item.use.deposite)
+  var desp = "成功交易.";
+ 
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
   this.props.dispatch(actions.signTx(txParams))
 }
@@ -681,7 +685,7 @@ ShareDetailScreen.prototype.withdraw = function (item,e) {
 ShareDetailScreen.prototype.agree = function (item,e) {
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
@@ -691,17 +695,18 @@ ShareDetailScreen.prototype.agree = function (item,e) {
 
 }
 
+//分享者删除自己的，也就删除不让人用。
+ShareDetailScreen.prototype.retractItemBySharer = function (item) {
+    var nodeId = 'shareMask_' + item.domain;// 暂时没有
+    var nodeId2 = 'shareMask_sharer_' + this.props.address;
+    this.retractItem(nodeId, item.id);
+    this.retractItem(nodeId2, item.id);
+
+}
+
 // 删除列表项目
-ShareDetailScreen.prototype.retractItem = function (nodeIdType, itemId) {
-  console.log(nodeIdType, itemId)
-  let nodeId
-  if (nodeIdType == 1) {
-    nodeId = 'shareMask_' + this.state.currentDomain;// 暂时没有
-  } else if (nodeIdType == 2) {
-    nodeId = 'shareMask_sharer_' + this.props.address;
-  } else if (nodeIdType == 3) {
-    nodeId = 'shareMask_user_' + this.props.address;
-  }
+ShareDetailScreen.prototype.retractItem = function (nodeId, itemId) {
+  
   console.log('retractItem:' + nodeId + "  " + itemId);
   var item = Strophe.xmlElement('item', {id: itemId},'');
   console.log('11111111111111111111')
@@ -1109,7 +1114,7 @@ function deepClone (obj) {
 function getItemStatus (item) {
   let now = new Date().getTime()
   if (!item.use || !item.use.user) {
-    return 1// '账号未被使用'
+    return 1// '等待中'
   } 
   let usedTime = now - item.use.useTime*1000
   // 使用中分两种情况
@@ -1134,7 +1139,7 @@ function shareListShowStatus(status) {
   let txt = ''
   switch (status) {
     case 1:
-      txt = '账号未被使用'
+      txt = '等待中'
       break
     case 2, 3:
       txt = '账号正在使用中'
@@ -1154,7 +1159,7 @@ function useListShowStatus(status) {
   let txt = ''
   switch (status) {
     case 1:
-      txt = '账号未被使用'
+      txt = '等待中'
       break
     case 2, 3:
       txt = '账号正在使用中'
