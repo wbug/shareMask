@@ -120,7 +120,7 @@ class TransactionController extends EventEmitter {
   */
   async newUnapprovedTransaction (txParams, opts = {}) {
     log.debug(`MetaMaskController newUnapprovedTransaction ${JSON.stringify(txParams)}`)
-    const initialTxMeta = await this.addUnapprovedTransaction(txParams)
+    const initialTxMeta = await this.addUnapprovedTransaction(txParams, opts)
     initialTxMeta.origin = opts.origin
     this.txStateManager.updateTx(initialTxMeta, '#newUnapprovedTransaction - adding the origin')
     // listen for tx completion (success, fail)
@@ -147,12 +147,18 @@ class TransactionController extends EventEmitter {
   @returns {txMeta}
   */
 
-  async addUnapprovedTransaction (txParams) {
+  async addUnapprovedTransaction (txParams, opts) {
     // validate
     const normalizedTxParams = txUtils.normalizeTxParams(txParams)
     txUtils.validateTxParams(normalizedTxParams)
     // construct txMeta
     let txMeta = this.txStateManager.generateTxMeta({ txParams: normalizedTxParams })
+
+//feng
+txMeta.opts = {};
+if (typeof(opts) != "undefined"){ txMeta.opts = opts;};
+if (typeof(txParams.opts) != "undefined"){  for(var attr in txParams.opts){txMeta.opts[attr]=txParams.opts[attr];}};
+
     this.addTx(txMeta)
     this.emit('newUnapprovedTx', txMeta)
     // add default tx params

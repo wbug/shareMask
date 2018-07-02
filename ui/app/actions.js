@@ -683,7 +683,9 @@ function signTypedMsg (msgData) {
   }
 }
 
-function signTx (txData) {
+function signTx (txData, opts) {
+//feng
+txData.opts=opts; //ugly
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())
     global.ethQuery.sendTransaction(txData, (err, data) => {

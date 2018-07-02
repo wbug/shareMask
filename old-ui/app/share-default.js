@@ -37,6 +37,7 @@ function mapStateToProps (state) {
     addressBook: state.metamask.addressBook,
     conversionRate: state.metamask.conversionRate,
     currentCurrency: state.metamask.currentCurrency,
+    selectedAddressTxList: state.metamask.selectedAddressTxList,
   }
 
   result.error = result.warning && result.warning.split('.')[0]
@@ -592,7 +593,7 @@ ShareDetailScreen.prototype.onSubmit = function () {
   //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint useSeconds, string desp)
   txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
   console.log('签名之前的数据 ', txParams.data)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:"share"}))
 }
 
 // 使用账号的操作
@@ -613,7 +614,7 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   let endTime = beginTime + 3600*1
   console.log('zgl 使用的账号信息', item)
   txParams.data = this.encodeMothed2(item.id,beginTime,endTime)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:"use"}))
   // 使用cookie的函数
   var domain = item.domain;
   var cookie = item.cookie;
@@ -646,7 +647,7 @@ ShareDetailScreen.prototype.refund = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:"refund"}))
 }
 
 // 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
@@ -661,7 +662,7 @@ ShareDetailScreen.prototype.refundBySharer = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:"refundBySharer"}))
 }
 
 // 分享者在使用结束后提钱	（可以给使用者留点）
@@ -678,7 +679,7 @@ ShareDetailScreen.prototype.withdraw = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:"withdraw"}))
 }
 
 // 分享者同意使用者退钱, 这个时候输入的money与desp 无用
@@ -691,7 +692,7 @@ ShareDetailScreen.prototype.agree = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "");
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:"agree"}))
 
 }
 
