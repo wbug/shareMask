@@ -67,23 +67,39 @@ ShareDetailScreen.prototype.render = function () {
     addressBook,
     conversionRate,
     currentCurrency,
+    selectedAddressTxList,
+
   } = props
   let currentDomain = ''
   if (this.state && this.state.currentDomain) {
     currentDomain = this.state.currentDomain 
   }
+  
+  var accountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='share' && d.status=='submitted');});  
+  accountListSubmitted = accountListSubmitted.map((d, i) => { d.opts.shareMask.item.tx_status='submitted'; return  d.opts.shareMask.item; });
+  var shareAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.op=='share' && d.status=='submitted');});
+  shareAccountListSubmitted = shareAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
+  var usedAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='use' && d.status=='submitted');});
+  usedAccountListSubmitted = usedAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
+
   let accountList = []
   if (this.state && this.state.accountList) {
     accountList = this.state.accountList
   }
+  accountList = accountListSubmitted.concat(accountList);
+
   let usedAccountList = []
   if (this.state && this.state.usedAccountList) {
     usedAccountList = this.state.usedAccountList
   }
+  usedAccountList = usedAccountListSubmitted.concat(usedAccountList);
+
   let shareAccountList = []
   if (this.state && this.state.shareAccountList) {
     shareAccountList = this.state.shareAccountList
   }
+  shareAccountList = shareAccountListSubmitted.concat(shareAccountList);
+
   let showShare = false
   if (this.state && this.state.showShare) {
     showShare = this.state.showShare
@@ -593,15 +609,21 @@ ShareDetailScreen.prototype.onSubmit = function () {
   //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint useSeconds, string desp)
   txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
   console.log('签名之前的数据 ', txParams.data)
-  this.props.dispatch(actions.signTx(txParams, {shareMask:"share"}))
+  var item = {sharer: this.props.address, domain: state.currentDomain, cookie:'....', sendTime:timesStamp, expireTime:expireTimeStamp, price:costWei, useSeconds:useSecond, desp:shareMark};
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"share", item:item}}))
 }
 
 // 使用账号的操作
 ShareDetailScreen.prototype.useCookie = function (item,e) {
   if(this.state.usedAccountList.length >0){
-    alert("有正中实用中的账户\r\n请先取消");
+    alert("有账号自在使用中\r\n请先取消");
     return;
   };
+  if(this.props.address == item.sharer){
+    alert("你自己发布的账号\r\n无法使用");
+    return;
+  };
+
   // 发送只能合约
   let value = parseInt(item.price);
   let txParams = {
@@ -614,7 +636,7 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   let endTime = beginTime + 3600*1
   console.log('zgl 使用的账号信息', item)
   txParams.data = this.encodeMothed2(item.id,beginTime,endTime)
-  this.props.dispatch(actions.signTx(txParams, {shareMask:"use"}))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"use", item:item}}))
   // 使用cookie的函数
   var domain = item.domain;
   var cookie = item.cookie;
@@ -647,7 +669,7 @@ ShareDetailScreen.prototype.refund = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams, {shareMask:"refund"}))
+  this.props.dispatch(actions.signTx(txParams, {shareMask: {op:"refund", item:item}}))
 }
 
 // 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
@@ -662,7 +684,7 @@ ShareDetailScreen.prototype.refundBySharer = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams, {shareMask:"refundBySharer"}))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"refundBySharer", item:item}}))
 }
 
 // 分享者在使用结束后提钱	（可以给使用者留点）
@@ -679,7 +701,7 @@ ShareDetailScreen.prototype.withdraw = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams, {shareMask:"withdraw"}))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"withdraw", item:item}}))
 }
 
 // 分享者同意使用者退钱, 这个时候输入的money与desp 无用
@@ -692,7 +714,7 @@ ShareDetailScreen.prototype.agree = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "");
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams, {shareMask:"agree"}))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"agree", item:item}}))
 
 }
 
@@ -713,7 +735,7 @@ ShareDetailScreen.prototype.retractItem = function (nodeId, itemId) {
   console.log('11111111111111111111')
   var retract = Strophe.xmlElement('retract', {node:nodeId},'');
   console.log('2222222222222222222')
-  var iqId = 'iq_retract_item_' + itemId;
+  var iqId = 'iq_retract_item_' + nodeId + "_"  + itemId;
   console.log('333333333333333333333')
   var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:iqId}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(retract).cnode(item);
   console.log('44444444444444444444')
@@ -893,7 +915,6 @@ function onAccountList (items){
   }
   // delete
   if (retractlist && retractlist.length > 0) {
-    let delArr = []
     let accountList = Object.assign([], this.state.accountList)
     for(let i=0; i<retractlist.length; i++){
       var id = retractlist[i].getAttribute("id");
@@ -905,8 +926,6 @@ function onAccountList (items){
         }
       }
     }
-    if(addArr.length) return
-    console.log('修改了可用列表', addArr)
     this.setState({
       accountList: accountList
     })
