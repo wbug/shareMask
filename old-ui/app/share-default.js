@@ -37,6 +37,7 @@ function mapStateToProps (state) {
     addressBook: state.metamask.addressBook,
     conversionRate: state.metamask.conversionRate,
     currentCurrency: state.metamask.currentCurrency,
+    selectedAddressTxList: state.metamask.selectedAddressTxList,
   }
 
   result.error = result.warning && result.warning.split('.')[0]
@@ -66,23 +67,39 @@ ShareDetailScreen.prototype.render = function () {
     addressBook,
     conversionRate,
     currentCurrency,
+    selectedAddressTxList,
+
   } = props
   let currentDomain = ''
   if (this.state && this.state.currentDomain) {
     currentDomain = this.state.currentDomain 
   }
+  
+  var accountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='share' && d.status=='submitted');});  
+  accountListSubmitted = accountListSubmitted.map((d, i) => { d.opts.shareMask.item.tx_status='submitted'; return  d.opts.shareMask.item; });
+  var shareAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.op=='share' && d.status=='submitted');});
+  shareAccountListSubmitted = shareAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
+  var usedAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='use' && d.status=='submitted');});
+  usedAccountListSubmitted = usedAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
+
   let accountList = []
   if (this.state && this.state.accountList) {
     accountList = this.state.accountList
   }
+  accountList = accountListSubmitted.concat(accountList);
+
   let usedAccountList = []
   if (this.state && this.state.usedAccountList) {
     usedAccountList = this.state.usedAccountList
   }
+  usedAccountList = usedAccountListSubmitted.concat(usedAccountList);
+
   let shareAccountList = []
   if (this.state && this.state.shareAccountList) {
     shareAccountList = this.state.shareAccountList
   }
+  shareAccountList = shareAccountListSubmitted.concat(shareAccountList);
+
   let showShare = false
   if (this.state && this.state.showShare) {
     showShare = this.state.showShare
@@ -204,14 +221,13 @@ ShareDetailScreen.prototype.render = function () {
           width: '100%',
           color: '#F7861C',
           background: '#EBEBEB',
-          color: '#AEAEAE',
           marginTop: '15px',
           marginBottom: '10px',
           lineHeight: '32px',
           position: 'relative',
         },
       }, [
-        !currentDomain || '当前网址为：', currentDomain || '当前网址无效',
+        !currentDomain || '位置:', currentDomain || '当前网址无效',
         h('div', {
           onClick: this.changeShareShow.bind(this),
           style: {
@@ -278,7 +294,6 @@ ShareDetailScreen.prototype.render = function () {
             }
           }, [
             h('option', { value: -1 }, '请选择费用'),
-            h('option', { value: 0 }, '使用使用'),
             h('option', { value: 0.1 }, '0.1 个币'),
             h('option', { value: 0.2 }, '0.2 个币'),
             h('option', { value: 0.5 }, '0.5 个币'),
@@ -363,7 +378,7 @@ ShareDetailScreen.prototype.render = function () {
                 '当前的状态：', shareListShowStatus(item.status),
                 h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
                 // 取消按钮
-                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.refund.bind(this, 2, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
                 '删除') : '',
                 // 取消按钮
                 item.status == 2 ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
@@ -412,15 +427,15 @@ ShareDetailScreen.prototype.render = function () {
               item.status == 2 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '申请退款') : '', // 弹框 金额 + 说明
               // 取消按钮
-              (item.status == 3 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 3, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-              '删除') : '',
+              (item.status == 3 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '删除并退出账户') : '',
               // 同意退款
               item.status == 5 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '修改退款') : '', // 弹框 金额 + 说明
             ]),
             h('div', {},[
               '开始时间:',showtime(item.use.useTime*1000),
-              '|剩余时间:',countDown(item.use.useTime*1000, item.useSeconds*1000)
+              '|计时:',countDown(item.use.useTime*1000, item.useSeconds*1000)
             ]),
             h('div', {},[
               '分享时间：',showtime(item.sendTime*1000),
@@ -574,14 +589,14 @@ ShareDetailScreen.prototype.onSubmit = function () {
   // 发送只能合约
   var txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
     value: '0x0', // + value.toString(16),
   }
   var d1 = new Date();
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
   var costWei = util.normalizeEthStringToWei(state.cost);
-  var useSecond = parseInt(state.useTime) *3600;
+  var useSecond = parseInt(state.useTime * 3600);
   console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
   // 账号信息用来存入localstorage
   let accountDetail = {
@@ -594,16 +609,26 @@ ShareDetailScreen.prototype.onSubmit = function () {
   //function share(string domain, string cookie, uint timeStamp , uint expireTimeStamp, uint price, uint useSeconds, string desp)
   txParams.data = this.encodeMothed(state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
   console.log('签名之前的数据 ', txParams.data)
-  this.props.dispatch(actions.signTx(txParams))
+  var item = {sharer: this.props.address, domain: state.currentDomain, cookie:'....', sendTime:timesStamp, expireTime:expireTimeStamp, price:costWei, useSeconds:useSecond, desp:shareMark};
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"share", item:item}}))
 }
 
 // 使用账号的操作
 ShareDetailScreen.prototype.useCookie = function (item,e) {
+  if(this.state.usedAccountList.length >0){
+    alert("有账号自在使用中\r\n请先取消");
+    return;
+  };
+  if(this.props.address == item.sharer){
+    alert("你自己发布的账号\r\n无法使用");
+    return;
+  };
+
   // 发送只能合约
   let value = parseInt(item.price);
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
     value: '0x' + value.toString(16),
   }
   var d1 = new Date();
@@ -611,7 +636,7 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   let endTime = beginTime + 3600*1
   console.log('zgl 使用的账号信息', item)
   txParams.data = this.encodeMothed2(item.id,beginTime,endTime)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"use", item:item}}))
   // 使用cookie的函数
   var domain = item.domain;
   var cookie = item.cookie;
@@ -633,74 +658,84 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
 
 // 使用者在使用结束前提出退钱 ; 使用者修改自己的退钱明细
 ShareDetailScreen.prototype.refund = function (item,e) {
+//zgl
+  var deposite = parseInt(item.use.deposite)
+  var desp = "你的账户不能用.";
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask: {op:"refund", item:item}}))
 }
 
 // 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
 ShareDetailScreen.prototype.refundBySharer = function (item,e) {
+//zgl
+  var desp = "我拉账户自己要用了.";
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"refundBySharer", item:item}}))
 }
 
 // 分享者在使用结束后提钱	（可以给使用者留点）
 ShareDetailScreen.prototype.withdraw = function (item,e) {
+//zgl
+  var deposite = parseInt(item.use.deposite)
+  var desp = "成功交易.";
+ 
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
-  txParams.data = this.encodeMothedReassign(item.id, beginTime, 100, "aaaaaa");
+  txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"withdraw", item:item}}))
 }
 
 // 分享者同意使用者退钱, 这个时候输入的money与desp 无用
 ShareDetailScreen.prototype.agree = function (item,e) {
   let txParams = {
     from: this.props.address,
-    to: '0x04cac7d033182de0d702dd24b95471d0f8070ad4',
+    to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
   }
   var d1 = new Date();
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "");
   console.log(txParams)
-  this.props.dispatch(actions.signTx(txParams))
+  this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"agree", item:item}}))
+
+}
+
+//分享者删除自己的，也就删除不让人用。
+ShareDetailScreen.prototype.retractItemBySharer = function (item) {
+    var nodeId = 'shareMask_' + item.domain;// 暂时没有
+    var nodeId2 = 'shareMask_sharer_' + this.props.address;
+    this.retractItem(nodeId, item.id);
+    this.retractItem(nodeId2, item.id);
 
 }
 
 // 删除列表项目
-ShareDetailScreen.prototype.retractItem = function (nodeIdType, itemId) {
-  console.log(nodeIdType, itemId)
-  let nodeId
-  if (nodeIdType == 1) {
-    nodeId = 'shareMask_' + this.state.currentDomain;// 暂时没有
-  } else if (nodeIdType == 2) {
-    nodeId = 'shareMask_sharer_' + this.props.address;
-  } else if (nodeIdType == 3) {
-    nodeId = 'shareMask_user_' + this.props.address;
-  }
+ShareDetailScreen.prototype.retractItem = function (nodeId, itemId) {
+  
   console.log('retractItem:' + nodeId + "  " + itemId);
   var item = Strophe.xmlElement('item', {id: itemId},'');
   console.log('11111111111111111111')
   var retract = Strophe.xmlElement('retract', {node:nodeId},'');
   console.log('2222222222222222222')
-  var iqId = 'iq_retract_item_' + itemId;
+  var iqId = 'iq_retract_item_' + nodeId + "_"  + itemId;
   console.log('333333333333333333333')
   var iq_pubsub = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:iqId}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(retract).cnode(item);
   console.log('44444444444444444444')
@@ -782,16 +817,23 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       }
       if(NodeId == domainNodeId){
         console.log('zgl 获取到了可用账号列表', accountList)
-        onlyOnAccountList.bind(this)(accountList)
+        this.setState({
+          accountList: accountList
+        })
       }
       if(NodeId == myShareNodeId){
         console.log('zgl 获取到了我分享的账号列表', accountList)
-        onlyOnShareAccountList.bind(this)(accountList)
+        this.setState({
+          shareAccountList: accountList
+        })
+ 
       }
 
       if(NodeId == myUseNodeId){
         console.log('zgl 获取到了我使用的账号列表', accountList)
-        onlyOnUseAccountList.bind(this)(accountList)
+        this.setState({
+          usedAccountList: accountList
+        })
       }
     }
   } catch(err){
@@ -856,10 +898,11 @@ function onAccountList (items){
     }
     // 如果id已经存在则不再增加
     let oldList = Object.assign([], this.state.accountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
+    for (let n=0; n < addArr.length; n++) {
+      for (let m=0; m < oldList.length; m++) {
+        let oldId = oldList[m].id
         if (oldId == addArr[n].id) {
+          oldList[m] = addArr[n];
           addArr.splice(n, 1)
           break
         }
@@ -872,7 +915,6 @@ function onAccountList (items){
   }
   // delete
   if (retractlist && retractlist.length > 0) {
-    let delArr = []
     let accountList = Object.assign([], this.state.accountList)
     for(let i=0; i<retractlist.length; i++){
       var id = retractlist[i].getAttribute("id");
@@ -884,34 +926,32 @@ function onAccountList (items){
         }
       }
     }
-    if(addArr.length) return
-    console.log('修改了可用列表', addArr)
     this.setState({
       accountList: accountList
     })
   }  
 }
 
-// 可用列表的处理: 单独的添加 覆盖 删除
-function onlyOnAccountList (itemlist){
-  if (itemlist && itemlist.length > 0) {
-    let addArr = itemlist
-    // 如果id已经存在则不再增加
-    let oldList = Object.assign([], this.state.accountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
-        if (oldId == addArr[n].id) {
-          addArr.splice(n, 1)
-          break
-        }
-      }
-    }
-    this.setState({
-      accountList: addArr.concat(this.state.accountList)
-    })
-  }
-}
+//// 可用列表的处理: 单独的添加 覆盖 删除
+//function onlyOnAccountList (itemlist){
+//  if (itemlist && itemlist.length > 0) {
+//    let addArr = itemlist
+//    // 如果id已经存在则不再增加
+//    let oldList = Object.assign([], this.state.accountList)
+//    for (let m=0; m < oldList.length; m++) {
+//      let oldId = oldList[m].id
+//      for (let n=0; n < addArr.length; n++) {
+//        if (oldId == addArr[n].id) {
+//          addArr.splice(n, 1)
+//          break
+//        }
+//      }
+//    }
+//    this.setState({
+//      accountList: addArr.concat(this.state.accountList)
+//    })
+//  }
+//}
 
 // 分享列表的处理: 添加 覆盖 删除
 function onShareAccountList (items){
@@ -961,34 +1001,34 @@ function onShareAccountList (items){
     }
     console.log('删除了我分享的列表')
     this.setState({
-      shareAccountList: accountListFilter( shareAccountList )
+      shareAccountList: accountListFilter( accountList )
     })
   } 
 }
 
-// 分享列表的处理: 单独的添加 覆盖
-function onlyOnShareAccountList (itemlist){
-  // add 
-  if (itemlist && itemlist.length > 0) {
-    let addArr = itemlist
-    // 如果id已经存在则替换，不存在则增加
-    let oldList = Object.assign([], this.state.shareAccountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
-        if (oldId == addArr[n].id) {
-          oldList.splice(m, 1, addArr[n])
-          addArr.splice(n, 1)
-          break
-        }
-      }
-    }
-    console.log('修改了我分享的列表', addArr, oldList)
-    this.setState({
-      shareAccountList: accountListFilter( addArr.concat(oldList) )
-    })
-  }
-}
+//// 分享列表的处理: 单独的添加 覆盖
+//function onlyOnShareAccountList (itemlist){
+//  // add 
+//  if (itemlist && itemlist.length > 0) {
+//    let addArr = itemlist
+//    // 如果id已经存在则替换，不存在则增加
+//    let oldList = Object.assign([], this.state.shareAccountList)
+//    for (let m=0; m < oldList.length; m++) {
+//      let oldId = oldList[m].id
+//      for (let n=0; n < addArr.length; n++) {
+//        if (oldId == addArr[n].id) {
+//          oldList.splice(m, 1, addArr[n])
+//          addArr.splice(n, 1)
+//          break
+//        }
+//      }
+//    }
+//    console.log('修改了我分享的列表', addArr, oldList)
+//    this.setState({
+//      shareAccountList: accountListFilter( addArr.concat(oldList) )
+//    })
+//  }
+//}
 
 // 使用列表的处理: 添加 覆盖 删除
 function onUseAccountList (items){
@@ -1026,49 +1066,49 @@ function onUseAccountList (items){
   // delete
   if (retractlist && retractlist.length > 0) {
     let delArr = []
-    let accountList = Object.assign([], this.state.usedAccountList)
+    let usedAccountList = Object.assign([], this.state.usedAccountList)
     for(let i=0; i<retractlist.length; i++){
       var id = retractlist[i].getAttribute("id");
       //id is the delete share
-      for (let j = 0; j < accountList.length; j++) {
-        if (id  == accountList[j].id) {
-          accountList.splice(j, 1)
+      for (let j = 0; j < usedAccountList.length; j++) {
+        if (id  == usedAccountList[j].id) {
+          usedAccountList.splice(j, 1)
           break
         }
       }
     }
     console.log('删除了我使用的列表')
-    editUsedAccountList('set',accountListFilter( usedAccountList ))
+    //editUsedAccountList('set',accountListFilter( usedAccountList ))
     this.setState({
       usedAccountList: accountListFilter( usedAccountList )
     })
   } 
 }
 
-// 使用列表的处理: 单独添加 覆盖
-function onlyOnUseAccountList (itemlist){
-  // add 与 更新
-  if (itemlist && itemlist.length > 0) {
-    let addArr = itemlist
-    // 如果id已经存在则替换，不存在则增加
-    let oldList = Object.assign([], this.state.usedAccountList)
-    for (let m=0; m < oldList.length; m++) {
-      let oldId = oldList[m].id
-      for (let n=0; n < addArr.length; n++) {
-        if (oldId == addArr[n].id) {
-          oldList.splice(m, 1, addArr[n])
-          addArr.splice(n, 1)
-          break
-        }
-      }
-    }
-    console.log('修改了我使用的列表', addArr, oldList)
-    // editUsedAccountList('set', accountListFilter( addArr.concat(oldList) ))
-    this.setState({
-      usedAccountList: accountListFilter( addArr.concat(oldList) )
-    })
-  }
-}
+//// 使用列表的处理: 单独添加 覆盖
+//function onlyOnUseAccountList (itemlist){
+//  // add 与 更新
+//  if (itemlist && itemlist.length > 0) {
+//    let addArr = itemlist
+//    // 如果id已经存在则替换，不存在则增加
+//    let oldList = Object.assign([], this.state.usedAccountList)
+//    for (let m=0; m < oldList.length; m++) {
+//      let oldId = oldList[m].id
+//      for (let n=0; n < addArr.length; n++) {
+//        if (oldId == addArr[n].id) {
+//          oldList.splice(m, 1, addArr[n])
+//          addArr.splice(n, 1)
+//          break
+//        }
+//      }
+//    }
+//    console.log('修改了我使用的列表', addArr, oldList)
+//    // editUsedAccountList('set', accountListFilter( addArr.concat(oldList) ))
+//    this.setState({
+//      usedAccountList: accountListFilter( addArr.concat(oldList) )
+//    })
+//  }
+//}
 
 // accountList set 之前都要走的 过滤的filter函数
 function accountListFilter (list) {
@@ -1094,7 +1134,7 @@ function deepClone (obj) {
 function getItemStatus (item) {
   let now = new Date().getTime()
   if (!item.use || !item.use.user) {
-    return 1// '账号未被使用'
+    return 1// '等待中'
   } 
   let usedTime = now - item.use.useTime*1000
   // 使用中分两种情况
@@ -1119,7 +1159,7 @@ function shareListShowStatus(status) {
   let txt = ''
   switch (status) {
     case 1:
-      txt = '账号未被使用'
+      txt = '等待中'
       break
     case 2, 3:
       txt = '账号正在使用中'
@@ -1139,7 +1179,7 @@ function useListShowStatus(status) {
   let txt = ''
   switch (status) {
     case 1:
-      txt = '账号未被使用'
+      txt = '等待中'
       break
     case 2, 3:
       txt = '账号正在使用中'
@@ -1389,7 +1429,8 @@ function countDown (start, len) {
   let now = new Date().getTime()
   let usedTime = (now -start) / 1000
   if (usedTime >= canUse) return '0分钟'
-  let lastTime = canUse - usedTime
+//  var lastTime = canUse - usedTime;
+var lastTime = usedTime;
   let hour,minit,second
   hour = Math.floor(lastTime/3600)
   minit = Math.floor((lastTime%3600)/60)

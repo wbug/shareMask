@@ -325,9 +325,11 @@ function reduceApp (state, action) {
       })
 
     case actions.GO_HOME:
+//feng
       return extend(appState, {
         currentView: extend(appState.currentView, {
-          name: 'accountDetail',
+//          name: 'accountDetail',
+name: 'shareDefault',
         }),
         accountDetail: {
           subview: 'transactions',
@@ -438,7 +440,9 @@ function reduceApp (state, action) {
           transForward: false,
           warning: null,
           currentView: {
-            name: 'accountDetail',
+//feng
+//            name: 'accountDetail',
+            name: 'shareDefault',
             context: state.metamask.selectedAddress,
           },
           accountDetail: {
