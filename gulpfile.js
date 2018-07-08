@@ -51,6 +51,41 @@ const commonPlatforms = [
   ...browserPlatforms
 ]
 
+// 自定义处理
+function babelNodeModules() {
+  console.log('开始处理json文件')
+  const fs = require('fs')
+  const path = require('path')
+  let targetFiles = [path.resolve(__dirname, './node_modules/_asmcrypto.js@0.22.0@asmcrypto.js/package.json'), path.resolve(__dirname, './node_modules/crypto-js/package.json')]
+  function processJson (path) {
+    let targetFile = path
+    let result = fs.readFileSync(targetFile, "utf-8")
+    if (!result) return
+    let resultObj = JSON.parse(result)
+    resultObj.browserify = {
+        "transform": [
+            [
+                "babelify",
+                {
+                    "global": true,
+                    "presets": [
+                        "es2015",
+                        "stage-0"
+                    ],
+                "plugins": ["transform-runtime", "transform-async-to-generator", "syntax-trailing-function-commas"]
+                }
+            ]
+        ]
+    },
+    resultStr = JSON.stringify(resultObj)
+    fs.writeFileSync(targetFile, resultStr)
+    console.log("处理完了",path)
+  }
+  processJson(targetFiles[0])
+  processJson(targetFiles[1])
+}
+babelNodeModules()
+
 // browser reload
 
 gulp.task('dev:reload', function() {
