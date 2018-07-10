@@ -37,7 +37,24 @@ PendingTx.prototype.render = function () {
   const conversionRate = props.conversionRate
   const txMeta = this.gatherTxMeta()
   const txParams = txMeta.txParams || {}
-
+  
+  // 提示内容
+  let typeStr = txMeta.opts.shareMask.op
+  let tip = '交易确认！'
+  // refund refundBySharer withdraw--分享者提钱   share --分享 use 使用 agree ---同意退钱
+  if (typeStr === 'share') {
+    tip = '分享者分享账号'
+  } else if (typeStr === 'use') {
+    tip = '使用者使用账户'
+  } else if (typeStr === 'refund') {
+    tip = '使用者提出退钱'
+  } else if (typeStr === 'refundBySharer') {
+    tip = '分享者收回账号'
+  } else if (typeStr === 'agree') {
+    tip = '分享者同意退钱'
+  } else if (typeStr === 'withdraw') {
+    tip = '分享者提现'
+  }
   // Allow retry txs
   const { lastGasPrice } = txMeta
   let forceGasMin
@@ -85,21 +102,42 @@ PendingTx.prototype.render = function () {
 
   this.inputs = []
 
+  // 控制高级选项的开关
+  let isHighLevel = true
+  if (!this.state.isHighLevel) {
+    isHighLevel = false
+  }
   return (
 
     h('div', {
       key: txMeta.id,
     }, [
-
+      h('h4', {
+        style: {
+          color: 'rgb(247, 134, 28)',
+          textAlign: 'center',
+        }
+      }, tip ),
+      h('h2', {
+        style:{
+          cursor: 'pointer',
+          textAlign: 'right',
+          color: 'rgb(247, 134, 28)'
+        },
+        onClick: this.showHighLevel.bind(this)
+      }, '高级选项'),
       h('form#pending-tx-form', {
         onSubmit: this.onSubmit.bind(this),
-
       }, [
+        h('div', {
+          style: {
+            height: isHighLevel ? 'auto' : 0,
+            overflow: isHighLevel ? 'auto' : 'hidden',
+          }
+        }, [
+          // tx info
 
-        // tx info
-        h('div', [
-
-          h('.flex-row.flex-center', {
+          h('.flex-row.flex-center.zhen', {
             style: {
               maxWidth: '100%',
             },
@@ -490,6 +528,12 @@ PendingTx.prototype.verifyGasParams = function () {
 
 PendingTx.prototype._notZeroOrEmptyString = function (obj) {
   return obj !== '' && obj !== '0x0'
+}
+
+PendingTx.prototype.showHighLevel = function (obj) {
+  this.setState({
+    isHighLevel: !this.state.isHighLevel
+  })
 }
 
 PendingTx.prototype.bnMultiplyByFraction = function (targetBN, numerator, denominator) {

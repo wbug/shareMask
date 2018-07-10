@@ -104,6 +104,16 @@ ShareDetailScreen.prototype.render = function () {
   if (this.state && this.state.showShare) {
     showShare = this.state.showShare
   }
+  // 我的分享列表
+  let showShare1 = false
+  if (this.state && this.state.showShare1) {
+    showShare1 = this.state.showShare1
+  }
+  // 退款原因的弹框
+  let showAlert = false
+  if (this.state && this.state.showAlert) {
+    showAlert = this.state.showAlert
+  }
   // 表单信息
   // 费用
   let cost = ''
@@ -120,8 +130,55 @@ ShareDetailScreen.prototype.render = function () {
   if (this.state && this.state.shareMark) {
     shareMark = this.state.shareMark
   }
+  // 退款原因
+  let refundReson = ''
+  if (this.state && this.state.refundReson) {
+    refundReson = this.state.refundReson
+  }
+  // 退款原因必填验证
+  let reasonError = false
+  if (this.state && this.state.reasonError) {
+    reasonError = this.state.reasonError
+  }
   return (
     h('.account-detail-section full-flex-height', [
+      // 弹框组件
+      showAlert ? h('div',{
+        style: {
+          position: 'fixed',
+          background: "rgba(0,0,0,0.4)",
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          zIndex: 99,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }
+      },[ 
+        h('div.content',{style: {background: 'white',padding: '30px 30px 10px'}},[
+          h('input', {
+            style: {
+              lineHeight: '30px',
+            },
+            type: 'text',
+            placeholder: '请输入理由',
+            value: refundReson,
+            onChange: this.handleRefundReson.bind(this),
+          }),
+          reasonError ? h('h5', {style:{color:'red'}}, '请填写理由') : null,
+          h('div', {
+            style: { display: 'flex',height: '60px', justifyContent: 'space-around', alignItems: 'center' },
+          }, [
+            h('button', {
+              style:{background:'#ccc',color: 'black'},
+              onClick: this.alertCancel.bind(this)
+            }, '取消'),
+            h('button', {
+              onClick: this.alertConfirm.bind(this)
+            }, '确定')
+          ])
+        ])
+      ]) : null,
 
       //
       // 头部 简介信息
@@ -215,6 +272,7 @@ ShareDetailScreen.prototype.render = function () {
       //
       // 中间内容区域
       //
+      // 
       // 标题区域
       h('h3.flex-center.text-transform-uppercase', {
         style: {
@@ -349,61 +407,100 @@ ShareDetailScreen.prototype.render = function () {
               fontSize: '14px',
             },
           }, '分享'),
-        ]),
-          /* 已经分享的列表 */
-        h('h3.flex-center.text-transform-uppercase', {
+        ])
+      ]) : null,
+      h('h3.flex-center.text-transform-uppercase', {
+        style: {
+          width: '100%',
+          color: '#F7861C',
+          background: '#EBEBEB',
+          color: '#AEAEAE',
+          position: 'relative',
+          marginTop: '10px',
+        },
+      }, [
+        '我的分享列表',
+        h('div', {
+          onClick: this.changeShareShow1.bind(this),
           style: {
-            width: '100%',
-            color: '#F7861C',
-            background: '#EBEBEB',
-            color: '#AEAEAE',
-            marginTop: '10px',
+            textTransform: 'uppercase',
+            fontSize: '14px',
+            lineHeight: '16px',
+            padding: '5px',
+            position: 'absolute',
+            right: '10px'
           },
         }, [
-          '我的分享列表',
+          h('span',{
+            style:{
+              cursor: 'pointer',
+              color: '#F7861C',
+              display:'inline-block',
+              verticalAlign: 'middle'
+            }
+          }, '分享列表'),
+          showShare1 ? h('i.fa.fa-sort-desc',{
+            // ariaHidden: "true"
+            style:{
+              display:'inline-block',
+              verticalAlign: 'middle',
+              marginTop: '-8px',
+              color: '#F7861C',
+              fontSize: '20px',
+            }
+          }) : h('i.fa.fa-sort-asc',{
+            // ariaHidden: "true"
+            style:{
+              display:'inline-block',
+              verticalAlign: 'middle',
+              marginTop: '8px',
+              color: '#F7861C',
+              fontSize: '20px',
+            }
+          })
         ]),
-        // 我的分享列表
-        h('ul',{ style: { width: '100%', } }, [
-          shareAccountList.length ? shareAccountList.map((item, index) => {
-            return h('li',{
-              style:{
-                borderBottom: '1px solid #ccc',
-                position: 'relative',
-                padding: '10px',
-              },
-              key: index
-            }, [
-              // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
-              h('div',  {style: { color: 'blue' }},[
-                '当前的状态：', shareListShowStatus(item.status),
-                h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
-                // 取消按钮
-                (item.status == 1 || item.status == 4) ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-                '删除') : '',
-                // 取消按钮
-                item.status == 2 ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-                '取消') : '', // 弹框- 说明
-                // 收钱
-                item.status == 3 ? h('span', { onClick: this.withdraw.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-                '提现') : '',
-                // 同意退款
-                item.status == 5 ? h('span', { onClick: this.agree.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-                '同意') : '',
-                ]),
-              h('div', {},[
-                '分享的网站：',item.domain,
-                '时间：',showtime(item.sendTime*1000),
+      ]),
+      // 我的分享列表
+      showShare1 ? h('ul',{ style: { width: '100%', } }, [
+        shareAccountList.length ? shareAccountList.map((item, index) => {
+          return h('li',{
+            style:{
+              borderBottom: '1px solid #ccc',
+              position: 'relative',
+              padding: '10px',
+            },
+            key: index
+          }, [
+            // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
+            h('div',  {style: { color: 'blue' }},[
+              '当前的状态：', shareListShowStatus(item.status),
+              h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
+              // 取消按钮
+              (item.status == 1 || item.status == 4) ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '删除') : '',
+              // 取消按钮
+              item.status == 2 ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '取消') : '', // 弹框- 说明
+              // 收钱
+              item.status == 3 ? h('span', { onClick: this.withdraw.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '提现') : '',
+              // 同意退款
+              item.status == 5 ? h('span', { onClick: this.agree.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '同意') : '',
               ]),
-              h('div', {},[ 
-                '费用：', item.price/1000000000000000000, '使用时长：', showUseTime(item.useSeconds)
-              ]),
-              h('div', {},[ 
-                '留言：', 
-                item.desp 
-              ]),
-            ])
-          }) : null
-        ]),
+            h('div', {},[
+              '分享的网站：',item.domain,
+              '时间：',showtime(item.sendTime*1000),
+            ]),
+            h('div', {},[ 
+              '费用：', item.price/1000000000000000000, '使用时长：', showUseTime(item.useSeconds)
+            ]),
+            h('div', {},[ 
+              '留言：', 
+              item.desp 
+            ]),
+          ])
+        }) : null
       ]) : null,
       h('h3.flex-center.text-transform-uppercase', {  style: { width: '100%', color: '#F7861C', background: '#EBEBEB', color: '#AEAEAE', marginTop: '10px', }}, [
         '可用账号列表',
@@ -421,16 +518,16 @@ ShareDetailScreen.prototype.render = function () {
           }, [
             // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
             h('div', {style: { color: 'blue' }},[
-              '账号状态：', // this.getUseStatus(item.status),
+              '账号状态：', useListShowStatus(item.status),
               h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
               // 取消按钮
-              item.status == 2 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 2 ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '申请退款') : '', // 弹框 金额 + 说明
               // 取消按钮
               (item.status == 3 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '删除并退出账户') : '',
               // 同意退款
-              item.status == 5 ? h('span', { onClick: this.refund.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 5 ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '修改退款') : '', // 弹框 金额 + 说明
             ]),
             h('div', {},[
@@ -501,6 +598,7 @@ ShareDetailScreen.prototype.componentDidMount =function () {
   console.log('初始化列表', mokeList)
   this.setState({
     showShare: false, // 是否显示分享账号的内容
+    showShare1: false, // 是否显示我的分享列表
     cookies: '',
     accountList: [], // 别人分享的列表
     shareAccountList: [], // 自己分享的账号列表
@@ -508,7 +606,9 @@ ShareDetailScreen.prototype.componentDidMount =function () {
     currentDomain: '',
     shareMark: '', // 备注
     cost: -1, // 费用
-    useTime: -1 // 使用时长
+    useTime: -1, // 使用时长
+    refundReson: '', // 退款原因
+    reasonError: false, // 退款原因未填
   })
   // 获取当前的域名,显示 + 获取当前域名下的使用列表
   chrome.tabs.getSelected(null, function (tab) {
@@ -660,7 +760,7 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
 ShareDetailScreen.prototype.refund = function (item,e) {
 //zgl
   var deposite = parseInt(item.use.deposite)
-  var desp = "你的账户不能用.";
+  var desp = this.state.refundReson; // 退款理由
   let txParams = {
     from: this.props.address,
     to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
@@ -692,7 +792,7 @@ ShareDetailScreen.prototype.withdraw = function (item,e) {
 //zgl
   var deposite = parseInt(item.use.deposite)
   var desp = "成功交易.";
- 
+
   let txParams = {
     from: this.props.address,
     to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
@@ -724,7 +824,36 @@ ShareDetailScreen.prototype.retractItemBySharer = function (item) {
     var nodeId2 = 'shareMask_sharer_' + this.props.address;
     this.retractItem(nodeId, item.id);
     this.retractItem(nodeId2, item.id);
+}
 
+// 填写 退钱的理由
+ShareDetailScreen.prototype.requireReson = function (item, type) {
+  this.setState({
+    showAlert: true,
+    refundReson: '', // 清空退款理由
+    reasonError: false, // reason 点击确定必填校验
+    item: item,
+    resonType: 1, // resonType: 1---使用者退款原因
+  })
+}
+// 弹框的确定按钮
+ShareDetailScreen.prototype.alertConfirm = function () {
+  if (!this.state.refundReson) {
+    this.setState({
+      reasonError: true
+    })
+    return false
+  }
+  if (this.state.resonType === 1){//使用者退款原因
+    this.refund(this.state.item)
+  }
+}
+
+// 弹框的取消按钮, 关闭弹框
+ShareDetailScreen.prototype.alertCancel = function () {
+  this.setState({
+    showAlert: false,
+  })
 }
 
 // 删除列表项目
@@ -1211,10 +1340,24 @@ ShareDetailScreen.prototype.handleShareMark = function (event) {
     shareMark: event.target.value
   })
 }
+// 表单绑定函数----退款原因
+ShareDetailScreen.prototype.handleRefundReson = function (event) {
+  this.setState({
+    refundReson: event.target.value
+  })
+}
 // 打开关闭分享区域
 ShareDetailScreen.prototype.changeShareShow = function () {
   this.setState({
     showShare: !this.state.showShare
+  })
+  return true;
+}
+
+// 打开关闭我的分享列表
+ShareDetailScreen.prototype.changeShareShow1 = function () {
+  this.setState({
+    showShare1: !this.state.showShare1
   })
   return true;
 }

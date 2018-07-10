@@ -51,6 +51,7 @@ ConfirmTxScreen.prototype.render = function () {
   var unconfTxList = txHelper(unapprovedTxs, unapprovedMsgs, unapprovedPersonalMsgs, unapprovedTypedMessages, network)
 
   var txData = unconfTxList[props.index] || {}
+  console.info('zgl', txData)
   var txParams = txData.params || {}
   var isNotification = getEnvironmentType(window.location.href) === ENVIRONMENT_TYPE_NOTIFICATION
 
@@ -77,7 +78,7 @@ ConfirmTxScreen.prototype.render = function () {
         !isNotification ? h('i.fa.fa-arrow-left.fa-lg.cursor-pointer', {
           onClick: this.goHome.bind(this),
         }) : null,
-        h('h2.page-subtitle', 'Confirm Transaction'),
+        h('h2.page-subtitle', '交易发送确认'),
         isNotification ? h(NetworkIndicator, {
           network: network,
           provider: provider,
@@ -236,8 +237,8 @@ ConfirmTxScreen.prototype.goHome = function (event) {
 
 function warningIfExists (warning) {
   if (warning &&
-     // Do not display user rejections on this screen:
-     warning.indexOf('User denied transaction signature') === -1) {
+    // Do not display user rejections on this screen:
+    warning.indexOf('User denied transaction signature') === -1) {
     return h('.error', {
       style: {
         margin: 'auto',
