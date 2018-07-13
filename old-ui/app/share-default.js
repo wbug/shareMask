@@ -273,59 +273,7 @@ ShareDetailScreen.prototype.render = function () {
       // 中间内容区域
       //
       // 
-      // 标题区域
-      h('h3.flex-center.text-transform-uppercase', {
-        style: {
-          width: '100%',
-          color: '#AEAEAE',
-          background: '#EBEBEB',
-          marginTop: '15px',
-          marginBottom: '10px',
-          lineHeight: '32px',
-          position: 'relative',
-        },
-      }, [
-        '我的分享记录',
-        h('div', {
-          onClick: this.changeShareShow.bind(this),
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '14px',
-            lineHeight: '16px',
-            padding: '5px',
-            position: 'absolute',
-            right: '10px'
-          },
-        }, [
-          h('span',{
-            style:{
-              cursor: 'pointer',
-              color: '#F7861C',
-              display:'inline-block',
-              verticalAlign: 'middle'
-            }
-          },'我要分享'),
-          showShare ? h('i.fa.fa-sort-desc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '-8px',
-              fontSize: '20px',
-            }
-          }) : h('i.fa.fa-sort-asc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '8px',
-              fontSize: '20px',
-            }
-          })
-        ]),
-      ]),
-      // 错误信息
-      
+     
       // 是否显示分享 区域，默认隐藏
       showShare ? h('section', {
         style: {
@@ -419,46 +367,10 @@ ShareDetailScreen.prototype.render = function () {
           marginTop: '10px',
         },
       }, [
-        '我的分享列表',
-        h('div', {
-          onClick: this.changeShareShow1.bind(this),
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '14px',
-            lineHeight: '16px',
-            padding: '5px',
-            position: 'absolute',
-            right: '10px'
-          },
-        }, [
-          h('span',{
-            style:{
-              cursor: 'pointer',
-              color: '#F7861C',
-              display:'inline-block',
-              verticalAlign: 'middle'
-            }
-          }, '分享列表'),
-          showShare1 ? h('i.fa.fa-sort-desc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '-8px',
-              color: '#F7861C',
-              fontSize: '20px',
-            }
-          }) : h('i.fa.fa-sort-asc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '8px',
-              color: '#F7861C',
-              fontSize: '20px',
-            }
-          })
-        ]),
+        '我的分享列表'
+        ,showShare1? h('i.fa.fa-chevron-up', {onClick: this.changeShareShow1.bind(this) })   : h('i.fa.fa-chevron-down', {onClick: this.changeShareShow1.bind(this) })
+        ,h('div', {  onClick: this.changeShareShow.bind(this) }  ,  '增加分享')
+
       ]),
       // 我的分享列表
       showShare1 ? h('ul',{ style: { width: '100%', } }, [
