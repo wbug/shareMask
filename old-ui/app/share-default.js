@@ -179,7 +179,129 @@ ShareDetailScreen.prototype.render = function () {
           ])
         ])
       ]) : null,
-
+      // 分享内容的弹框组件
+      showShare ? h('div',{
+        style: {
+          position: 'fixed',
+          background: "rgba(0,0,0,0.4)",
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          zIndex: 99,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }
+      },[ 
+        h('div.content',{style: {background: 'white',padding: '30px 30px 10px', width: "90%"}},[
+          h('h3.flex-center.text-transform-uppercase',{},'当前网址：' + currentDomain),
+          h('section', {
+            style: {
+              width: '100%'
+            }
+          },[
+            props.error && h('span.error.flex-center',{ style: { width: '100%' } }, '!!!' + props.error),
+            h('section.flex-row.flex-center', [
+              h('label.large-input', {
+                style: {
+                  fontSize: '13px',
+                  width: '20%',
+                  textAlign: 'left'
+                }
+              }, '使用费用:'),
+              h('select.large-input', {
+                name: 'amount',
+                placeholder: '使用费用',
+                type: 'text',
+                value: cost,
+                onChange: this.handleCost.bind(this),
+                style: {
+                  width: '25%',
+                }
+              }, [
+                h('option', { value: -1 }, '请选择费用'),
+                h('option', { value: 0.1 }, '0.1 个币'),
+                h('option', { value: 0.2 }, '0.2 个币'),
+                h('option', { value: 0.5 }, '0.5 个币'),
+                h('option', { value: 1 }, '1 个币'),
+                h('option', { value: 2 }, '2 个币'),
+                h('option', { value: 5 }, '5 个币'),
+                h('option', { value: 10 }, '10 个币'),
+                h('option', { value: 20 }, '20 个币'),
+                h('option', { value: 50 }, '50 个币'),
+              ]),
+              h('label.large-input', {
+                style: {
+                  fontSize: '13px',
+                  width: '20%',
+                  textAlign: 'center'
+                }
+              }, '使用时长:'),
+              h('select.large-input', {
+                name: 'amount',
+                placeholder: '使用时长',
+                type: 'text',
+                value: useTime,
+                onChange: this.handleUseTime.bind(this),
+                style: {
+                  width: '25%',
+                }
+              }, [
+                h('option', { value: -1 }, '请选择时间'),
+                h('option', { value: 0.5 }, '30 分钟'),
+                h('option', { value: 1 }, '1 小时'),
+                h('option', { value: 2 }, '2 小时'),
+                h('option', { value: 3 }, '3 小时'),
+                h('option', { value: 6 }, '6 小时'),
+                h('option', { value: 12 }, '12 小时'),
+                h('option', { value: 24 }, '24 小时'),
+              ]),
+            ]),
+            h('section.flex-row.flex-center', {
+              style: {
+                margin: '20px 20px 10px'
+              }
+            }, [
+              h(Conbo, {
+                ref: 'shareMark',
+                list: ['没时间打理，如不能用，请提退币', '多人共享中，如你使用时被踢，请提退币', '好人模式，下个人使用前，你可一直使用'],
+                width: '80%',
+              }),
+              // h('button.primary', {
+              //   onClick: this.onSubmit.bind(this),
+              //   style: {
+              //     width: '20%',
+              //     textTransform: 'uppercase',
+              //     fontSize: '12px',
+              //   },
+              // }, '分享'),
+            ]),
+            h('section.flex-row.flex-center', {
+              style: {
+                margin: '20px 20px 10px'
+              }
+            }, [
+              h('button.primary', {
+                onClick: this.changeShareShow.bind(this),
+                style: {
+                  background:'#ccc',
+                  color: 'black',
+                  width: '30%',
+                  textTransform: 'uppercase',
+                  fontSize: '12px',
+                },
+              }, '取消'),
+              h('button.primary', {
+                onClick: this.onSubmit.bind(this),
+                style: {
+                  width: '30%',
+                  textTransform: 'uppercase',
+                  fontSize: '12px',
+                },
+              }, '分享'),
+            ])
+          ])
+        ])
+      ]) : null,
       //
       // 头部 简介信息
       //
@@ -275,88 +397,6 @@ ShareDetailScreen.prototype.render = function () {
       // 
      
       // 是否显示分享 区域，默认隐藏
-      showShare ? h('section', {
-        style: {
-          width: '100%'
-        }
-      },[
-        props.error && h('span.error.flex-center',{ style: { width: '100%' } }, '!!!' + props.error),
-        h('section.flex-row.flex-center', [
-          h('label.large-input', {
-            style: {
-              fontSize: '13px',
-              width: '20%',
-              textAlign: 'left'
-            }
-          }, '使用费用:'),
-          h('select.large-input', {
-            name: 'amount',
-            placeholder: '使用费用',
-            type: 'text',
-            value: cost,
-            onChange: this.handleCost.bind(this),
-            style: {
-              width: '25%',
-            }
-          }, [
-            h('option', { value: -1 }, '请选择费用'),
-            h('option', { value: 0.1 }, '0.1 个币'),
-            h('option', { value: 0.2 }, '0.2 个币'),
-            h('option', { value: 0.5 }, '0.5 个币'),
-            h('option', { value: 1 }, '1 个币'),
-            h('option', { value: 2 }, '2 个币'),
-            h('option', { value: 5 }, '5 个币'),
-            h('option', { value: 10 }, '10 个币'),
-            h('option', { value: 20 }, '20 个币'),
-            h('option', { value: 50 }, '50 个币'),
-          ]),
-          h('label.large-input', {
-            style: {
-              fontSize: '13px',
-              width: '20%',
-              textAlign: 'center'
-            }
-          }, '使用时长:'),
-          h('select.large-input', {
-            name: 'amount',
-            placeholder: '使用时长',
-            type: 'text',
-            value: useTime,
-            onChange: this.handleUseTime.bind(this),
-            style: {
-              width: '25%',
-            }
-          }, [
-            h('option', { value: -1 }, '请选择时间'),
-            h('option', { value: 0.5 }, '30 分钟'),
-            h('option', { value: 1 }, '1 小时'),
-            h('option', { value: 2 }, '2 小时'),
-            h('option', { value: 3 }, '3 小时'),
-            h('option', { value: 6 }, '6 小时'),
-            h('option', { value: 12 }, '12 小时'),
-            h('option', { value: 24 }, '24 小时'),
-          ]),
-        ]),
-        h('section.flex-row.flex-center', {
-          style: {
-            margin: '20px 20px 10px'
-          }
-        }, [
-          h(Conbo, {
-            ref: 'shareMark',
-            list: ['没时间打理，如不能用，请提退币', '多人共享中，如你使用时被踢，请提退币', '好人模式，下个人使用前，你可一直使用'],
-            width: '80%',
-          }),
-          h('button.primary', {
-            onClick: this.onSubmit.bind(this),
-            style: {
-              width: '20%',
-              textTransform: 'uppercase',
-              fontSize: '14px',
-            },
-          }, '分享'),
-        ])
-      ]) : null,
       h('h3.flex-center.text-transform-uppercase', {
         style: {
           width: '100%',
@@ -368,8 +408,8 @@ ShareDetailScreen.prototype.render = function () {
         },
       },
       [
-         h('div', {onClick: this.changeShareShow1.bind(this)} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的分享列表' ])
-        ,h('div', {  onClick: this.changeShareShow.bind(this), style:{marginLeft:'30px'} }  , [h('i.fa.fa-share-alt', ), '发布'])
+        h('div', {onClick: this.changeShareShow1.bind(this), style: {color: '#f7861c'}} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的分享列表' ])
+        ,h('div', {  onClick: this.changeShareShow.bind(this), style:{marginLeft:'30px',color: '#f7861c'} }  , [h('i.fa.fa-share-alt', ), '发布'])
       ]),
       // 我的分享列表
       showShare1 ? h('ul',{ style: { width: '100%', } }, [
