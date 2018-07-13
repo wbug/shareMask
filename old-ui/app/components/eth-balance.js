@@ -80,10 +80,9 @@ EthBalanceComponent.prototype.renderBalance = function (value) {
             fontSize: '12px',
             marginLeft: '5px',
           },
-        }, label),
+        }, '币'),
       ]),
 
-      showFiat ? h(FiatValue, { value: props.value, conversionRate, currentCurrency }) : null,
     ]))
   )
 }
