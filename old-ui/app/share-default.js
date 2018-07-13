@@ -761,6 +761,7 @@ ShareDetailScreen.prototype.refund = function (item,e) {
 //zgl
   var deposite = parseInt(item.use.deposite)
   var desp = this.state.refundReson; // 退款理由
+  console.log('zlg 退款理由', desp)
   let txParams = {
     from: this.props.address,
     to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
