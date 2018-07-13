@@ -39,7 +39,7 @@ PendingTx.prototype.render = function () {
   const txParams = txMeta.txParams || {}
   
   // 提示内容
-  let typeStr = txMeta.opts.shareMask.op
+  let typeStr = txMeta.opts.shareMask ? txMeta.opts.shareMask.op : '';
   let tip = '交易确认！'
   // refund refundBySharer withdraw--分享者提钱   share --分享 use 使用 agree ---同意退钱
   if (typeStr === 'share') {
@@ -54,6 +54,8 @@ PendingTx.prototype.render = function () {
     tip = '分享者同意退钱'
   } else if (typeStr === 'withdraw') {
     tip = '分享者提现'
+  } else {
+    tip = '转账'
   }
   // Allow retry txs
   const { lastGasPrice } = txMeta
