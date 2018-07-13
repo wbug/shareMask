@@ -76,11 +76,11 @@ ShareDetailScreen.prototype.render = function () {
   }
   
   var accountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='share' && d.status=='submitted');});  
-  accountListSubmitted = accountListSubmitted.map((d, i) => { d.opts.shareMask.item.tx_status='submitted'; return  d.opts.shareMask.item; });
+  accountListSubmitted = accountListSubmitted.map((d, i) => { d.opts.shareMask.item.tx_status='submitted'; d.opts.shareMask.item.status=1; return  d.opts.shareMask.item; });
   var shareAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.op=='share' && d.status=='submitted');});
-  shareAccountListSubmitted = shareAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
+  shareAccountListSubmitted = shareAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; d.opts.shareMask.item.status=1; return d.opts.shareMask.item; });
   var usedAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='use' && d.status=='submitted');});
-  usedAccountListSubmitted = usedAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
+  usedAccountListSubmitted = usedAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; d.opts.shareMask.item.status=1; return d.opts.shareMask.item; });
 
   let accountList = []
   if (this.state && this.state.accountList) {
@@ -273,59 +273,7 @@ ShareDetailScreen.prototype.render = function () {
       // 中间内容区域
       //
       // 
-      // 标题区域
-      h('h3.flex-center.text-transform-uppercase', {
-        style: {
-          width: '100%',
-          color: '#F7861C',
-          background: '#EBEBEB',
-          marginTop: '15px',
-          marginBottom: '10px',
-          lineHeight: '32px',
-          position: 'relative',
-        },
-      }, [
-        !currentDomain || '位置:', currentDomain || '当前网址无效',
-        h('div', {
-          onClick: this.changeShareShow.bind(this),
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '14px',
-            lineHeight: '16px',
-            padding: '5px',
-            position: 'absolute',
-            right: '10px'
-          },
-        }, [
-          h('span',{
-            style:{
-              cursor: 'pointer',
-              color: '#F7861C',
-              display:'inline-block',
-              verticalAlign: 'middle'
-            }
-          },'我要分享'),
-          showShare ? h('i.fa.fa-sort-desc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '-8px',
-              fontSize: '20px',
-            }
-          }) : h('i.fa.fa-sort-asc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '8px',
-              fontSize: '20px',
-            }
-          })
-        ]),
-      ]),
-      // 错误信息
-      
+     
       // 是否显示分享 区域，默认隐藏
       showShare ? h('section', {
         style: {
@@ -418,47 +366,10 @@ ShareDetailScreen.prototype.render = function () {
           position: 'relative',
           marginTop: '10px',
         },
-      }, [
-        '我的分享列表',
-        h('div', {
-          onClick: this.changeShareShow1.bind(this),
-          style: {
-            textTransform: 'uppercase',
-            fontSize: '14px',
-            lineHeight: '16px',
-            padding: '5px',
-            position: 'absolute',
-            right: '10px'
-          },
-        }, [
-          h('span',{
-            style:{
-              cursor: 'pointer',
-              color: '#F7861C',
-              display:'inline-block',
-              verticalAlign: 'middle'
-            }
-          }, '分享列表'),
-          showShare1 ? h('i.fa.fa-sort-desc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '-8px',
-              color: '#F7861C',
-              fontSize: '20px',
-            }
-          }) : h('i.fa.fa-sort-asc',{
-            // ariaHidden: "true"
-            style:{
-              display:'inline-block',
-              verticalAlign: 'middle',
-              marginTop: '8px',
-              color: '#F7861C',
-              fontSize: '20px',
-            }
-          })
-        ]),
+      },
+      [
+         h('div', {onClick: this.changeShareShow1.bind(this)} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的分享列表' ])
+        ,h('div', {  onClick: this.changeShareShow.bind(this), style:{marginLeft:'30px'} }  , [h('i.fa.fa-share-alt', ), '发布'])
       ]),
       // 我的分享列表
       showShare1 ? h('ul',{ style: { width: '100%', } }, [
@@ -502,8 +413,8 @@ ShareDetailScreen.prototype.render = function () {
           ])
         }) : null
       ]) : null,
-      h('h3.flex-center.text-transform-uppercase', {  style: { width: '100%', color: '#F7861C', background: '#EBEBEB', color: '#AEAEAE', marginTop: '10px', }}, [
-        '可用账号列表',
+      h('h3.flex-center.text-transform-uppercase', {  style: { width: '100%', color: '#F7861C', background: '#EBEBEB', marginTop: '10px', }}, [
+        currentDomain, '-可用账号',
       ]),
       // 使用过的账号列表
       h('ul',{ style: { width: '100%', } }, [
@@ -695,7 +606,7 @@ ShareDetailScreen.prototype.onSubmit = function () {
   var d1 = new Date();
   var timesStamp = parseInt(d1.getTime()/1000);
   var expireTimeStamp = timesStamp + 3600*12;
-  var costWei = util.normalizeEthStringToWei(state.cost);
+  var costWei = parseInt(util.normalizeEthStringToWei(state.cost));
   var useSecond = parseInt(state.useTime * 3600);
   console.log('发送的数据', state.currentDomain, state.cookies, timesStamp, expireTimeStamp, costWei, useSecond, shareMark)
   // 账号信息用来存入localstorage
@@ -736,6 +647,7 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   let endTime = beginTime + 3600*1
   console.log('zgl 使用的账号信息', item)
   txParams.data = this.encodeMothed2(item.id,beginTime,endTime)
+  item.use={user:this.props.address, useTime:beginTime, useEndTime:endTime, deposite:value}
   this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"use", item:item}}))
   // 使用cookie的函数
   var domain = item.domain;
@@ -770,6 +682,7 @@ ShareDetailScreen.prototype.refund = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
+  item.reassign={from:this.props.address, to:item.sharer, timeStamp:beginTime,  moneySharer:0, moneyUser:deposite, desp:desp, agreeSharer:0, agreeUser:1 }
   this.props.dispatch(actions.signTx(txParams, {shareMask: {op:"refund", item:item}}))
 }
 
@@ -785,6 +698,7 @@ ShareDetailScreen.prototype.refundBySharer = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, desp);
   console.log(txParams)
+  item.reassign={from:this.props.address, to:item.user, timeStamp:beginTime,  moneySharer:0, moneyUser:deposite, desp:desp, agreeSharer:1, agreeUser:1 }
   this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"refundBySharer", item:item}}))
 }
 
@@ -802,6 +716,7 @@ ShareDetailScreen.prototype.withdraw = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, deposite, desp);
   console.log(txParams)
+  item.reassign={from:this.props.address, to:item.user, timeStamp:beginTime,  moneySharer:deposite, moneyUser:0, desp:desp, agreeSharer:1, agreeUser:1 }
   this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"withdraw", item:item}}))
 }
 
@@ -815,6 +730,7 @@ ShareDetailScreen.prototype.agree = function (item,e) {
   let beginTime = parseInt(d1.getTime()/1000);
   txParams.data = this.encodeMothedReassign(item.id, beginTime, 0, "");
   console.log(txParams)
+  item.reassign={from:this.props.address, to:item.user, timeStamp:beginTime,  moneySharer:0, moneyUser:deposite, desp:desp, agreeSharer:1, agreeUser:1 }
   this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"agree", item:item}}))
 
 }
