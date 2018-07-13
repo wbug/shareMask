@@ -104,7 +104,7 @@ ShareDetailScreen.prototype.render = function () {
   if (this.state && this.state.showShare) {
     showShare = this.state.showShare
   }
-  // 我的分享列表
+  // 我的发布列表
   let showShare1 = false
   if (this.state && this.state.showShare1) {
     showShare1 = this.state.showShare1
@@ -312,20 +312,18 @@ ShareDetailScreen.prototype.render = function () {
           position: 'relative'
         },
       }, [
-        h('a',{
+       h('a', {
           href: 'home.html',
           target: '_blank'
-        },[
-          h('img',{
-            src: 'images/popout.svg',
-            style: {
-              position: 'absolute',
-              right: 0,
-              top:0,
-            }
-          })
-        ]),
-        // header - identicon + nav
+        }, [h('img', {
+          src: 'images/popout.svg',
+          style: {
+            position: 'absolute',
+            right: 0,
+            top: 0
+          }
+        })]),
+       // header - identicon + nav
         h('.flex-row.flex-space-between', {
           style: {
             marginTop: '15px',
@@ -361,7 +359,12 @@ ShareDetailScreen.prototype.render = function () {
               paddingTop: '8px',
               marginBottom: '8px',
             },
-          }, identity && identity.name),
+          },  [h('div', {   onClick: () => props.dispatch(actions.backToAccountDetail(props.address)) }, '我的网络互助账户')
+               , h('div', {  onClick: () => {      props.dispatch(actions.showQrView(props.address, '我的账户'))
+                     }, style:{marginLeft:'4px'},    title:'账户二维码' }, [h('i.fa.fa-qrcode', { })])
+               , h('div', {  onClick: () => props.dispatch(actions.showSendPage()), style:{marginLeft:'12px',color: '#f7861c'},   title:'转账' }, [h('i.fa.fa-exchange', { })])
+              ]
+          ),
 
           // address and getter actions
           h('.flex-row.flex-center', {
@@ -408,10 +411,10 @@ ShareDetailScreen.prototype.render = function () {
         },
       },
       [
-        h('div', {onClick: this.changeShareShow1.bind(this), style: {color: '#f7861c'}} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的分享列表' ])
+        h('div', {onClick: this.changeShareShow1.bind(this), style: {color: '#f7861c'}} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的发布列表' ])
         ,h('div', {  onClick: this.changeShareShow.bind(this), style:{marginLeft:'30px',color: '#f7861c'} }  , [h('i.fa.fa-share-alt', ), '发布'])
       ]),
-      // 我的分享列表
+      // 我的发布列表
       showShare1 ? h('ul',{ style: { width: '100%', } }, [
         shareAccountList.length ? shareAccountList.map((item, index) => {
           return h('li',{
@@ -549,7 +552,7 @@ ShareDetailScreen.prototype.componentDidMount =function () {
   console.log('初始化列表', mokeList)
   this.setState({
     showShare: false, // 是否显示分享账号的内容
-    showShare1: false, // 是否显示我的分享列表
+    showShare1: false, // 是否显示我的发布列表
     cookies: '',
     accountList: [], // 别人分享的列表
     shareAccountList: [], // 自己分享的账号列表
@@ -1311,7 +1314,7 @@ ShareDetailScreen.prototype.changeShareShow = function () {
   return true;
 }
 
-// 打开关闭我的分享列表
+// 打开关闭我的发布列表
 ShareDetailScreen.prototype.changeShareShow1 = function () {
   this.setState({
     showShare1: !this.state.showShare1
