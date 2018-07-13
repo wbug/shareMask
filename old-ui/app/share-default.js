@@ -366,11 +366,10 @@ ShareDetailScreen.prototype.render = function () {
           position: 'relative',
           marginTop: '10px',
         },
-      }, [
-        '我的分享列表'
-        ,showShare1? h('i.fa.fa-chevron-up', {onClick: this.changeShareShow1.bind(this) })   : h('i.fa.fa-chevron-down', {onClick: this.changeShareShow1.bind(this) })
-        ,h('div', {  onClick: this.changeShareShow.bind(this) }  ,  '增加分享')
-
+      },
+      [
+         h('div', {onClick: this.changeShareShow1.bind(this)} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的分享列表' ])
+        ,h('div', {  onClick: this.changeShareShow.bind(this), style:{marginLeft:'30px'} }  , [h('i.fa.fa-share-alt', ), '发布'])
       ]),
       // 我的分享列表
       showShare1 ? h('ul',{ style: { width: '100%', } }, [
