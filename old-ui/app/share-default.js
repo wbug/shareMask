@@ -100,6 +100,10 @@ ShareDetailScreen.prototype.render = function () {
   }
   shareAccountList = shareAccountListSubmitted.concat(shareAccountList);
 
+  var accountLoad = this.state ?  this.state.accountLoad : false;
+  var shareAccountLoad = this.state ?  this.state.shareAccountLoad : false;
+  var usedAccoutLoad = this.state ?  this.state.usedAccoutLoad : false;
+
   let showShare = false
   if (this.state && this.state.showShare) {
     showShare = this.state.showShare
@@ -193,7 +197,7 @@ ShareDetailScreen.prototype.render = function () {
         }
       },[ 
         h('div.content',{style: {background: 'white',padding: '30px 30px 10px', width: "90%"}},[
-          h('h3.flex-center.text-transform-uppercase',{},'当前网址：' + currentDomain),
+          h('h3.flex-center.text-transform-uppercase',{}, '将当前' + currentDomain + '账号发布'),
           h('section', {
             style: {
               width: '100%'
@@ -427,19 +431,24 @@ ShareDetailScreen.prototype.render = function () {
           }, [
             // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
             h('div',  {style: { color: 'blue' }},[
-              '当前的状态：', shareListShowStatus(item.status),
+              '当前的状态：', shareListShowStatus(item),
               h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
+              // 在区块链确认中
+              item.tx_status == 'submitted'? h('i.fa.fa-circle-o-notch.fa-spin.fa-1x.fa-fw', {style: {position: 'absolute', top: '20px', right: '30px',} }) : '',
               // 取消按钮
-              (item.status == 1 || item.status == 4) ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 1 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '删除') : '',
               // 取消按钮
-              item.status == 2 ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 2 && item.tx_status != 'submitted' ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '取消') : '', // 弹框- 说明
               // 收钱
-              item.status == 3 ? h('span', { onClick: this.withdraw.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 3 && item.tx_status != 'submitted' ? h('span', { onClick: this.withdraw.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '提现') : '',
+              //
+              item.status == 4 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '删除') : '',
               // 同意退款
-              item.status == 5 ? h('span', { onClick: this.agree.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 5 && item.tx_status != 'submitted' ? h('span', { onClick: this.agree.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '同意') : '',
               ]),
             h('div', {},[
@@ -472,16 +481,20 @@ ShareDetailScreen.prototype.render = function () {
           }, [
             // 1.分享人的账户地址，2.针对的域名，3.cookie，4.时间戳1，5.时间戳2 , 6.留言，7.使用费用 8. 使用时长
             h('div', {style: { color: 'blue' }},[
-              '账号状态：', useListShowStatus(item.status),
+              '账号状态：', useListShowStatus(item),
               h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
+              // 在区块链确认中
+              item.tx_status == 'submitted'? h('i.fa.fa-circle-o-notch.fa-spin.fa-1x.fa-fw', {style: {position: 'absolute', top: '20px', right: '30px',} }) : '',
               // 取消按钮
-              item.status == 2 ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 2 && item.tx_status != 'submitted' ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '申请退款') : '', // 弹框 金额 + 说明
               // 取消按钮
-              (item.status == 3 || item.status == 4) ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 3 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              '删除并退出账户') : '',
+              item.status == 4 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '删除并退出账户') : '',
               // 同意退款
-              item.status == 5 ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
+              item.status == 5 && item.tx_status != 'submitted' ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '修改退款') : '', // 弹框 金额 + 说明
             ]),
             h('div', {},[
@@ -502,6 +515,7 @@ ShareDetailScreen.prototype.render = function () {
         }) : null
       ]),
       // 可用账号列表
+      accountLoad==false ? h('div', { style:{margin: 'auto'}}, [h('i.fa.fa-refresh.fa-spin.fa-3x.fa-fw', { })]) : 
       h('ul',{style:{width: '100%', minHeight: '400px'}}, [
         accountList.length ? accountList.map((item, index) => {
           return h('li',{
@@ -526,6 +540,7 @@ ShareDetailScreen.prototype.render = function () {
               '留言：', 
               item.desp 
             ]),
+            item.tx_status == 'submitted' ? h('i.fa.fa-circle-o-notch.fa-spin.fa-1x.fa-fw', {style: {position: 'absolute', top: '20px', right: '30px',} }) : 
             h('button.primary', {
               onClick: this.useCookie.bind(this, item),
               style: {
@@ -557,6 +572,9 @@ ShareDetailScreen.prototype.componentDidMount =function () {
     accountList: [], // 别人分享的列表
     shareAccountList: [], // 自己分享的账号列表
     usedAccountList:[], // 使用过的账号列表
+    accountLoad: false,
+    shareAccountLoad: false,
+    usedAccoutLoad: false,
     currentDomain: '',
     shareMark: '', // 备注
     cost: -1, // 费用
@@ -907,13 +925,15 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       if(NodeId == domainNodeId){
         console.log('zgl 获取到了可用账号列表', accountList)
         this.setState({
-          accountList: accountList
+          accountList: accountList,
+          accountLoad: true
         })
       }
       if(NodeId == myShareNodeId){
         console.log('zgl 获取到了我分享的账号列表', accountList)
         this.setState({
-          shareAccountList: accountList
+          shareAccountList: accountList,
+          shareAccountLoad : true
         })
  
       }
@@ -921,7 +941,8 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       if(NodeId == myUseNodeId){
         console.log('zgl 获取到了我使用的账号列表', accountList)
         this.setState({
-          usedAccountList: accountList
+          usedAccountList: accountList,
+          usedAccoutLoad: true
         })
       }
     }
@@ -1244,7 +1265,9 @@ function getItemStatus (item) {
 }
 
 // 分享列表 账号状态的对应文字
-function shareListShowStatus(status) {
+function shareListShowStatus(item) {
+  var status = item.status;
+  var tx_status = item.tx_status;
   let txt = ''
   switch (status) {
     case 1:
@@ -1260,11 +1283,14 @@ function shareListShowStatus(status) {
       txt = '用户请求退款'
       break
   }
+  txt = tx_status == 'submitted'?'区块链确认中': txt;
   return txt
 }
 
 // 使用列表 账号状态对应的文字
-function useListShowStatus(status) {
+function useListShowStatus(item) {
+  var status = item.status;
+  var tx_status = item.tx_status;
   let txt = ''
   switch (status) {
     case 1:
@@ -1280,6 +1306,8 @@ function useListShowStatus(status) {
       txt = '用户请求退款'
       break
   }
+  txt = tx_status == 'submitted'?'区块链确认中': txt;
+  return txt;
 }
 
 // 表单绑定函数---费用
