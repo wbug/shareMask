@@ -598,7 +598,8 @@ App.prototype.renderPrimary = function () {
         },
       }, [
         h('i.fa.fa-arrow-left.fa-lg.cursor-pointer.color-orange', {
-          onClick: () => props.dispatch(actions.backToAccountDetail(props.selectedAddress)),
+          onClick: () => this.props.dispatch(actions.goHome()),
+//feng          onClick: () => props.dispatch(actions.backToAccountDetail(props.selectedAddress)),
           style: {
             marginLeft: '10px',
             marginTop: '50px',
