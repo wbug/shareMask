@@ -126,9 +126,14 @@ AccountDetailScreen.prototype.render = function () {
                           padding: '5px 0px',
                           lineHeight: '25px',
                         },
-                      }, [
-                        identity && identity.name,
-                      ]),
+                      },
+                          [h('div', {   onClick: () => props.dispatch(actions.backToAccountDetail(props.address)) }, '我的网络互助账户')
+                           , h('div', {  onClick: () => {      props.dispatch(actions.showQrView(props.address, '我的账户'))
+                                 }, style:{marginLeft:'4px'},    title:'账户二维码' }, [h('i.fa.fa-qrcode', { })])
+                           , h('div', {  onClick: () => props.dispatch(actions.showSendPage()), style:{marginLeft:'12px',color: '#f7861c'},   title:'转账' }, [h('i.fa.fa-exchange', { })])
+                          ]
+//                        [  identity && identity.name,  ]
+                      ),
                     ]
                   ),
                   h(
