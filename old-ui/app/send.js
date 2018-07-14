@@ -109,7 +109,15 @@ SendTransactionScreen.prototype.render = function () {
               paddingTop: '8px',
               marginBottom: '8px',
             },
-          }, identity && identity.name),
+          }, 
+          [h('div', {   onClick: () => props.dispatch(actions.backToAccountDetail(props.address)) }, '我的网络互助账户')
+               , h('div', {  onClick: () => {      props.dispatch(actions.showQrView(props.address, '我的账户'))
+                     }, style:{marginLeft:'4px'},    title:'账户二维码' }, [h('i.fa.fa-qrcode', { })])
+               , h('div', {  onClick: () => props.dispatch(actions.showSendPage()), style:{marginLeft:'12px',color: '#f7861c'},   title:'转账' }, [h('i.fa.fa-exchange', { })])
+              ]
+
+//identity && identity.name
+          ),
 
           // address and getter actions
           h('.flex-row.flex-center', {
@@ -151,7 +159,7 @@ SendTransactionScreen.prototype.render = function () {
           marginBottom: '16px',
         },
       }, [
-        'Send Transaction',
+        '发送转账交易',
       ]),
 
       // error message
@@ -161,7 +169,7 @@ SendTransactionScreen.prototype.render = function () {
       h('section.flex-row.flex-center', [
         h(EnsInput, {
           name: 'address',
-          placeholder: 'Recipient Address',
+          placeholder: '接受者 地址',
           onChange: this.recipientDidChange.bind(this),
           network,
           identities,
@@ -174,7 +182,7 @@ SendTransactionScreen.prototype.render = function () {
 
         h('input.large-input', {
           name: 'amount',
-          placeholder: 'Amount',
+          placeholder: '金额',
           type: 'number',
           style: {
             marginRight: '6px',
@@ -189,7 +197,7 @@ SendTransactionScreen.prototype.render = function () {
           style: {
             textTransform: 'uppercase',
           },
-        }, 'Next'),
+        }, '下一步'),
 
       ]),
 
@@ -204,7 +212,7 @@ SendTransactionScreen.prototype.render = function () {
           marginBottom: '16px',
         },
       }, [
-        'Transaction Data (optional)',
+        '转账符加数据 (可选)',
       ]),
 
       // 'data' field
@@ -231,8 +239,9 @@ SendTransactionScreen.prototype.navigateToAccounts = function (event) {
 }
 
 SendTransactionScreen.prototype.back = function () {
-  var address = this.props.address
-  this.props.dispatch(actions.backToAccountDetail(address))
+  this.props.dispatch(actions.goHome())
+//var address = this.props.address
+//this.props.dispatch(actions.backToAccountDetail(address))
 }
 
 SendTransactionScreen.prototype.recipientDidChange = function (recipient, nickname) {
