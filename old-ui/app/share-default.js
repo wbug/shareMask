@@ -76,11 +76,16 @@ ShareDetailScreen.prototype.render = function () {
   }
   
   var accountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='share' && d.status=='submitted');});  
-  accountListSubmitted = accountListSubmitted.map((d, i) => { d.opts.shareMask.item.tx_status='submitted'; d.opts.shareMask.item.status=1; return  d.opts.shareMask.item; });
+  accountListSubmitted = accountListSubmitted.map((d, i) => { d.opts.shareMask.item.tx_status='submitted'; return  d.opts.shareMask.item; });
   var shareAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.op=='share' && d.status=='submitted');});
-  shareAccountListSubmitted = shareAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; d.opts.shareMask.item.status=1; return d.opts.shareMask.item; });
+  shareAccountListSubmitted = shareAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
   var usedAccountListSubmitted = selectedAddressTxList.filter((d, i) => {   return (d.opts && d.opts.shareMask&& d.opts.shareMask.item && d.opts.shareMask.item.domain==currentDomain && d.opts.shareMask.op=='use' && d.status=='submitted');});
-  usedAccountListSubmitted = usedAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; d.opts.shareMask.item.status=1; return d.opts.shareMask.item; });
+  usedAccountListSubmitted = usedAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
+
+
+  var accountLoad = this.state ?  this.state.accountLoad : false;
+  var shareAccountLoad = this.state ?  this.state.shareAccountLoad : false;
+  var usedAccoutLoad = this.state ?  this.state.usedAccoutLoad : false;
 
   let accountList = []
   if (this.state && this.state.accountList) {
@@ -92,15 +97,27 @@ ShareDetailScreen.prototype.render = function () {
   if (this.state && this.state.usedAccountList) {
     usedAccountList = this.state.usedAccountList
   }
+
+  //把refund的确认中状态组补进去
+  usedAccountList = usedAccountList.map(function (d, i) {
+    var find = selectedAddressTxList.filter(function (d2, i) { return d2.opts && d2.opts.shareMask && d2.opts.shareMask.item && d2.opts.shareMask.item.id == d.id  && d2.status == 'submitted';  });
+    if(find.length >0 ) d.tx_status = 'submitted'; return d;
+  });
   usedAccountList = usedAccountListSubmitted.concat(usedAccountList);
 
   let shareAccountList = []
   if (this.state && this.state.shareAccountList) {
     shareAccountList = this.state.shareAccountList
   }
+  
+  //把refund的确认中状态组补进去
+  shareAccountList = shareAccountList.map(function (d, i) {
+    var find = selectedAddressTxList.filter(function (d2, i) { return d2.opts && d2.opts.shareMask && d2.opts.shareMask.item && d2.opts.shareMask.item.id == d.id  && d2.status == 'submitted';  });
+    if(find.length >0 ) d.tx_status = 'submitted'; return d;
+  });
   shareAccountList = shareAccountListSubmitted.concat(shareAccountList);
 
-  var accountLoad = this.state ?  this.state.accountLoad : false;
+  var edAccountListSubmittedccountLoad = this.state ?  this.state.accountLoad : false;
   var shareAccountLoad = this.state ?  this.state.shareAccountLoad : false;
   var usedAccoutLoad = this.state ?  this.state.usedAccoutLoad : false;
 
@@ -285,7 +302,7 @@ ShareDetailScreen.prototype.render = function () {
               }
             }, [
               h('button.primary', {
-                onClick: this.changeShareShow.bind(this),
+                onClick: this.changeShareShow.bind(this, usedAccountList),
                 style: {
                   background:'#ccc',
                   color: 'black',
@@ -415,8 +432,8 @@ ShareDetailScreen.prototype.render = function () {
         },
       },
       [
-        h('div', {onClick: this.changeShareShow1.bind(this), style: {color: '#f7861c'}} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的发布列表' ])
-        ,h('div', {  onClick: this.changeShareShow.bind(this), style:{marginLeft:'30px',color: '#f7861c'} }  , [h('i.fa.fa-share-alt', ), '发布'])
+        h('div', {onClick: this.changeShareShow1.bind(this), style: {color: '#f7861c' , cursor:'pointer'}} ,[showShare1? h('i.fa.fa-chevron-up', { })   : h('i.fa.fa-chevron-down', {}),'我的发布列表' ])
+        ,h('div', {  onClick: this.changeShareShow.bind(this, usedAccountList), style:{marginLeft:'30px',color: '#f7861c' , cursor:'pointer'} }  , [h('i.fa.fa-share-alt', ), '发布'])
       ]),
       // 我的发布列表
       showShare1 ? h('ul',{ style: { width: '100%', } }, [
@@ -435,19 +452,19 @@ ShareDetailScreen.prototype.render = function () {
               h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
               // 在区块链确认中
               item.tx_status == 'submitted'? h('i.fa.fa-circle-o-notch.fa-spin.fa-1x.fa-fw', {style: {position: 'absolute', top: '20px', right: '30px',} }) : '',
-              // 取消按钮
+              // 待使用
               item.status == 1 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '删除') : '',
-              // 取消按钮
+              // 使用中未超时
               item.status == 2 && item.tx_status != 'submitted' ? h('span', { onClick: this.refundBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '取消') : '', // 弹框- 说明
-              // 收钱
+              // 使用中已超时
               item.status == 3 && item.tx_status != 'submitted' ? h('span', { onClick: this.withdraw.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '提现') : '',
-              //
+              // 双方已经都确认 
               item.status == 4 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItemBySharer.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '删除') : '',
-              // 同意退款
+              // 用方提出了退钱
               item.status == 5 && item.tx_status != 'submitted' ? h('span', { onClick: this.agree.bind(this, item), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '同意') : '',
               ]),
@@ -468,7 +485,7 @@ ShareDetailScreen.prototype.render = function () {
       h('h3.flex-center.text-transform-uppercase', {  style: { width: '100%', color: '#F7861C', background: '#EBEBEB', marginTop: '10px', }}, [
         currentDomain, '-可用账号',
       ]),
-      // 使用过的账号列表
+      // 使用的账号列表
       h('ul',{ style: { width: '100%', } }, [
         usedAccountList.length ? usedAccountList.map((item, index) => {
           return h('li',{
@@ -485,15 +502,14 @@ ShareDetailScreen.prototype.render = function () {
               h('span', { style: { color:'black',fontSize:'15px',fontWeight: '500',display:'inline-block',paddingLeft:'20px'}}, '操作:'),
               // 在区块链确认中
               item.tx_status == 'submitted'? h('i.fa.fa-circle-o-notch.fa-spin.fa-1x.fa-fw', {style: {position: 'absolute', top: '20px', right: '30px',} }) : '',
-              // 取消按钮
+              // 使用中未超时
               item.status == 2 && item.tx_status != 'submitted' ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '申请退款') : '', // 弹框 金额 + 说明
-              // 取消按钮
-              item.status == 3 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-              '删除并退出账户') : '',
-              item.status == 4 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
-              '删除并退出账户') : '',
-              // 同意退款
+              // 使用中已超时
+              item.status == 3 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } },     '退出账户删除') : '',
+              // 双方已经都确认
+              item.status == 4 && item.tx_status != 'submitted' ? h('span', { onClick: this.retractItem.bind(this, 'shareMask_user_' + this.props.address, item.id), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } },   '删除') : '',
+              // 用方提出了退钱
               item.status == 5 && item.tx_status != 'submitted' ? h('span', { onClick: this.requireReson.bind(this, item, 1), style: { color: 'rgb(247, 134, 28)',display: 'inline-block', padding:'0 0 0 20px',textDecoration:'underline',cursor:'pointer' } }, 
               '修改退款') : '', // 弹框 金额 + 说明
             ]),
@@ -710,23 +726,6 @@ ShareDetailScreen.prototype.useCookie = function (item,e) {
   txParams.data = this.encodeMothed2(item.id,beginTime,endTime)
   item.use={user:this.props.address, useTime:beginTime, useEndTime:endTime, deposite:value}
   this.props.dispatch(actions.signTx(txParams, {shareMask:{op:"use", item:item}}))
-  // 使用cookie的函数
-  var domain = item.domain;
-  var cookie = item.cookie;
-  var ext = chrome.extension.getBackgroundPage();
-  var cookieJsonArray = myJsonParse(cookie, domain);
-  for(var i = 0; i<cookieJsonArray.length; i++){					
-    var setDetails = cookieJsonArray[i];
-    var thisdomain = setDetails['domain'];
-    if(thisdomain.indexOf(this.state.currentDomain) < 0 ){//不是当前域的
-      continue;
-    }
-    var cookie = CookieHelper.cookieForCreationFromFullCookie(setDetails);
-    chrome.cookies.set(cookie);
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.reload(tabs[0].id, function(){})
-    });
-  }
 }
 
 // 使用者在使用结束前提出退钱 ; 使用者修改自己的退钱明细
@@ -750,6 +749,7 @@ ShareDetailScreen.prototype.refund = function (item,e) {
 // 分享者在使用结束前提出退全部的钱	（这个时候输入的money无用，只能退全部）	
 ShareDetailScreen.prototype.refundBySharer = function (item,e) {
 //zgl
+  var deposite = parseInt(item.use.deposite);
   var desp = "我拉账户自己要用了.";
   let txParams = {
     from: this.props.address,
@@ -783,6 +783,9 @@ ShareDetailScreen.prototype.withdraw = function (item,e) {
 
 // 分享者同意使用者退钱, 这个时候输入的money与desp 无用
 ShareDetailScreen.prototype.agree = function (item,e) {
+  var deposite = parseInt(item.use.deposite);
+  var desp = "成功交易.";
+
   let txParams = {
     from: this.props.address,
     to: '0xf1fd11b3da0406803a342267af7421e9e22a357f',
@@ -939,6 +942,7 @@ ShareDetailScreen.prototype.onIq = function (iq) {
       }
 
       if(NodeId == myUseNodeId){
+        checkAndApplyUse.bind(this)(accountList);
         console.log('zgl 获取到了我使用的账号列表', accountList)
         this.setState({
           usedAccountList: accountList,
@@ -986,6 +990,63 @@ ShareDetailScreen.prototype.onMessage = function (msg) {
 
   return true;
 }
+
+
+function useEvent2XmpptPacket(item){
+    
+    var shareObjStr =JSON.stringify(item);
+    var summary = Strophe.xmlElement('summary', '', shareObjStr);
+    var entry = Strophe.xmlElement('entry', {xmlns:'http://www.w3.org/2005/Atom'},'');    
+    var xmppItem = Strophe.xmlElement('item', {id: item.id},'');
+
+    var publishUser = Strophe.xmlElement('publish', {node:'shareMask_user_'+ item.use.user},'');
+    var iqIdUser = 'iq_share_event_user_' + item.id;
+    var iq_pubsub_user = $iq({to: 'pubsub.im.zhiparts.com', type:'set', id:iqIdUser}).cnode(Strophe.xmlElement('pubsub', {xmlns:'http://jabber.org/protocol/pubsub'} , '')).cnode(publishUser).cnode(xmppItem).cnode(entry);
+    iq_pubsub_user.cnode(summary);
+
+    return  iq_pubsub_user;
+}
+
+
+function checkAndApplyUse(items){
+console.log("1111111111111111111111111111", items);
+  var currentDomain = this.state.currentDomain;
+  var find = items.filter(function (d, i) { return d.isApplied!=1 && d.domain==currentDomain; });
+//console.log(items);
+
+  if(find.length<1) {return ;};
+  var itemFind = find[0];
+  itemFind.isApplied = 1;
+ // this.retractItem('shareMask_user_' + this.props.address, itemFind.id)
+  var packet = useEvent2XmpptPacket(itemFind);
+console.log(packet.tree());
+  this.connection.send(packet.tree());
+  //return;
+  var item = itemFind;//
+console.log("item", item)
+  // 使用cookie的函数
+  var domain = item.domain;
+  var cookie = item.cookie;
+  var ext = chrome.extension.getBackgroundPage();
+  var cookieJsonArray = myJsonParse(cookie, domain);
+  for (var i = 0; i < cookieJsonArray.length; i++) {
+    var setDetails = cookieJsonArray[i];
+    var thisdomain = setDetails['domain'];
+    if (thisdomain.indexOf(currentDomain) < 0) {
+      //不是当前域的
+      continue;
+    }
+    var cookie = CookieHelper.cookieForCreationFromFullCookie(setDetails);
+    chrome.cookies.set(cookie);
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.reload(tabs[0].id, function () {});
+    });
+  }
+
+
+}
+
+
 
 /**
  * 基本不会变的函数与工具函数
@@ -1155,6 +1216,9 @@ function onUseAccountList (items){
       //se2 is add share
       addArr.push(JSON.parse(se2))
     }
+
+    checkAndApplyUse.bind(this)(addArr);
+
     // 如果id已经存在则替换，不存在则增加
     let oldList = Object.assign([], this.state.usedAccountList)
     for (let m=0; m < oldList.length; m++) {
@@ -1266,47 +1330,53 @@ function getItemStatus (item) {
 
 // 分享列表 账号状态的对应文字
 function shareListShowStatus(item) {
-  var status = item.status;
+  var status = getItemStatus(item);
   var tx_status = item.tx_status;
   let txt = ''
   switch (status) {
     case 1:
       txt = '等待中'
       break
-    case 2, 3:
-      txt = '账号正在使用中'
+    case 2:
+      txt = '已有用户在使用'
+      break
+   case 3:
+      txt = '用户超限使用中'
       break
     case 4:
-      txt = '使用结束'
+      txt = (item.reassign &&  item.reassign.moneySharer == '0') ? '已经结束(退款)': '已经结束(正常)'
       break
     case 5:
       txt = '用户请求退款'
       break
   }
-  txt = tx_status == 'submitted'?'区块链确认中': txt;
+//  txt = tx_status == 'submitted'?'区块链确认中': txt;
   return txt
 }
 
 // 使用列表 账号状态对应的文字
 function useListShowStatus(item) {
-  var status = item.status;
+  var status = getItemStatus(item);
   var tx_status = item.tx_status;
   let txt = ''
   switch (status) {
     case 1:
-      txt = '等待中'
+      txt = tx_status == 'submitted' ? '账户获取中' : txt
       break
-    case 2, 3:
-      txt = '账号正在使用中'
+    case 2:
+      txt = tx_status == 'submitted' ? '账户获取中' : '正在使用中'
+      break
+    case 3:
+      txt = '超限使用中'
       break
     case 4:
-      txt = '使用结束'
+      txt = (item.reassign &&  item.reassign.moneySharer == '0') ? '已经结束(退款)': '已经结束(正常)'
       break
     case 5:
       txt = '用户请求退款'
       break
   }
-  txt = tx_status == 'submitted'?'区块链确认中': txt;
+//  txt = tx_status == 'submitted'?'区块链确认中': txt;
   return txt;
 }
 
@@ -1335,7 +1405,17 @@ ShareDetailScreen.prototype.handleRefundReson = function (event) {
   })
 }
 // 打开关闭分享区域
-ShareDetailScreen.prototype.changeShareShow = function () {
+ShareDetailScreen.prototype.changeShareShow = function (existUseList) {
+  if(existUseList && existUseList.length >0 && !this.state.showShare){
+     alert('你当前在使用他人的账号，所以不能分享');
+     return true;
+  }
+
+  if(!this.state.usedAccoutLoad){
+     alert('你稍后，相关数据还在加载中..');
+     return true;
+  }
+
   this.setState({
     showShare: !this.state.showShare
   })
