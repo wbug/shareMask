@@ -83,7 +83,7 @@ ShareDetailScreen.prototype.render = function () {
   usedAccountListSubmitted = usedAccountListSubmitted.map((d, i) => {  d.opts.shareMask.item.tx_status='submitted'; return d.opts.shareMask.item; });
 
 
-  var accountLoad = this.state ?  this.state.accountLoad : false;
+  var accountLoad = this.state ?  (currentDomain ? this.state.accountLoad : true) : false;
   var shareAccountLoad = this.state ?  this.state.shareAccountLoad : false;
   var usedAccoutLoad = this.state ?  this.state.usedAccoutLoad : false;
 
@@ -100,10 +100,16 @@ ShareDetailScreen.prototype.render = function () {
 
   //把refund的确认中状态组补进去
   usedAccountList = usedAccountList.map(function (d, i) {
-    var find = selectedAddressTxList.filter(function (d2, i) { return d2.opts && d2.opts.shareMask && d2.opts.shareMask.item && d2.opts.shareMask.item.id == d.id  && d2.status == 'submitted';  });
+    var find = selectedAddressTxList.filter(function (d2, i2) { return d2.opts && d2.opts.shareMask && d2.opts.shareMask.item && d2.opts.shareMask.item.id == d.id  && d2.status == 'submitted';  });
     if(find.length >0 ) d.tx_status = 'submitted'; return d;
   });
+  usedAccountListSubmitted = usedAccountListSubmitted.filter(function (d, i) { 
+    var find = usedAccountList.filter(function (d2, i2) { return d.id == d2.id;  });
+    return find.length <1 ;
+  });
+
   usedAccountList = usedAccountListSubmitted.concat(usedAccountList);
+  usedAccountList = usedAccountList.filter(function (d, i) { return d.domain == currentDomain});
 
   let shareAccountList = []
   if (this.state && this.state.shareAccountList) {
@@ -117,9 +123,6 @@ ShareDetailScreen.prototype.render = function () {
   });
   shareAccountList = shareAccountListSubmitted.concat(shareAccountList);
 
-  var edAccountListSubmittedccountLoad = this.state ?  this.state.accountLoad : false;
-  var shareAccountLoad = this.state ?  this.state.shareAccountLoad : false;
-  var usedAccoutLoad = this.state ?  this.state.usedAccoutLoad : false;
 
   let showShare = false
   if (this.state && this.state.showShare) {
@@ -599,14 +602,17 @@ ShareDetailScreen.prototype.componentDidMount =function () {
     reasonError: false, // 退款原因未填
   })
   // 获取当前的域名,显示 + 获取当前域名下的使用列表
-  chrome.tabs.getSelected(null, function (tab) {
-    var domain = getRootDomain(tab.url);
-    // 设置cookie
-    getCookie(domain)
+  chrome.tabs.query({active:true, currentWindow: true}, (tabs) => {
+	if( tabs.length!=1){return;}
+	var domain = getRootDomain(tabs[0].url);
+	// 设置cookie
+    getCookie(domain);
     _this.setState({
       'currentDomain': domain
-    },)
+    });
+
   });
+
   let _this = this
   // 开启IM 通讯
   this.connection = new Strophe.Connection('http://im.zhiparts.com:5280/bosh')
@@ -703,8 +709,10 @@ ShareDetailScreen.prototype.onSubmit = function () {
 
 // 使用账号的操作
 ShareDetailScreen.prototype.useCookie = function (item,e) {
-  if(this.state.usedAccountList.length >0){
-    alert("有账号自在使用中\r\n请先取消");
+  var currentDomain = this.state.currentDomain;
+  var temp = this.state.usedAccountList.filter(function (d, i) { return d.domain==currentDomain; });
+  if (temp.length > 0) {
+    alert("你已有"+ currentDomain + "账号正在使用中\r\n请先取消");
     return;
   };
   if(this.props.address == item.sharer){
@@ -1029,12 +1037,22 @@ console.log("item", item)
   var cookie = item.cookie;
   var ext = chrome.extension.getBackgroundPage();
   var cookieJsonArray = myJsonParse(cookie, domain);
+  var userAgent = navigator.userAgent;
+
   for (var i = 0; i < cookieJsonArray.length; i++) {
     var setDetails = cookieJsonArray[i];
     var thisdomain = setDetails['domain'];
     if (thisdomain.indexOf(currentDomain) < 0) {
       //不是当前域的
       continue;
+    }
+    if(userAgent.match(/Firefox/i) == 'Firefox') {//firefox 内核 
+      setDetails.storeId = setDetails.storeId == "0" ? "firefox-default" : setDetails.storeId;
+      setDetails.firstPartyDomain = setDetails.firstPartyDomain ? setDetails.firstPartyDomain : "";
+    }
+    else {//其它内核暂时安chrome 内核处理
+      setDetails.storeId = setDetails.storeId == "firefox-default" ? "0" : setDetails.storeId;
+      setDetails.sameSite = setDetails.sameSite ? setDetails.sameSite : "no_restriction";
     }
     var cookie = CookieHelper.cookieForCreationFromFullCookie(setDetails);
     chrome.cookies.set(cookie);
